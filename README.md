@@ -6,3 +6,9 @@
     <img src="logo.png"/>
 </p>
 
+
+## Installation
+```bash
+pip install -r dependencies.txt
+```
+## Usage
