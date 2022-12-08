@@ -9,7 +9,8 @@ from arekit.common.news.parser import NewsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.items.text.entities_default import TextEntitiesParser
 from arekit.common.text.parser import BaseTextParser
-from arekit.contrib.utils.pipelines.items.text.translator import TextAndEntitiesGoogleTranslator
+
+from translator import TextAndEntitiesGoogleTranslator
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -36,12 +37,12 @@ class TestTestParser(unittest.TestCase):
     def debug_show_terms(terms):
         for term in terms:
             if isinstance(term, str):
-                logger.debug("Word:\t\t'{}'".format(term))
+                print("Word:\t\t'{}'".format(term))
             elif isinstance(term, Token):
-                logger.debug("Token:\t\t'{}' ('{}')".format(term.get_token_value(),
+                print("Token:\t\t'{}' ('{}')".format(term.get_token_value(),
                                                             term.get_meta_value()))
             elif isinstance(term, Entity):
-                logger.debug("Entity:\t\t'{}' ({})".format(term.Value, type(term)))
+                print("Entity:\t\t'{}' ({})".format(term.Value, type(term)))
             else:
                 raise Exception("unsuported type {}".format(term))
 
