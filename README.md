@@ -19,3 +19,7 @@ python -m arekit.download_data
 ```
 
 ## Usage
+
+```bash
+python translate.py 
+```

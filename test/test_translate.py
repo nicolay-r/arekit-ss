@@ -44,7 +44,7 @@ class TestTestParser(unittest.TestCase):
             elif isinstance(term, Entity):
                 print("Entity:\t\t'{}' ({})".format(term.Value, type(term)))
             else:
-                raise Exception("unsuported type {}".format(term))
+                raise Exception("unsupported type {}".format(term))
 
 
 if __name__ == '__main__':
