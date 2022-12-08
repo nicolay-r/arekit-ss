@@ -77,7 +77,7 @@ def do_serialize_bert(writer, terms_per_context=50, dest_lang="en", limit=None):
                    writer=writer)
 
 
-def do_serialize_nn(writer, limit=None):
+def do_serialize_nn(writer, dest_lang="en", limit=None):
     stemmer = MystemWrapper()
     frames_collection = RuSentiFramesCollection.read_collection(
         version=RuSentiFramesVersions.V20,
@@ -91,6 +91,7 @@ def do_serialize_nn(writer, limit=None):
 
     text_parser = BaseTextParser(pipeline=[RuAttitudesTextEntitiesParser(),
                                            DefaultTextTokenizer(keep_tokens=True),
+                                           TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang),
                                            LemmasBasedFrameVariantsParser(
                                                frame_variants=frame_variant_collection,
                                                stemmer=stemmer)])

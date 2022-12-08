@@ -6,7 +6,7 @@ from arekit.common.pipeline.items.base import BasePipelineItem
 
 
 class TextAndEntitiesGoogleTranslator(BasePipelineItem):
-    """ Text translator, based on GoogleTraslate service
+    """ Text translator, based on GoogleTranslate service
         NOTE: Considered to be adopted right-after entities parsed
         but before the input tokenization into list of terms.
         For entities we update and assign its DisplayValue.

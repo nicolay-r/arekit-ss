@@ -72,7 +72,7 @@ def do_serialize_bert(writer, terms_per_context=50, dest_lang="en"):
                    writer=writer)
 
 
-def do_serialize_nn(writer):
+def do_serialize_nn(writer, dest_lang="en"):
 
     version = RuSentRelVersions.V11
 
@@ -89,6 +89,7 @@ def do_serialize_nn(writer):
 
     text_parser = BaseTextParser(pipeline=[BratTextEntitiesParser(),
                                            DefaultTextTokenizer(keep_tokens=True),
+                                           TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang),
                                            LemmasBasedFrameVariantsParser(
                                                frame_variants=frame_variant_collection,
                                                stemmer=stemmer)])
