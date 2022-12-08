@@ -20,19 +20,18 @@ from arekit.contrib.utils.vectorizers.bpe import BPEVectorizer
 from arekit.contrib.utils.vectorizers.random_norm import RandomNormalVectorizer
 
 from sources.scaler import PosNegNeuRelationsLabelScaler
+from sources.scaler_frames import ThreeLabelScaler
 
 
-def serialize_nn(output_dir, writer,
+def serialize_nn(output_dir, writer, data_folding,
                  labels_scaler=PosNegNeuRelationsLabelScaler(),
                  entities_fmt=StringEntitiesDisplayValueFormatter(),
-                 data_folding=None, data_type_pipelines=None, limit=None, suffix="nn"):
+                 data_type_pipelines=None):
     """ Run data preparation process for neural networks, i.e.
         convolutional neural networks and recurrent-based neural networks.
         Implementation based on AREkit toolkit API.
     """
-    assert(isinstance(suffix, str))
     assert(isinstance(output_dir, str))
-    assert(isinstance(limit, int) or limit is None)
     assert(isinstance(writer, BaseWriter))
 
     stemmer = MystemWrapper()
@@ -70,8 +69,6 @@ def serialize_nn(output_dir, writer,
         save_labels_func=lambda data_type: data_type != DataType.Test,
         ctx=ctx,
         save_embedding=True)
-
-    doc_ops = None
 
     ppl = BasePipeline([pipeline_item])
     ppl.run(input_data=None,

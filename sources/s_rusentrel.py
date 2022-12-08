@@ -41,12 +41,12 @@ class RuSentRelTypedEntitiesFormatter(StringEntitiesFormatter):
         return self.type_formatter[original_value.Type]
 
 
-def do_serialize_bert(writer):
+def do_serialize_bert(writer, terms_per_context=50, dest_lang="en"):
 
     version = RuSentRelVersions.V11
 
     text_parser = BaseTextParser(pipeline=[BratTextEntitiesParser(),
-                                           TextAndEntitiesGoogleTranslator(src="ru", dest="en"),
+                                           TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang),
                                            DefaultTextTokenizer()])
 
     pipeline = create_text_opinion_extraction_pipeline(
@@ -58,7 +58,7 @@ def do_serialize_bert(writer):
                              supported_data_type=DataType.Train)
 
     sample_row_provider = CroppedBertSampleRowProvider(
-        crop_window_size=50,
+        crop_window_size=terms_per_context,
         label_scaler=PosNegNeuRelationsLabelScaler(),
         text_b_template=BertTextBTemplates.NLI.value,
         text_terms_mapper=BertDefaultStringTextTermsMapper(
@@ -66,15 +66,13 @@ def do_serialize_bert(writer):
         ))
 
     serialize_bert(output_dir="_out/serialize-rusentrel-bert",
-                   terms_per_context=50,
-                   split_filepath=None,
                    data_type_pipelines={DataType.Train: pipeline},
                    sample_row_provider=sample_row_provider,
                    data_folding=data_folding,
                    writer=writer)
 
 
-def __test_serialize_nn(writer):
+def do_serialize_nn(writer):
 
     version = RuSentRelVersions.V11
 

@@ -10,11 +10,6 @@ from arekit.contrib.utils.pipelines.items.sampling.bert import BertExperimentInp
 
 
 class CroppedBertSampleRowProvider(BaseSampleRowProvider):
-    """ Нужно немного изменить базовый провайдер так, чтобы
-        возвращался небольшой контекст, который влкючает в себя
-        объект и субъект, чтобы когда на вход в BERT будут подаваться семплы,
-        не возникло проблемы отсечения ввиду огромного предложения.
-    """
 
     def __init__(self, crop_window_size, label_scaler, text_terms_mapper, text_b_template):
 
@@ -56,11 +51,7 @@ class CroppedBertSampleRowProvider(BaseSampleRowProvider):
         return terms[_from:_to], src_ind - _from, tgt_ind - _from
 
 
-def serialize_bert(split_filepath, terms_per_context, writer, sample_row_provider, output_dir,
-                   data_folding, data_type_pipelines=None, limit=None):
-    assert(isinstance(limit, int) or limit is None)
-    assert(isinstance(split_filepath, str) or split_filepath is None)
-    assert(isinstance(terms_per_context, int))
+def serialize_bert(writer, sample_row_provider, output_dir, data_folding, data_type_pipelines):
     assert(isinstance(sample_row_provider, BaseSampleRowProvider))
     assert(isinstance(output_dir, str))
 
@@ -71,8 +62,6 @@ def serialize_bert(split_filepath, terms_per_context, writer, sample_row_provide
             save_labels_func=lambda data_type: data_type != DataType.Test,
             sample_rows_provider=sample_row_provider)
     ])
-
-    doc_ops = None
 
     pipeline.run(input_data=None,
                  params_dict={
