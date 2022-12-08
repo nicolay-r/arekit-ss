@@ -1,5 +1,3 @@
-from arekit.common.entities.base import Entity
-from arekit.common.entities.str_fmt import StringEntitiesFormatter
 from arekit.common.experiment.data_type import DataType
 from arekit.common.folding.nofold import NoFolding
 from arekit.common.frames.variants.collection import FrameVariantsCollection
@@ -14,6 +12,7 @@ from arekit.contrib.source.rusentrel.io_utils import RuSentRelVersions, RuSentRe
 from arekit.contrib.source.rusentrel.labels_fmt import RuSentRelLabelsFormatter
 from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
 from arekit.contrib.utils.bert.text_b_rus import BertTextBTemplates
+from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesDisplayValueFormatter
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.sources.rusentrel.extract_text_opinions import \
@@ -22,23 +21,9 @@ from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
 from framework.arekit.serialize_bert import CroppedBertSampleRowProvider, serialize_bert
 from framework.arekit.serialize_nn import serialize_nn
+
 from sources.scaler import PosNegNeuRelationsLabelScaler
 from translator import TextAndEntitiesGoogleTranslator
-
-
-class RuSentRelTypedEntitiesFormatter(StringEntitiesFormatter):
-
-    type_formatter = {
-        "GEOPOLIT": "гео-сущность",
-        "ORG": "организация",
-        "PER": "личность",
-        "LOC": "локация",
-        "ОRG": "организация"
-    }
-
-    def to_string(self, original_value, entity_type):
-        assert(isinstance(original_value, Entity))
-        return self.type_formatter[original_value.Type]
 
 
 def do_serialize_bert(writer, terms_per_context=50, dest_lang="en"):
@@ -62,7 +47,7 @@ def do_serialize_bert(writer, terms_per_context=50, dest_lang="en"):
         label_scaler=PosNegNeuRelationsLabelScaler(),
         text_b_template=BertTextBTemplates.NLI.value,
         text_terms_mapper=BertDefaultStringTextTermsMapper(
-            entity_formatter=RuSentRelTypedEntitiesFormatter()
+            entity_formatter=StringEntitiesDisplayValueFormatter()
         ))
 
     serialize_bert(output_dir="_out/serialize-rusentrel-bert",

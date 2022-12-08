@@ -1,5 +1,3 @@
-from arekit.common.entities.base import Entity
-from arekit.common.entities.str_fmt import StringEntitiesFormatter
 from arekit.common.experiment.data_type import DataType
 from arekit.common.folding.nofold import NoFolding
 from arekit.common.frames.variants.collection import FrameVariantsCollection
@@ -12,6 +10,7 @@ from arekit.contrib.source.rusentiframes.labels_fmt import RuSentiFramesEffectLa
 from arekit.contrib.source.rusentiframes.types import RuSentiFramesVersions
 from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
 from arekit.contrib.utils.bert.text_b_rus import BertTextBTemplates
+from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesDisplayValueFormatter
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.sources.ruattitudes.extract_text_opinions import create_text_opinion_extraction_pipeline
@@ -20,36 +19,9 @@ from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from framework.arekit.serialize_bert import serialize_bert, CroppedBertSampleRowProvider
 from framework.arekit.serialize_nn import serialize_nn
 
-from sources.helper import EntityHelper
 from sources.scaler import PosNegNeuRelationsLabelScaler
 
 from translator import TextAndEntitiesGoogleTranslator
-
-
-class RuAttitudesTypedEntitiesFormatter(StringEntitiesFormatter):
-    """ Форматирование сущностей. Было принято решение использовать тип сущности в качетстве значений.
-        Поскольку тексты русскоязычные, то и типы были руссифицированы из соображений более удачных embeddings.
-    """
-
-    fmts = {
-        'QUANTITY': "количество",
-        'ORG': "организация",
-        'LAW': "закон",
-        'FAC': "сооружение",
-        'PERCENT': "процент",
-        'NORP': "связь",
-        'GPE': "гео-сущность",
-        'CARDINAL': "число",
-        'LOC': "локация",
-    }
-
-    def __init__(self):
-        self.__st = set()
-
-    def to_string(self, original_value, entity_type):
-        assert(isinstance(original_value, Entity))
-        return self.fmts[original_value.Type] if original_value.Type in self.fmts else \
-            EntityHelper.format(original_value)
 
 
 def do_serialize_bert(writer, terms_per_context=50, dest_lang="en", limit=None):
@@ -67,7 +39,7 @@ def do_serialize_bert(writer, terms_per_context=50, dest_lang="en", limit=None):
         label_scaler=PosNegNeuRelationsLabelScaler(),
         text_b_template=BertTextBTemplates.NLI.value,
         text_terms_mapper=BertDefaultStringTextTermsMapper(
-            entity_formatter=RuAttitudesTypedEntitiesFormatter()
+            entity_formatter=StringEntitiesDisplayValueFormatter()
         ))
 
     serialize_bert(output_dir="_out/serialize-ruattitudes-bert",

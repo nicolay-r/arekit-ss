@@ -21,5 +21,5 @@ python -m arekit.download_data
 ## Usage
 
 ```bash
-python translate.py 
+python3 translate.py --writer csv --sampler bert --dest_lang en --limit 5
 ```

@@ -8,7 +8,7 @@ from sources.s_ruattitudes import do_serialize_bert, do_serialize_nn
 class TestRuAttitudes(unittest.TestCase):
 
     def test_serialize_bert_opennre(self):
-        do_serialize_bert(writer=OpenNREJsonWriter(text_columns=["text_a", "text_b"]))
+        do_serialize_bert(writer=OpenNREJsonWriter(text_columns=["text_a", "text_b"]), limit=5)
 
     def test_serialize_nn_csv(self):
         do_serialize_nn(writer=PandasCsvWriter(write_header=True), limit=5)
