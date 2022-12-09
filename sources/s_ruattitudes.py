@@ -25,7 +25,8 @@ from sources.scaler import PosNegNeuRelationsLabelScaler
 from translator import TextAndEntitiesGoogleTranslator
 
 
-def do_serialize_bert(writer, terms_per_context=50, dest_lang="en", limit=None):
+def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", limit=None):
+
     text_parser = BaseTextParser(pipeline=[RuAttitudesTextEntitiesParser(),
                                            TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang),
                                            DefaultTextTokenizer()])
@@ -43,15 +44,18 @@ def do_serialize_bert(writer, terms_per_context=50, dest_lang="en", limit=None):
             entity_formatter=StringEntitiesDisplayValueFormatter()
         ))
 
-    serialize_bert(output_dir="_out/serialize-ruattitudes-bert",
+    serialize_bert(output_dir=output_dir,
                    data_type_pipelines={DataType.Train: pipeline},
                    sample_row_provider=sample_row_provider,
                    data_folding=data_folding,
                    writer=writer)
 
 
-def do_serialize_nn(writer, dest_lang="en", limit=None):
+def do_serialize_nn(writer, output_dir, dest_lang="en", limit=None):
+
     stemmer = MystemWrapper()
+
+    # Adopt frames annotation.
     frames_collection = RuSentiFramesCollection.read_collection(
         version=RuSentiFramesVersions.V20,
         labels_fmt=RuSentiFramesLabelsFormatter(pos_label_type=PositiveTo, neg_label_type=NegativeTo),
@@ -75,7 +79,7 @@ def do_serialize_nn(writer, dest_lang="en", limit=None):
     data_folding = NoFolding(doc_ids=ru_attitudes.keys(),
                              supported_data_type=DataType.Train)
 
-    serialize_nn(output_dir="_out/serialize-ruattitudes-nn",
+    serialize_nn(output_dir=output_dir,
                  data_type_pipelines={DataType.Train: pipeline},
                  data_folding=data_folding,
                  writer=writer)

@@ -27,7 +27,7 @@ from sources.scaler import PosNegNeuRelationsLabelScaler
 from translator import TextAndEntitiesGoogleTranslator
 
 
-def do_serialize_bert(writer, terms_per_context=50, dest_lang="en"):
+def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en"):
 
     version = RuSentRelVersions.V11
 
@@ -51,18 +51,18 @@ def do_serialize_bert(writer, terms_per_context=50, dest_lang="en"):
             entity_formatter=StringEntitiesDisplayValueFormatter()
         ))
 
-    serialize_bert(output_dir="_out/serialize-rusentrel-bert",
+    serialize_bert(output_dir=output_dir,
                    data_type_pipelines={DataType.Train: pipeline},
                    sample_row_provider=sample_row_provider,
                    data_folding=data_folding,
                    writer=writer)
 
 
-def do_serialize_nn(writer, dest_lang="en"):
-
-    version = RuSentRelVersions.V11
+def do_serialize_nn(writer, output_dir, dest_lang="en"):
 
     stemmer = MystemWrapper()
+
+    # Adopt frames annotation.
     frames_collection = RuSentiFramesCollection.read_collection(
         version=RuSentiFramesVersions.V20,
         labels_fmt=RuSentiFramesLabelsFormatter(pos_label_type=PositiveTo, neg_label_type=NegativeTo),
@@ -80,6 +80,8 @@ def do_serialize_nn(writer, dest_lang="en"):
                                                frame_variants=frame_variant_collection,
                                                stemmer=stemmer)])
 
+    version = RuSentRelVersions.V11
+
     pipeline = create_text_opinion_extraction_pipeline(
         rusentrel_version=version,
         text_parser=text_parser,
@@ -88,7 +90,7 @@ def do_serialize_nn(writer, dest_lang="en"):
     data_folding = NoFolding(doc_ids=RuSentRelIOUtils.iter_collection_indices(version),
                              supported_data_type=DataType.Train)
 
-    serialize_nn(output_dir="_out/serialize-rusentrel-nn",
+    serialize_nn(output_dir=output_dir,
                  data_type_pipelines={DataType.Train: pipeline},
                  data_folding=data_folding,
                  writer=writer)

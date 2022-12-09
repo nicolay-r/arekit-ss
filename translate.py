@@ -5,15 +5,21 @@ from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
 from sources.s_ruattitudes import do_serialize_bert, do_serialize_nn
 
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="Source Translator.")
     parser.add_argument("--writer", type=str)
+    parser.add_argument("--source", type=str)
     parser.add_argument("--sampler", type=str)
     parser.add_argument("--dest_lang", type=str, default="en")
+    parser.add_argument("--output_dir_template", type=str, default="_out/serialize")
     parser.add_argument("--limit", type=int, default=None)
 
     args = parser.parse_args()
+
+    # Completing the output template.
+    output_dir = '-'.join([args.output_dir_template, args.sampler, args.source])
 
     # Setup writer.
     writer = None
@@ -24,6 +30,8 @@ if __name__ == '__main__':
 
     # Choose Serializer.
     if args.sampler == "bert":
-        do_serialize_bert(writer=writer, dest_lang=args.dest_lang, limit=args.limit)
+        do_serialize_bert(writer=writer, dest_lang=args.dest_lang, limit=args.limit,
+                          output_dir=output_dir)
     elif args.sampler == "nn":
-        do_serialize_nn(writer=writer, dest_lang=args.dest_lang, limit=args.limit)
+        do_serialize_nn(writer=writer, dest_lang=args.dest_lang, limit=args.limit,
+                        output_dir=output_dir)
