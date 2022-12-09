@@ -2,7 +2,6 @@ from collections import OrderedDict
 
 from arekit.common.labels.base import NoLabel
 from arekit.common.labels.scaler.base import BaseLabelScaler
-from arekit.common.labels.scaler.sentiment import SentimentLabelScaler
 from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
 
 

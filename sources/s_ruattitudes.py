@@ -3,6 +3,7 @@ from arekit.common.folding.nofold import NoFolding
 from arekit.common.frames.variants.collection import FrameVariantsCollection
 from arekit.common.text.parser import BaseTextParser
 
+from arekit.contrib.bert.input.providers.cropped_sample import CroppedBertSampleRowProvider
 from arekit.contrib.bert.terms.mapper import BertDefaultStringTextTermsMapper
 from arekit.contrib.source.ruattitudes.entity.parser import RuAttitudesTextEntitiesParser
 from arekit.contrib.source.rusentiframes.collection import RuSentiFramesCollection
@@ -16,7 +17,7 @@ from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextToken
 from arekit.contrib.utils.pipelines.sources.ruattitudes.extract_text_opinions import create_text_opinion_extraction_pipeline
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
-from framework.arekit.serialize_bert import serialize_bert, CroppedBertSampleRowProvider
+from framework.arekit.serialize_bert import serialize_bert
 from framework.arekit.serialize_nn import serialize_nn
 
 from sources.scaler import PosNegNeuRelationsLabelScaler
