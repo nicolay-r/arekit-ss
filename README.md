@@ -42,6 +42,14 @@ sampled for the BERT-based models, with samples limited by `limit` parameter
 * [RuSentRel](https://paperswithcode.com/dataset/rusentrel)
 * [RuAttitudes](https://github.com/nicolay-r/RuAttitudes)
 
+**samplers**:
+* nn -- cnn/lstm archictecture related, including frames annotation from RuAttitudes.
+* bert -- BERT-based, single-input sequence.  
+
+**writer**:
+* `csv` -- for AREkit/AREnets framework;
+* `jsonl` -- for [OpenNRE](https://github.com/thunlp/OpenNRE) framwork.
+
 ## References
 
 * [AREkit framework](https://github.com/nicolay-r/AREkit)
