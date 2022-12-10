@@ -32,7 +32,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Completing the output template.
-    output_dir = '-'.join([args.output_dir_template, args.sampler, args.source])
+    output_dir = '-'.join([args.output_dir_template, args.sampler, args.source, args.dest_lang])
 
     # Setup writer.
     writer = None
