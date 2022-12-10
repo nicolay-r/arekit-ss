@@ -27,7 +27,7 @@ from sources.scaler import PosNegNeuRelationsLabelScaler
 from translator import TextAndEntitiesGoogleTranslator
 
 
-def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en"):
+def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", limit=None):
 
     version = RuSentRelVersions.V11
 
@@ -58,7 +58,7 @@ def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en"):
                    writer=writer)
 
 
-def do_serialize_nn(writer, output_dir, dest_lang="en"):
+def do_serialize_nn(writer, output_dir, dest_lang="en", limit=None):
 
     stemmer = MystemWrapper()
 
