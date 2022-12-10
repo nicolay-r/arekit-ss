@@ -12,7 +12,6 @@ from arekit.contrib.source.rusentiframes.types import RuSentiFramesVersions
 from arekit.contrib.source.rusentrel.io_utils import RuSentRelVersions, RuSentRelIOUtils
 from arekit.contrib.source.rusentrel.labels_fmt import RuSentRelLabelsFormatter
 from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
-from arekit.contrib.utils.bert.text_b_rus import BertTextBTemplates
 from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesDisplayValueFormatter
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
@@ -46,7 +45,7 @@ def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", 
     sample_row_provider = CroppedBertSampleRowProvider(
         crop_window_size=terms_per_context,
         label_scaler=PosNegNeuRelationsLabelScaler(),
-        text_b_template=BertTextBTemplates.NLI.value,
+        text_b_template=None,
         text_terms_mapper=BertDefaultStringTextTermsMapper(
             entity_formatter=StringEntitiesDisplayValueFormatter()
         ))
