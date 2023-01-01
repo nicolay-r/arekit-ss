@@ -1,8 +1,16 @@
+import logging
+import time
+
 from googletrans import Translator
 
 from arekit.common.entities.base import Entity
 from arekit.common.pipeline.context import PipelineContext
 from arekit.common.pipeline.items.base import BasePipelineItem
+from httpcore import ConnectError
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 
 
 class TextAndEntitiesGoogleTranslator(BasePipelineItem):
@@ -13,12 +21,14 @@ class TextAndEntitiesGoogleTranslator(BasePipelineItem):
         NOTE#2: Move this pipeline item as a separated github project.
     """
 
-    def __init__(self, src, dest):
+    def __init__(self, src, dest, attempts=10, timeout_for_connection_lost_sec=1.0):
         assert(isinstance(src, str))
         assert(isinstance(src, str))
         self.translator = Translator()
         self.__src = src
         self.__dest = dest
+        self.__attempts = attempts
+        self.__timeout_for_connection_lost = timeout_for_connection_lost_sec
 
     def apply_core(self, input_data, pipeline_ctx):
         assert(isinstance(pipeline_ctx, PipelineContext))
@@ -47,13 +57,22 @@ class TextAndEntitiesGoogleTranslator(BasePipelineItem):
 
         __optionally_register(parts_to_join)
 
-        # Compose text parts.
-        translated_parts = [part.text for part in
-                            self.translator.translate(content, dest=self.__dest, src=self.__src)]
+        translated_parts = []
 
-        for entity_ind, entity_part_ind in enumerate(origin_entity_ind):
-            entity = origin_entities[entity_ind]
-            entity.set_display_value(translated_parts[entity_part_ind])
-            translated_parts[entity_part_ind] = entity
+        # Due to the potential opportunity of connection lost, we wrap everything in a loop with multiple attempts.
+        for attempt_index in range(self.__attempts):
+            try:
+                # Compose text parts.
+                translated_parts = [part.text for part in
+                                    self.translator.translate(content, dest=self.__dest, src=self.__src)]
+                for entity_ind, entity_part_ind in enumerate(origin_entity_ind):
+                    entity = origin_entities[entity_ind]
+                    entity.set_display_value(translated_parts[entity_part_ind])
+                    translated_parts[entity_part_ind] = entity
+                break
+            except ConnectError as _:
+                logger.info("Unable to perform translation. Try {} out of {}.".format(attempt_index, self.__attempts))
+                time.sleep(self.__timeout_for_connection_lost)
+                translated_parts = []
 
         return translated_parts
