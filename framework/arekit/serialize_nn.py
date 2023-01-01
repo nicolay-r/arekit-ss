@@ -1,7 +1,5 @@
 from arekit.common.experiment.data_type import DataType
 from arekit.common.pipeline.base import BasePipeline
-from arekit.contrib.networks.core.input.ctx_serialization import NetworkSerializationContext
-from arekit.contrib.networks.core.input.term_types import TermTypes
 from arekit.contrib.source.rusentiframes.collection import RuSentiFramesCollection
 from arekit.contrib.source.rusentiframes.labels_fmt import RuSentiFramesLabelsFormatter, \
     RuSentiFramesEffectLabelsFormatter
@@ -15,9 +13,7 @@ from arekit.contrib.utils.io_utils.samples import SamplesIO
 from arekit.contrib.utils.pipelines.items.sampling.networks import NetworksInputSerializerPipelineItem
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.processing.pos.mystem_wrap import POSMystemWrapper
-from arekit.contrib.utils.resources import load_embedding_news_mystem_skipgram_1000_20_2015
-from arekit.contrib.utils.vectorizers.bpe import BPEVectorizer
-from arekit.contrib.utils.vectorizers.random_norm import RandomNormalVectorizer
+from arekit.contrib.networks.input.ctx_serialization import NetworkSerializationContext
 
 from sources.scaler import PosNegNeuRelationsLabelScaler
 from sources.scaler_frames import ThreeLabelScaler
@@ -50,18 +46,8 @@ def serialize_nn(output_dir, writer, data_folding,
         frame_roles_label_scaler=ThreeLabelScaler(),
         frames_connotation_provider=frames_connotation_provider)
 
-    embedding = load_embedding_news_mystem_skipgram_1000_20_2015(stemmer)
-    bpe_vectorizer = BPEVectorizer(embedding=embedding, max_part_size=3)
-    norm_vectorizer = RandomNormalVectorizer(vector_size=embedding.VectorSize,
-                                             token_offset=12345)
-
     pipeline_item = NetworksInputSerializerPipelineItem(
-        vectorizers={
-            TermTypes.WORD: bpe_vectorizer,
-            TermTypes.ENTITY: bpe_vectorizer,
-            TermTypes.FRAME: bpe_vectorizer,
-            TermTypes.TOKEN: norm_vectorizer
-        },
+        vectorizers=None,
         samples_io=SamplesIO(target_dir=output_dir, writer=writer),
         emb_io=NpEmbeddingIO(target_dir=output_dir),
         str_entity_fmt=entities_fmt,
