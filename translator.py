@@ -1,6 +1,8 @@
 import logging
 import time
 
+from arekit.common.data.input.providers.const import IDLE_MODE
+from arekit.common.pipeline.conts import PARENT_CTX
 from googletrans import Translator
 
 from arekit.common.entities.base import Entity
@@ -38,6 +40,16 @@ class TextAndEntitiesGoogleTranslator(BasePipelineItem):
             if len(prts_to_join) > 0:
                 content.append(" ".join(prts_to_join))
             parts_to_join.clear()
+
+        # Check the pipeline state whether is an idle mode or not.
+        parent_ctx = pipeline_ctx.provide(PARENT_CTX)
+        idle_mode = parent_ctx.provide(IDLE_MODE)
+
+        # When pipeline utilized only for the assessing the expected amount
+        # of rows (common case of idle_mode), there is no need to perform
+        # translation.
+        if idle_mode:
+            return
 
         content = []
         origin_entities = []
