@@ -51,7 +51,7 @@ def serialize_nn(output_dir, writer, data_folding,
         samples_io=SamplesIO(target_dir=output_dir, writer=writer),
         emb_io=NpEmbeddingIO(target_dir=output_dir),
         str_entity_fmt=entities_fmt,
-        balance_func=lambda data_type: data_type == DataType.Train,
+        balance_func=lambda _: False,
         save_labels_func=lambda data_type: data_type != DataType.Test,
         ctx=ctx,
         save_embedding=True)

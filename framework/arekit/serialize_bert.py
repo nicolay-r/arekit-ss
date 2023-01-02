@@ -12,7 +12,7 @@ def serialize_bert(writer, sample_row_provider, output_dir, data_folding, data_t
 
     pipeline = BasePipeline([
         BertExperimentInputSerializerPipelineItem(
-            balance_func=lambda data_type: data_type == DataType.Train,
+            balance_func=lambda _: False,
             samples_io=SamplesIO(target_dir=output_dir, writer=writer),
             save_labels_func=lambda data_type: data_type != DataType.Test,
             sample_rows_provider=sample_row_provider)
