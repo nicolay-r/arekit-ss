@@ -24,14 +24,14 @@ from sources.scaler import PosNegNeuRelationsLabelScaler
 from translator import TextAndEntitiesGoogleTranslator
 
 
-def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", limit=None):
+def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", docs_limit=None):
 
     text_parser = BaseTextParser(pipeline=[RuAttitudesTextEntitiesParser(),
                                            TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang),
                                            DefaultTextTokenizer()])
 
     pipeline, ru_attitudes = create_text_opinion_extraction_pipeline(
-        text_parser=text_parser, label_scaler=PosNegNeuRelationsLabelScaler(), limit=limit)
+        text_parser=text_parser, label_scaler=PosNegNeuRelationsLabelScaler(), limit=docs_limit)
 
     data_folding = NoFolding(doc_ids=ru_attitudes.keys(), supported_data_type=DataType.Train)
 
@@ -50,7 +50,7 @@ def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", 
                    writer=writer)
 
 
-def do_serialize_nn(writer, output_dir, dest_lang="en", limit=None):
+def do_serialize_nn(writer, output_dir, dest_lang="en", docs_limit=None):
 
     stemmer = MystemWrapper()
 
@@ -73,7 +73,7 @@ def do_serialize_nn(writer, output_dir, dest_lang="en", limit=None):
                                                stemmer=stemmer)])
 
     pipeline, ru_attitudes = create_text_opinion_extraction_pipeline(
-        text_parser=text_parser, label_scaler=PosNegNeuRelationsLabelScaler(), limit=limit)
+        text_parser=text_parser, label_scaler=PosNegNeuRelationsLabelScaler(), limit=docs_limit)
 
     data_folding = NoFolding(doc_ids=ru_attitudes.keys(),
                              supported_data_type=DataType.Train)

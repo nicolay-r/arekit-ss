@@ -27,12 +27,13 @@ if __name__ == '__main__':
     parser.add_argument("--sampler", type=str)
     parser.add_argument("--dest_lang", type=str, default="en")
     parser.add_argument("--output_dir_template", type=str, default="_out/serialize")
-    parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--docs_limit", type=int, default=None)
 
     args = parser.parse_args()
 
     # Completing the output template.
-    output_dir = '-'.join([args.output_dir_template, args.sampler, args.source, args.dest_lang])
+    output_dir = '-'.join([args.output_dir_template, args.sampler, args.source, args.dest_lang,
+                           str(args.docs_limit) if args.docs_limit is not None else "all"])
 
     # Setup writer.
     writer = None
@@ -43,4 +44,4 @@ if __name__ == '__main__':
 
     # Running handler
     handler = sources[args.source][args.sampler]
-    handler(writer=writer, dest_lang=args.dest_lang, limit=args.limit, output_dir=output_dir)
+    handler(writer=writer, dest_lang=args.dest_lang, docs_limit=args.docs_limit, output_dir=output_dir)

@@ -1,3 +1,5 @@
+import itertools
+
 from arekit.common.experiment.data_type import DataType
 from arekit.common.folding.nofold import NoFolding
 from arekit.common.frames.variants.collection import FrameVariantsCollection
@@ -26,7 +28,15 @@ from sources.scaler import PosNegNeuRelationsLabelScaler
 from translator import TextAndEntitiesGoogleTranslator
 
 
-def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", limit=None):
+def __iter_doc_ids(version, docs_limit):
+    assert((isinstance(docs_limit, int) and docs_limit > 0) or docs_limit is None)
+    doc_ids_iter = RuSentRelIOUtils.iter_collection_indices(version)
+    if docs_limit is not None:
+        doc_ids_iter = itertools.islice(doc_ids_iter, docs_limit)
+    return doc_ids_iter
+
+
+def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", docs_limit=None):
 
     version = RuSentRelVersions.V11
 
@@ -39,7 +49,7 @@ def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", 
         text_parser=text_parser,
         labels_fmt=RuSentRelLabelsFormatter(pos_label_type=PositiveTo, neg_label_type=NegativeTo))
 
-    data_folding = NoFolding(doc_ids=RuSentRelIOUtils.iter_collection_indices(version),
+    data_folding = NoFolding(doc_ids=__iter_doc_ids(version, docs_limit),
                              supported_data_type=DataType.Train)
 
     sample_row_provider = CroppedBertSampleRowProvider(
@@ -57,7 +67,7 @@ def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", 
                    writer=writer)
 
 
-def do_serialize_nn(writer, output_dir, dest_lang="en", limit=None):
+def do_serialize_nn(writer, output_dir, dest_lang="en", docs_limit=None):
 
     stemmer = MystemWrapper()
 
@@ -86,7 +96,7 @@ def do_serialize_nn(writer, output_dir, dest_lang="en", limit=None):
         text_parser=text_parser,
         labels_fmt=RuSentRelLabelsFormatter(pos_label_type=PositiveTo, neg_label_type=NegativeTo))
 
-    data_folding = NoFolding(doc_ids=RuSentRelIOUtils.iter_collection_indices(version),
+    data_folding = NoFolding(doc_ids=__iter_doc_ids(version, docs_limit),
                              supported_data_type=DataType.Train)
 
     serialize_nn(output_dir=output_dir,

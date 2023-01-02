@@ -10,11 +10,11 @@ class TestRuAttitudes(unittest.TestCase):
     __output_dir = "_out/"
 
     def test_serialize_bert_opennre(self):
-        do_serialize_bert(writer=OpenNREJsonWriter(text_columns=["text_a", "text_b"]), limit=5,
+        do_serialize_bert(writer=OpenNREJsonWriter(text_columns=["text_a", "text_b"]), docs_limit=5,
                           output_dir="_out/ra-bert")
 
     def test_serialize_nn_csv(self):
-        do_serialize_nn(writer=PandasCsvWriter(write_header=True), limit=5, output_dir="_out/ra-nn")
+        do_serialize_nn(writer=PandasCsvWriter(write_header=True), docs_limit=5, output_dir="_out/ra-nn")
 
     def test_serialize_nn_opennre(self):
-        do_serialize_nn(writer=OpenNREJsonWriter(text_columns=["text_a"]), limit=5, output_dir="_out/ra-nn")
+        do_serialize_nn(writer=OpenNREJsonWriter(text_columns=["text_a"]), docs_limit=5, output_dir="_out/ra-nn")
