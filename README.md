@@ -33,7 +33,7 @@ python -m arekit.download_data
 ## Usage
 
 ```bash
-python3 translate.py --writer csv --source rusentrel --sampler bert --dest_lang en --docs_limit 5
+python3 translate.py --writer csv --source rusentrel --sampler bert --dest_lang en --docs_limit 1
 ```
 In this example, we convert the RuSentRel collection, originally written in Russian, to the English version,
 sampled for the BERT-based models, with samples limited by `limit` parameter
@@ -48,7 +48,7 @@ sampled for the BERT-based models, with samples limited by `limit` parameter
 
 **writer**:
 * `csv` -- for AREkit/AREnets framework;
-* `jsonl` -- for [OpenNRE](https://github.com/thunlp/OpenNRE) framwork.
+* `jsonl` -- for [OpenNRE](https://github.com/thunlp/OpenNRE) framework.
 
 ## References
 
