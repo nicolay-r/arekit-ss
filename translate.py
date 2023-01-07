@@ -1,4 +1,5 @@
 import argparse
+from os.path import join
 
 from arekit.contrib.utils.data.writers.csv_pd import PandasCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
@@ -22,18 +23,18 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="Source Translator.")
 
-    parser.add_argument("--writer", type=str)
-    parser.add_argument("--source", type=str)
-    parser.add_argument("--sampler", type=str)
+    parser.add_argument("--writer", type=str, default="csv")
+    parser.add_argument("--source", type=str, default="ruattitudes")
+    parser.add_argument("--sampler", type=str, default="nn")
     parser.add_argument("--dest_lang", type=str, default="en")
-    parser.add_argument("--output_dir_template", type=str, default="_out/serialize")
-    parser.add_argument("--docs_limit", type=int, default=None)
+    parser.add_argument("--output_dir", type=str, default="_out")
+    parser.add_argument("--docs_limit", type=int, default=1)
 
     args = parser.parse_args()
 
     # Completing the output template.
-    output_dir = '-'.join([args.output_dir_template, args.sampler, args.source, args.dest_lang,
-                           str(args.docs_limit) if args.docs_limit is not None else "all"])
+    output_dir = join(args.output_dir, '-'.join([args.source, args.dest_lang,
+                                                 str(args.docs_limit) if args.docs_limit is not None else "all"]))
 
     # Setup writer.
     writer = None
