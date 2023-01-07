@@ -11,8 +11,6 @@ from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesD
 from arekit.contrib.utils.io_utils.embedding import NpEmbeddingIO
 from arekit.contrib.utils.io_utils.samples import SamplesIO
 from arekit.contrib.utils.pipelines.items.sampling.networks import NetworksInputSerializerPipelineItem
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
-from arekit.contrib.utils.processing.pos.mystem_wrap import POSMystemWrapper
 from arekit.contrib.networks.input.ctx_serialization import NetworkSerializationContext
 
 from sources.scaler import PosNegNeuRelationsLabelScaler
@@ -30,9 +28,6 @@ def serialize_nn(output_dir, writer, data_folding,
     assert(isinstance(output_dir, str))
     assert(isinstance(writer, BaseWriter))
 
-    stemmer = MystemWrapper()
-    pos_tagger = POSMystemWrapper(mystem=stemmer.MystemInstance)
-
     # Frames initialization
     frames_collection = RuSentiFramesCollection.read_collection(
         version=RuSentiFramesVersions.V20,
@@ -42,7 +37,6 @@ def serialize_nn(output_dir, writer, data_folding,
 
     ctx = NetworkSerializationContext(
         labels_scaler=labels_scaler,
-        pos_tagger=pos_tagger,
         frame_roles_label_scaler=ThreeLabelScaler(),
         frames_connotation_provider=frames_connotation_provider)
 
