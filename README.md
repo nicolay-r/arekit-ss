@@ -42,9 +42,10 @@ sampled for the BERT-based models, with samples limited by `limit` parameter
 **Supported sources**: 
 * [RuSentRel](https://paperswithcode.com/dataset/rusentrel)
 * [RuAttitudes](https://github.com/nicolay-r/RuAttitudes)
+* SentiNEREL
 
 **samplers**:
-* nn -- cnn/lstm archictecture related, including frames annotation from RuAttitudes.
+* nn -- cnn/lstm architecture related, including frames annotation from RuAttitudes.
 * bert -- BERT-based, single-input sequence.  
 
 **writer**:

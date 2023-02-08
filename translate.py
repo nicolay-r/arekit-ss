@@ -6,6 +6,7 @@ from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
 import sources.s_ruattitudes as s_ra
 import sources.s_rusentrel as s_rsr
+import sources.s_sentinerel as s_snrL
 
 
 sources = {
@@ -16,6 +17,10 @@ sources = {
     "rusentrel": {
         "nn": s_rsr.do_serialize_nn,
         "bert": s_rsr.do_serialize_bert
+    },
+    "sentinerel": {
+        "nn": s_snrL.do_serialize_nn,
+        "bert": s_snrL.do_serialize_bert
     }
 }
 
