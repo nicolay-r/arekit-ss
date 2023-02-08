@@ -2,6 +2,7 @@
 
 ![](https://img.shields.io/badge/Python-3.6-brightgreen.svg)
 ![](https://img.shields.io/badge/AREkit-0.23.0-orange.svg)
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-googletrans-sampler/blob/master/arekit_googletrans_sampler.ipynb)
 
 <p align="center">
     <img src="logo.png"/>
@@ -31,6 +32,7 @@ python -m arekit.download_data
 ```
 
 ## Usage
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-googletrans-sampler/blob/master/arekit_googletrans_sampler.ipynb)
 
 ```bash
 python3 translate.py --writer csv --source rusentrel --sampler bert \
