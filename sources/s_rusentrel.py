@@ -40,9 +40,10 @@ def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", 
 
     version = RuSentRelVersions.V11
 
-    text_parser = BaseTextParser(pipeline=[BratTextEntitiesParser(),
-                                           TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang),
-                                           DefaultTextTokenizer()])
+    text_parser = BaseTextParser(pipeline=[
+        BratTextEntitiesParser(),
+        TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang) if dest_lang != 'ru' else None,
+        DefaultTextTokenizer()])
 
     pipeline = create_text_opinion_extraction_pipeline(
         rusentrel_version=version,
@@ -82,12 +83,13 @@ def do_serialize_nn(writer, output_dir, dest_lang="en", docs_limit=None):
         overwrite_existed_variant=True,
         raise_error_on_existed_variant=False)
 
-    text_parser = BaseTextParser(pipeline=[BratTextEntitiesParser(),
-                                           DefaultTextTokenizer(keep_tokens=True),
-                                           TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang),
-                                           LemmasBasedFrameVariantsParser(
-                                               frame_variants=frame_variant_collection,
-                                               stemmer=stemmer)])
+    text_parser = BaseTextParser(pipeline=[
+        BratTextEntitiesParser(),
+        DefaultTextTokenizer(keep_tokens=True),
+        TextAndEntitiesGoogleTranslator(src="ru", dest=dest_lang) if dest_lang != 'ru' else None,
+        LemmasBasedFrameVariantsParser(
+            frame_variants=frame_variant_collection,
+            stemmer=stemmer)])
 
     version = RuSentRelVersions.V11
 
