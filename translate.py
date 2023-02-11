@@ -33,7 +33,7 @@ if __name__ == '__main__':
     parser.add_argument("--sampler", type=str, default="nn")
     parser.add_argument("--dest_lang", type=str, default="en")
     parser.add_argument("--output_dir", type=str, default="_out")
-    parser.add_argument("--docs_limit", type=int, default=1)
+    parser.add_argument("--docs_limit", type=int, default=None)
 
     args = parser.parse_args()
 
