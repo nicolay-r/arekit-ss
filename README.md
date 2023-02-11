@@ -8,6 +8,9 @@
     <img src="logo.png"/>
 </p>
 
+> **Mind the case (issue [#18](https://github.com/nicolay-r/arekit-googletrans-sampler/issues/18)):** switching to another language may changed amount of extracted data due to `terms_per_context` parameter
+that crops context with fixed amount of words.
+
 As a task, [*Sentiment Attitude Extraction*](http://nlpprogress.com/russian/sentiment-analysis.html) 
 is devoted to extraction of the sentiment connections from 
 subjects towards objects mentioned in texts, usually analytical articles.
