@@ -82,7 +82,7 @@ class TextAndEntitiesGoogleTranslator(BasePipelineItem):
                     entity.set_display_value(translated_parts[entity_part_ind])
                     translated_parts[entity_part_ind] = entity
                 break
-            except ConnectError as _:
+            except:     # ConnectError as _:
                 logger.info("Unable to perform translation. Try {} out of {}.".format(attempt_index, self.__attempts))
                 time.sleep(self.__timeout_for_connection_lost)
                 translated_parts = []
