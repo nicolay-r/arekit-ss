@@ -57,7 +57,7 @@ def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", 
                    writer=writer)
 
 
-def do_serialize_nn(writer, output_dir, dest_lang="en", docs_limit=None):
+def do_serialize_nn(writer, output_dir, terms_per_context=50, dest_lang="en", docs_limit=None):
 
     stemmer = MystemWrapper()
 
@@ -82,6 +82,7 @@ def do_serialize_nn(writer, output_dir, dest_lang="en", docs_limit=None):
     pipelines, data_folding = create_text_opinion_extraction_pipeline(
         sentinerel_version=SentiNerelVersions.V21,
         text_parser=text_parser,
+        terms_per_context=terms_per_context,
         docs_limit=docs_limit,
         doc_ops=None,
         entity_filter=CollectionEntityFilter())
