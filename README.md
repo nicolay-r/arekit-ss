@@ -1,7 +1,7 @@
-## Prompt-enriched Text Sampler 
+## Prompt-enriched Text Sampler
 
 ![](https://img.shields.io/badge/Python-3.6-brightgreen.svg)
-![](https://img.shields.io/badge/AREkit-0.23.0-orange.svg)
+![](https://img.shields.io/badge/AREkit-0.23.1-orange.svg)
 [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-googletrans-sampler/blob/master/arekit_googletrans_sampler.ipynb)
 
 <p align="center">
