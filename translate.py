@@ -34,6 +34,7 @@ if __name__ == '__main__':
     parser.add_argument("--dest_lang", type=str, default="en")
     parser.add_argument("--output_dir", type=str, default="_out")
     parser.add_argument("--docs_limit", type=int, default=None)
+    parser.add_argument("--terms_per_context", type=int, default=50)
 
     args = parser.parse_args()
 
@@ -50,4 +51,5 @@ if __name__ == '__main__':
 
     # Running handler
     handler = sources[args.source][args.sampler]
-    handler(writer=writer, dest_lang=args.dest_lang, docs_limit=args.docs_limit, output_dir=output_dir)
+    handler(writer=writer, dest_lang=args.dest_lang, docs_limit=args.docs_limit, output_dir=output_dir,
+            terms_per_context=args.terms_per_context)
