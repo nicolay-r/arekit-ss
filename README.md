@@ -1,4 +1,4 @@
-## Sentiment Attitude Extraction Resources Translation 
+## Prompt-enriched Text Sampler 
 
 ![](https://img.shields.io/badge/Python-3.6-brightgreen.svg)
 ![](https://img.shields.io/badge/AREkit-0.23.0-orange.svg)
@@ -19,8 +19,10 @@ This task has been originally proposed and becomes a part of the studies in
 dataset, in which
 texts are written in Russian.
 
-To address this limitation, this repository provides `googletrans`-based transfer for 
+To address the limitation above, this repository provides:
+1. `googletrans`-based transfer for 
 the result samples that might be composed for any other language you want!
+2. **Prompting mechanism** that allows you to enrich the input with prompts for further applications in `ChatGPT` or related chatbots.
 
 ## Installation
 
