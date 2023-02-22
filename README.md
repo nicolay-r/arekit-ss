@@ -62,3 +62,4 @@ sampled for the BERT-based models, with samples limited by `limit` parameter
 ## References
 
 * [AREkit framework](https://github.com/nicolay-r/AREkit)
+* [Prompt engeneering guide](https://github.com/dair-ai/Prompt-Engineering-Guide)
