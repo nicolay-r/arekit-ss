@@ -1,4 +1,4 @@
-## arekit-prompt-sampler 0.23.1
+## arekit-ss 0.23.1
 
 ![](https://img.shields.io/badge/Python-3.6-brightgreen.svg)
 ![](https://img.shields.io/badge/AREkit-0.23.1-orange.svg)
