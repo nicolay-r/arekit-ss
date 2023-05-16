@@ -6,6 +6,7 @@ from arekit.contrib.source.rusentiframes.labels_fmt import RuSentiFramesLabelsFo
 from arekit.contrib.source.rusentiframes.types import RuSentiFramesVersions
 from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
 from arekit.contrib.utils.connotations.rusentiframes_sentiment import RuSentiFramesConnotationProvider
+from arekit.contrib.utils.data.storages.pandas_based import PandasBasedRowsStorage
 from arekit.contrib.utils.data.writers.base import BaseWriter
 from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesDisplayValueFormatter
 from arekit.contrib.utils.io_utils.embedding import NpEmbeddingIO
@@ -42,6 +43,7 @@ def serialize_nn(output_dir, writer, data_folding,
 
     pipeline_item = NetworksInputSerializerPipelineItem(
         vectorizers=None,
+        storage=PandasBasedRowsStorage(),
         samples_io=SamplesIO(target_dir=output_dir, writer=writer),
         emb_io=NpEmbeddingIO(target_dir=output_dir),
         str_entity_fmt=entities_fmt,
