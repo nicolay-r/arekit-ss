@@ -1,5 +1,3 @@
-from arekit.common.entities.base import Entity
-from arekit.common.entities.types import OpinionEntityType
 from arekit.common.experiment.data_type import DataType
 from arekit.common.frames.variants.collection import FrameVariantsCollection
 from arekit.common.text.parser import BaseTextParser
@@ -12,7 +10,6 @@ from arekit.contrib.source.rusentiframes.labels_fmt import RuSentiFramesEffectLa
 from arekit.contrib.source.rusentiframes.types import RuSentiFramesVersions
 from arekit.contrib.source.sentinerel.io_utils import SentiNerelVersions
 from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
-from arekit.contrib.utils.entities.filter import EntityFilter
 from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesDisplayValueFormatter
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
@@ -22,7 +19,6 @@ from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
 from framework.arekit.serialize_bert import serialize_bert
 from framework.arekit.serialize_nn import serialize_nn
-from sources.helper import EntityHelper
 from sources.scaler import PosNegNeuRelationsLabelScaler
 
 from translator import TextAndEntitiesGoogleTranslator
@@ -47,8 +43,7 @@ def do_serialize_bert(writer, output_dir, terms_per_context=50, dest_lang="en", 
         sentinerel_version=SentiNerelVersions.V21,
         docs_limit=docs_limit,
         doc_ops=None,
-        text_parser=text_parser,
-        entity_filter=CollectionEntityFilter())
+        text_parser=text_parser)
 
     serialize_bert(output_dir=output_dir,
                    data_type_pipelines={DataType.Train: pipelines[DataType.Train]},
@@ -84,30 +79,9 @@ def do_serialize_nn(writer, output_dir, terms_per_context=50, dest_lang="en", do
         text_parser=text_parser,
         terms_per_context=terms_per_context,
         docs_limit=docs_limit,
-        doc_ops=None,
-        entity_filter=CollectionEntityFilter())
+        doc_ops=None)
 
     serialize_nn(output_dir=output_dir,
                  data_type_pipelines={DataType.Train: pipelines[DataType.Train]},
                  data_folding=data_folding,
                  writer=writer)
-
-
-class CollectionEntityFilter(EntityFilter):
-
-    def is_ignored(self, entity, e_type):
-        """ субъектом всегда может быть только:
-                [PERSON, ORGANIZATION, COUNTRY, PROFESSION]
-            — объектом могут быть видимо все типы.
-        """
-        assert(isinstance(entity, Entity))
-        assert(isinstance(e_type, OpinionEntityType))
-
-        supported = [EntityHelper.PERSON, EntityHelper.ORGANIZATION, EntityHelper.COUNTRY, EntityHelper.PROFESSION]
-
-        if e_type == OpinionEntityType.Subject:
-            return entity.Type not in supported
-        if e_type == OpinionEntityType.Object:
-            return entity.Type not in supported
-        else:
-            return True
