@@ -55,7 +55,7 @@ def do_serialize_nn(writer, output_dir, dest_lang="en", docs_limit=None):
     stemmer = MystemWrapper()
 
     # Adopt frames annotation.
-    frames_collection = RuSentiFramesCollection.read_collection(
+    frames_collection = RuSentiFramesCollection.read(
         version=RuSentiFramesVersions.V20,
         labels_fmt=RuSentiFramesLabelsFormatter(pos_label_type=PositiveTo, neg_label_type=NegativeTo),
         effect_labels_fmt=RuSentiFramesEffectLabelsFormatter(pos_label_type=PositiveTo, neg_label_type=NegativeTo))
