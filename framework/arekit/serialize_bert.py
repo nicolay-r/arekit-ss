@@ -7,11 +7,11 @@ from arekit.contrib.utils.io_utils.samples import SamplesIO
 from arekit.contrib.utils.pipelines.items.sampling.bert import BertExperimentInputSerializerPipelineItem
 
 
-def serialize_bert(writer, sample_row_provider, output_dir, data_folding, data_type_pipelines):
+def serialize_bert_pipeline(writer, sample_row_provider, output_dir):
     assert(isinstance(sample_row_provider, BaseSampleRowProvider))
     assert(isinstance(output_dir, str))
 
-    pipeline = BasePipeline([
+    return BasePipeline([
         BertExperimentInputSerializerPipelineItem(
             storage=RowCacheStorage(),
             balance_func=lambda _: False,
@@ -19,9 +19,3 @@ def serialize_bert(writer, sample_row_provider, output_dir, data_folding, data_t
             save_labels_func=lambda data_type: data_type != DataType.Test,
             sample_rows_provider=sample_row_provider)
     ])
-
-    pipeline.run(input_data=None,
-                 params_dict={
-                     "data_folding": data_folding,
-                     "data_type_pipelines": data_type_pipelines
-                 })

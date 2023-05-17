@@ -7,22 +7,27 @@ from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 import sources.s_ruattitudes as s_ra
 import sources.s_rusentrel as s_rsr
 import sources.s_sentinerel as s_snrL
+from framework.arekit.bert_sampler import create_bert_sampler
+from framework.arekit.serialize_bert import serialize_bert_pipeline
+from framework.arekit.serialize_nn import serialize_nn_pipeline
+from sources.config import SourcesConfig
 
 
-sources = {
+data_provider_pipelines = {
     "ruattitudes": {
-        "nn": s_ra.do_serialize_nn,
-        "bert": s_ra.do_serialize_bert
+        "nn": s_ra.build_datapipeline_nn,
+        "bert": s_ra.build_datapipeline_bert
     },
     "rusentrel": {
-        "nn": s_rsr.do_serialize_nn,
-        "bert": s_rsr.do_serialize_bert
+        "nn": s_rsr.build_datapipeline_nn,
+        "bert": s_rsr.build_datapipeline_bert
     },
     "sentinerel": {
-        "nn": s_snrL.do_serialize_nn,
-        "bert": s_snrL.do_serialize_bert
+        "nn": s_snrL.build_datapipeline_nn,
+        "bert": s_snrL.build_datapipeline_bert
     }
 }
+
 
 if __name__ == '__main__':
 
@@ -46,10 +51,34 @@ if __name__ == '__main__':
     writer = None
     if args.writer == "csv":
         writer = NativeCsvWriter()
-    elif args.writer == "jsonl":
+    elif args.writer in ['jsonl', 'json']:
         writer = OpenNREJsonWriter(text_columns=["text_a", "text_b"])
+    else:
+        raise Exception("writer `{}` is not supported!".format(args.writer))
 
-    # Running handler
-    handler = sources[args.source][args.sampler]
-    handler(writer=writer, dest_lang=args.dest_lang, docs_limit=args.docs_limit, output_dir=output_dir,
-            terms_per_context=args.terms_per_context)
+    # Initialize config.
+    cfg = SourcesConfig()
+    cfg.terms_per_context = args.terms_per_context
+    cfg.dest_lang = args.dest_lang
+    cfg.docs_limit = args.docs_limit
+
+    # Extract data to be serialized in a form of the pipeline.
+    dpp = data_provider_pipelines[args.source][args.sampler]
+    data_folding, data_type_pipelines = dpp(cfg)
+
+    # Prepare serializer and pass data_type_pipelines.
+    pipeline = None
+    if args.sampler == "nn":
+        pipeline = serialize_nn_pipeline(output_dir=args.output_dir, writer=writer)
+    elif args.sampler == "bert":
+        pipeline = serialize_bert_pipeline(output_dir=args.output_dir, writer=writer,
+                                           sample_row_provider=create_bert_sampler(args.terms_per_context))
+    else:
+        raise Exception("sampler `{}` is not supported!".format(args.sampler))
+
+    # Launch pipeline.
+    pipeline.run(input_data=None,
+                 params_dict={
+                     "data_folding": data_folding,
+                     "data_type_pipelines": data_type_pipelines
+                 })
