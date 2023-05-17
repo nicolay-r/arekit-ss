@@ -1,7 +1,7 @@
 import argparse
 from os.path import join
 
-from arekit.contrib.utils.data.writers.csv_pd import PandasCsvWriter
+from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
 import sources.s_ruattitudes as s_ra
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     # Setup writer.
     writer = None
     if args.writer == "csv":
-        writer = PandasCsvWriter(write_header=True)
+        writer = NativeCsvWriter()
     elif args.writer == "jsonl":
         writer = OpenNREJsonWriter(text_columns=["text_a", "text_b"])
 
