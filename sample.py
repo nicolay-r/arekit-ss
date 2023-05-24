@@ -10,6 +10,7 @@ import sources.s_rusentrel as s_rsr
 import sources.s_sentinerel as s_snr
 from framework.arekit.rows_bert import create_bert_rows_provider
 from framework.arekit.rows_nn import create_nn_rows_provider
+from framework.arekit.rows_prompt import create_prompt_rows_provider
 from framework.arekit.serialize_bert import serialize_bert_pipeline
 from framework.arekit.serialize_nn import serialize_nn_pipeline
 from sources.config import SourcesConfig
@@ -18,15 +19,18 @@ from sources.scaler import PosNegNeuRelationsLabelScaler
 data_provider_pipelines = {
     "ruattitudes": {
         "nn": s_ra.build_datapipeline_nn,
-        "bert": s_ra.build_datapipeline_bert
+        "bert": s_ra.build_datapipeline_bert,
+        "prompt": s_ra.build_datapipeline_bert
     },
     "rusentrel": {
         "nn": s_rsr.build_datapipeline_nn,
-        "bert": s_rsr.build_datapipeline_bert
+        "bert": s_rsr.build_datapipeline_bert,
+        "prompt": s_rsr.build_datapipeline_bert
     },
     "sentinerel": {
         "nn": s_snr.build_datapipeline_nn,
-        "bert": s_snr.build_datapipeline_bert
+        "bert": s_snr.build_datapipeline_bert,
+        "prompt": s_snr.build_datapipeline_bert
     }
 }
 
@@ -40,6 +44,7 @@ if __name__ == '__main__':
     parser.add_argument("--sampler", type=str, default="nn")
     parser.add_argument("--dest_lang", type=str, default="en")
     parser.add_argument("--output_dir", type=str, default="_out")
+    parser.add_argument("--prompt", type=str, default="{text},`{s_ind}`,`{t_ind}`, `{label}`")
     parser.add_argument("--docs_limit", type=int, default=None)
     parser.add_argument("--terms_per_context", type=int, default=50)
 
@@ -79,9 +84,15 @@ if __name__ == '__main__':
     elif "bert" == args.sampler:
         pipeline_item = serialize_bert_pipeline(
             output_dir=args.output_dir, writer=writer,
-            sample_row_provider=create_bert_rows_provider(
+            rows_provider=create_bert_rows_provider(
                 terms_per_context=args.terms_per_context,
                 labels_scaler=labels_scaler))
+    elif "prompt" == args.sampler:
+        # same as for BERT.
+        pipeline_item = serialize_bert_pipeline(
+            output_dir=args.output_dir, writer=writer,
+            rows_provider=create_prompt_rows_provider(
+                prompt=args.prompt, labels_scaler=labels_scaler))
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])

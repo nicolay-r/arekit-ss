@@ -39,8 +39,9 @@ In this example, we convert the RuSentRel collection, originally written in Russ
 sampled for the BERT-based models, with samples limited by `limit` parameter
 
 **samplers**:
-* nn -- cnn/lstm architecture related, including frames annotation from RuAttitudes.
-* bert -- BERT-based, single-input sequence.  
+* `nn` -- cnn/lstm architecture related, including frames annotation from RuAttitudes.
+* `bert` -- BERT-based, single-input sequence.  
+* `prompt` -- prompt-based sampler for ChatGPT and the related conversational systems.
 
 **writer**:
 * `csv` -- for AREkit/AREnets framework;
