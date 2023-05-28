@@ -23,9 +23,10 @@ from sources.scaler import PosNegNeuRelationsLabelScaler
 def build_datapipeline_bert(cfg):
     assert(isinstance(cfg, SourcesConfig))
 
-    text_parser = BaseTextParser(pipeline=[RuAttitudesTextEntitiesParser(),
-                                           TextAndEntitiesGoogleTranslator(src="ru", dest=cfg.dest_lang),
-                                           DefaultTextTokenizer()])
+    text_parser = BaseTextParser(pipeline=[
+        RuAttitudesTextEntitiesParser(),
+        TextAndEntitiesGoogleTranslator(src="ru", dest=cfg.dest_lang) if cfg.dest_lang != 'ru' else None,
+        DefaultTextTokenizer()])
 
     version = RuAttitudesVersions.V20Large
 
@@ -62,12 +63,13 @@ def build_datapipeline_nn(cfg):
         overwrite_existed_variant=True,
         raise_error_on_existed_variant=False)
 
-    text_parser = BaseTextParser(pipeline=[RuAttitudesTextEntitiesParser(),
-                                           DefaultTextTokenizer(keep_tokens=True),
-                                           TextAndEntitiesGoogleTranslator(src="ru", dest=cfg.dest_lang),
-                                           LemmasBasedFrameVariantsParser(
-                                               frame_variants=frame_variant_collection,
-                                               stemmer=stemmer)])
+    text_parser = BaseTextParser(pipeline=[
+        RuAttitudesTextEntitiesParser(),
+        DefaultTextTokenizer(keep_tokens=True),
+        TextAndEntitiesGoogleTranslator(src="ru", dest=cfg.dest_lang) if cfg.dest_lang != 'ru' else None,
+            LemmasBasedFrameVariantsParser(
+                frame_variants=frame_variant_collection,
+                stemmer=stemmer)])
 
     version = RuAttitudesVersions.V20Large
 
