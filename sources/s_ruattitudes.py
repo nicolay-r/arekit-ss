@@ -4,12 +4,14 @@ from arekit.common.frames.variants.collection import FrameVariantsCollection
 from arekit.common.text.parser import BaseTextParser
 
 from arekit.contrib.source.ruattitudes.entity.parser import RuAttitudesTextEntitiesParser
+from arekit.contrib.source.ruattitudes.io_utils import RuAttitudesVersions
 from arekit.contrib.source.rusentiframes.collection import RuSentiFramesCollection
 from arekit.contrib.source.rusentiframes.labels_fmt import RuSentiFramesEffectLabelsFormatter, RuSentiFramesLabelsFormatter
 from arekit.contrib.source.rusentiframes.types import RuSentiFramesVersions
 from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
+from arekit.contrib.utils.pipelines.sources.ruattitudes.doc_ops import RuAttitudesDocumentOperations
 from arekit.contrib.utils.pipelines.sources.ruattitudes.extract_text_opinions import create_text_opinion_extraction_pipeline
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
@@ -25,10 +27,21 @@ def build_datapipeline_bert(cfg):
                                            TextAndEntitiesGoogleTranslator(src="ru", dest=cfg.dest_lang),
                                            DefaultTextTokenizer()])
 
-    pipeline, ru_attitudes = create_text_opinion_extraction_pipeline(
-        text_parser=text_parser, label_scaler=PosNegNeuRelationsLabelScaler(), limit=cfg.docs_limit)
+    version = RuAttitudesVersions.V20Large
 
-    data_folding = NoFolding(doc_ids=ru_attitudes.keys(), supported_data_type=DataType.Train)
+    pipeline = create_text_opinion_extraction_pipeline(
+        version=version,
+        text_parser=text_parser,
+        label_scaler=PosNegNeuRelationsLabelScaler(),
+        limit=cfg.docs_limit)
+
+    d = RuAttitudesDocumentOperations.read_ruattitudes_to_brat_in_memory(
+        version=version,
+        keep_doc_ids_only=True,
+        doc_id_func=lambda doc_id: doc_id,
+        limit=cfg.docs_limit)
+
+    data_folding = NoFolding(doc_ids=d.keys(), supported_data_type=DataType.Train)
 
     return data_folding, {DataType.Train: pipeline}
 
@@ -56,10 +69,21 @@ def build_datapipeline_nn(cfg):
                                                frame_variants=frame_variant_collection,
                                                stemmer=stemmer)])
 
-    pipeline, ru_attitudes = create_text_opinion_extraction_pipeline(
-        text_parser=text_parser, label_scaler=PosNegNeuRelationsLabelScaler(), limit=cfg.docs_limit)
+    version = RuAttitudesVersions.V20Large
 
-    data_folding = NoFolding(doc_ids=ru_attitudes.keys(),
+    pipeline = create_text_opinion_extraction_pipeline(
+        version=version,
+        text_parser=text_parser,
+        label_scaler=PosNegNeuRelationsLabelScaler(),
+        limit=cfg.docs_limit)
+
+    d = RuAttitudesDocumentOperations.read_ruattitudes_to_brat_in_memory(
+        version=version,
+        keep_doc_ids_only=True,
+        doc_id_func=lambda doc_id: doc_id,
+        limit=cfg.docs_limit)
+
+    data_folding = NoFolding(doc_ids=d.keys(),
                              supported_data_type=DataType.Train)
 
     return data_folding, {DataType.Train: pipeline}
