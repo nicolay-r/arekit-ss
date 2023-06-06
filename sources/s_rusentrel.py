@@ -11,7 +11,6 @@ from arekit.contrib.source.rusentiframes.labels_fmt import RuSentiFramesLabelsFo
 from arekit.contrib.source.rusentiframes.types import RuSentiFramesVersions
 from arekit.contrib.source.rusentrel.io_utils import RuSentRelVersions, RuSentRelIOUtils
 from arekit.contrib.source.rusentrel.labels_fmt import RuSentRelLabelsFormatter
-from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.sources.rusentrel.extract_text_opinions import \
@@ -19,6 +18,7 @@ from arekit.contrib.utils.pipelines.sources.rusentrel.extract_text_opinions impo
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
 from sources.config import SourcesConfig
+from sources.labels.sentiment import PositiveTo, NegativeTo
 from sources.processing.translator import TextAndEntitiesGoogleTranslator
 
 

@@ -8,10 +8,11 @@ from framework.arekit.rows_bert import create_bert_rows_provider
 from framework.arekit.rows_nn import create_nn_rows_provider
 from framework.arekit.serialize_bert import serialize_bert_pipeline
 from framework.arekit.serialize_nn import serialize_nn_pipeline
+
 from sources.config import SourcesConfig
+from sources.labels.scaler import PosNegNeuRelationsLabelScaler
 from sources.s_rusentrel import build_datapipeline_bert
 from sources.s_sentinerel import build_datapipeline_nn
-from sources.scaler import PosNegNeuRelationsLabelScaler
 
 
 class TestRuSentRel(unittest.TestCase):

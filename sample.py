@@ -14,7 +14,7 @@ from framework.arekit.rows_prompt import create_prompt_rows_provider
 from framework.arekit.serialize_bert import serialize_bert_pipeline
 from framework.arekit.serialize_nn import serialize_nn_pipeline
 from sources.config import SourcesConfig
-from sources.scaler import PosNegNeuRelationsLabelScaler
+from sources.labels.scaler import PosNegNeuRelationsLabelScaler
 
 data_provider_pipelines = {
     "ruattitudes": {

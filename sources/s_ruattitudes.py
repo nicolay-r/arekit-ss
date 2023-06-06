@@ -8,7 +8,6 @@ from arekit.contrib.source.ruattitudes.io_utils import RuAttitudesVersions
 from arekit.contrib.source.rusentiframes.collection import RuSentiFramesCollection
 from arekit.contrib.source.rusentiframes.labels_fmt import RuSentiFramesEffectLabelsFormatter, RuSentiFramesLabelsFormatter
 from arekit.contrib.source.rusentiframes.types import RuSentiFramesVersions
-from arekit.contrib.source.sentinerel.labels import PositiveTo, NegativeTo
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.sources.ruattitudes.doc_ops import RuAttitudesDocumentOperations
@@ -16,8 +15,9 @@ from arekit.contrib.utils.pipelines.sources.ruattitudes.extract_text_opinions im
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
 from sources.config import SourcesConfig
+from sources.labels.scaler import PosNegNeuRelationsLabelScaler
+from sources.labels.sentiment import PositiveTo, NegativeTo
 from sources.processing.translator import TextAndEntitiesGoogleTranslator
-from sources.scaler import PosNegNeuRelationsLabelScaler
 
 
 def build_datapipeline_bert(cfg):
