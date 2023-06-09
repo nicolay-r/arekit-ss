@@ -1,11 +1,13 @@
 import logging
 import unittest
 
+from arekit.common.data.input.providers.const import IDLE_MODE
 from arekit.common.entities.base import Entity
 from arekit.common.context.token import Token
 from arekit.common.news.sentence import BaseNewsSentence
 from arekit.common.news.base import News
 from arekit.common.news.parser import NewsParser
+from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.items.text.entities_default import TextEntitiesParser
 from arekit.common.text.parser import BaseTextParser
@@ -30,7 +32,8 @@ class TestTestParser(unittest.TestCase):
         ])
 
         news = News(doc_id=0, sentences=[BaseNewsSentence(text.split())])
-        parsed_news = NewsParser.parse(news=news, text_parser=text_parser)
+        parsed_news = NewsParser.parse(news=news, text_parser=text_parser,
+                                       parent_ppl_ctx=PipelineContext({IDLE_MODE: False}))
         self.debug_show_terms(parsed_news.iter_terms())
 
     @staticmethod
