@@ -1,6 +1,7 @@
 import unittest
 
 from arekit.common.pipeline.base import BasePipeline
+from arekit.contrib.source.ruattitudes.entity.parser import RuAttitudesTextEntitiesParser
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
 from arekit_ss.framework.arekit.rows_bert import create_bert_rows_provider
@@ -10,7 +11,9 @@ from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
 
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
-from arekit_ss.sources.s_rusentrel import build_datapipeline_bert, build_datapipeline_nn
+from arekit_ss.sources.s_ruattitudes import build_ruattitudes_datapipeline
+from arekit_ss.text_parser.text_lm import create_lm
+from arekit_ss.text_parser.text_nn_frames import create_nn_frames
 
 
 class TestRuAttitudes(unittest.TestCase):
@@ -24,7 +27,10 @@ class TestRuAttitudes(unittest.TestCase):
         return cfg
 
     def test_serialize_bert_opennre(self):
-        data_folding, pipelines = build_datapipeline_bert(self.__config())
+        cfg = self.__config()
+        cfg.entities_parser = RuAttitudesTextEntitiesParser()
+        cfg.text_parser = create_lm(cfg)
+        data_folding, pipelines = build_ruattitudes_datapipeline(cfg)
         item = serialize_bert_pipeline(output_dir="_out/ra-bert",
                                        writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                        rows_provider=create_bert_rows_provider(
@@ -38,7 +44,10 @@ class TestRuAttitudes(unittest.TestCase):
                   })
 
     def test_serialize_nn_csv(self):
-        data_folding, pipelines = build_datapipeline_nn(self.__config())
+        cfg = self.__config()
+        cfg.entities_parser = RuAttitudesTextEntitiesParser()
+        cfg.text_parser = create_nn_frames(cfg)
+        data_folding, pipelines = build_ruattitudes_datapipeline(cfg)
         item = serialize_nn_pipeline(output_dir="_out/ra-nn",
                                      writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                      rows_provider=create_nn_rows_provider(
@@ -51,7 +60,10 @@ class TestRuAttitudes(unittest.TestCase):
                   })
 
     def test_serialize_nn_opennre(self):
-        data_folding, pipelines = build_datapipeline_nn(self.__config())
+        cfg = self.__config()
+        cfg.entities_parser = RuAttitudesTextEntitiesParser()
+        cfg.text_parser = create_nn_frames(cfg)
+        data_folding, pipelines = build_ruattitudes_datapipeline(cfg)
         item = serialize_nn_pipeline(writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                      output_dir="_out/ra-nn",
                                      rows_provider=create_nn_rows_provider(

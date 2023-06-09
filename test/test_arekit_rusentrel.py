@@ -1,6 +1,7 @@
 import unittest
 
 from arekit.common.pipeline.base import BasePipeline
+from arekit.contrib.source.brat.entities.parser import BratTextEntitiesParser
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
@@ -11,8 +12,9 @@ from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
 
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
-from arekit_ss.sources.s_rusentrel import build_datapipeline_bert
-from arekit_ss.sources.s_sentinerel import build_datapipeline_nn
+from arekit_ss.sources.s_rusentrel import build_s_rusentrel_datapipeline
+from arekit_ss.text_parser.text_lm import create_lm
+from arekit_ss.text_parser.text_nn_frames import create_nn_frames
 
 
 class TestRuSentRel(unittest.TestCase):
@@ -24,7 +26,10 @@ class TestRuSentRel(unittest.TestCase):
         return cfg
 
     def test_serialize_bert_opennre(self):
-        data_folding, pipelines = build_datapipeline_bert(self.__config())
+        cfg = self.__config()
+        cfg.entities_parser = BratTextEntitiesParser()
+        cfg.text_parser = create_lm(cfg)
+        data_folding, pipelines = build_s_rusentrel_datapipeline(cfg)
         item = serialize_bert_pipeline(output_dir="_out/rsr_bert",
                                        writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                        rows_provider=create_bert_rows_provider(
@@ -38,7 +43,10 @@ class TestRuSentRel(unittest.TestCase):
                      })
 
     def test_serialize_nn_csv(self):
-        data_folding, pipelines = build_datapipeline_nn(self.__config())
+        cfg = self.__config()
+        cfg.entities_parser = BratTextEntitiesParser()
+        cfg.text_parser = create_nn_frames(cfg)
+        data_folding, pipelines = build_s_rusentrel_datapipeline(cfg)
         item = serialize_nn_pipeline(output_dir="_out/rsr_nn",
                                      writer=NativeCsvWriter(),
                                      rows_provider=create_nn_rows_provider(
@@ -51,7 +59,9 @@ class TestRuSentRel(unittest.TestCase):
                   })
 
     def test_serialize_nn_opennre(self):
-        data_folding, pipelines = build_datapipeline_nn(self.__config())
+        cfg = self.__config()
+        cfg.text_parser = create_nn_frames(cfg)
+        data_folding, pipelines = build_s_rusentrel_datapipeline(cfg)
         item = serialize_nn_pipeline(writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                      output_dir="_out/rsr-nn",
                                      rows_provider=create_nn_rows_provider(

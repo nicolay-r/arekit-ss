@@ -33,7 +33,7 @@ python -m arekit.download_data
 
 ```bash
 python3 -m arekit_ss.sample --writer csv --source rusentrel --sampler bert \
-                            --dest_lang en --docs_limit 1 --output_dir 'out'
+                            --dest_lang en --docs_limit 1 --output_dir 'out' --text_parser lm 
 ```
 In this example, we convert the RuSentRel collection, originally written in Russian, to the English version,
 sampled for the BERT-based models, with samples limited by `limit` parameter

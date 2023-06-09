@@ -10,7 +10,7 @@ from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextToken
 from arekit.contrib.utils.pipelines.items.text.entities_default import TextEntitiesParser
 from arekit.common.text.parser import BaseTextParser
 
-from arekit_ss.sources.processing.translator import TextAndEntitiesGoogleTranslator
+from arekit_ss.text_parser.translator import TextAndEntitiesGoogleTranslator
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

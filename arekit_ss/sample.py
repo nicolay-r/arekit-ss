@@ -2,6 +2,8 @@ import argparse
 from os.path import join
 
 from arekit.common.pipeline.base import BasePipeline
+from arekit.contrib.source.brat.entities.parser import BratTextEntitiesParser
+from arekit.contrib.source.ruattitudes.entity.parser import RuAttitudesTextEntitiesParser
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
@@ -12,26 +14,28 @@ from arekit_ss.framework.arekit.serialize_bert import serialize_bert_pipeline
 from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
+from arekit_ss.text_parser.text_lm import create_lm
+from arekit_ss.text_parser.text_nn_frames import create_nn_frames
+
 import arekit_ss.sources.s_ruattitudes as s_ra
 import arekit_ss.sources.s_rusentrel as s_rsr
 import arekit_ss.sources.s_sentinerel as s_snr
 
+text_parsing_pipelines = {
+   "nn-frames": create_nn_frames,
+   "lm": create_lm
+}
+
+entity_parsers = {
+    "ruattitudes": RuAttitudesTextEntitiesParser(),
+    "rusentrel": BratTextEntitiesParser(),
+    "sentinerel": BratTextEntitiesParser(),
+}
+
 data_provider_pipelines = {
-    "ruattitudes": {
-        "nn": s_ra.build_datapipeline_nn,
-        "bert": s_ra.build_datapipeline_bert,
-        "prompt": s_ra.build_datapipeline_bert
-    },
-    "rusentrel": {
-        "nn": s_rsr.build_datapipeline_nn,
-        "bert": s_rsr.build_datapipeline_bert,
-        "prompt": s_rsr.build_datapipeline_bert
-    },
-    "sentinerel": {
-        "nn": s_snr.build_datapipeline_nn,
-        "bert": s_snr.build_datapipeline_bert,
-        "prompt": s_snr.build_datapipeline_bert
-    }
+    "ruattitudes": s_ra.build_ruattitudes_datapipeline,
+    "rusentrel": s_rsr.build_s_rusentrel_datapipeline,
+    "sentinerel": s_snr.build_sentinerel_datapipeline,
 }
 
 
@@ -45,6 +49,7 @@ if __name__ == '__main__':
     parser.add_argument("--dest_lang", type=str, default="en")
     parser.add_argument("--output_dir", type=str, default="_out")
     parser.add_argument("--prompt", type=str, default="{text},`{s_ind}`,`{t_ind}`, `{label}`")
+    parser.add_argument("--text_parser", type=str, default="nn")
     parser.add_argument("--docs_limit", type=int, default=None)
     parser.add_argument("--terms_per_context", type=int, default=50)
 
@@ -68,9 +73,11 @@ if __name__ == '__main__':
     cfg.terms_per_context = args.terms_per_context
     cfg.dest_lang = args.dest_lang
     cfg.docs_limit = args.docs_limit
+    cfg.entities_parser = entity_parsers[args.source]
+    cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
 
     # Extract data to be serialized in a form of the pipeline.
-    dpp = data_provider_pipelines[args.source][args.sampler]
+    dpp = data_provider_pipelines[args.source]
     data_folding, data_type_pipelines = dpp(cfg)
 
     labels_scaler = PosNegNeuRelationsLabelScaler()

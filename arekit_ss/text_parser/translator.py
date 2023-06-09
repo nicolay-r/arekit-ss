@@ -1,9 +1,9 @@
 import logging
 import time
+from googletrans import Translator
 
 from arekit.common.data.input.providers.const import IDLE_MODE
 from arekit.common.pipeline.conts import PARENT_CTX
-from googletrans import Translator
 
 from arekit.common.entities.base import Entity
 from arekit.common.pipeline.context import PipelineContext
