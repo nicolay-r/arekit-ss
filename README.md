@@ -1,6 +1,6 @@
 ## arekit-ss 0.23.1
 
-![](https://img.shields.io/badge/Python-3.6-brightgreen.svg)
+![](https://img.shields.io/badge/Python-3.9-brightgreen.svg)
 ![](https://img.shields.io/badge/AREkit-0.23.1-orange.svg)
 [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-googletrans-sampler/blob/master/arekit_googletrans_sampler.ipynb)
 
@@ -33,7 +33,7 @@ python -m arekit.download_data
 
 ```bash
 python3 -m arekit_ss.sample --writer csv --source rusentrel --sampler bert \
-                            --dest_lang en --docs_limit 1 --output_dir 'out' --text_parser lm 
+                            --dest_lang en --docs_limit 1 --text_parser lm --output_dir 'out' 
 ```
 In this example, we convert the RuSentRel collection, originally written in Russian, to the English version,
 sampled for the BERT-based models, with samples limited by `limit` parameter
