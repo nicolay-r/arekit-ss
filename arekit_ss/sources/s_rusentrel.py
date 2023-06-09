@@ -17,9 +17,9 @@ from arekit.contrib.utils.pipelines.sources.rusentrel.extract_text_opinions impo
     create_text_opinion_extraction_pipeline
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
-from sources.config import SourcesConfig
-from sources.labels.sentiment import PositiveTo, NegativeTo
-from sources.processing.translator import TextAndEntitiesGoogleTranslator
+from arekit_ss.sources.config import SourcesConfig
+from arekit_ss.sources.labels.sentiment import PositiveTo, NegativeTo
+from arekit_ss.sources.processing.translator import TextAndEntitiesGoogleTranslator
 
 
 def __iter_doc_ids(version, docs_limit):

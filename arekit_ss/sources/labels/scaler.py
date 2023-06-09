@@ -3,7 +3,7 @@ from collections import OrderedDict
 from arekit.common.labels.base import NoLabel
 from arekit.common.labels.scaler.base import BaseLabelScaler
 
-from sources.labels.sentiment import NegativeTo, PositiveTo
+from arekit_ss.sources.labels.sentiment import NegativeTo, PositiveTo
 
 
 class PosNegNeuRelationsLabelScaler(BaseLabelScaler):

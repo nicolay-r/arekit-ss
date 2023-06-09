@@ -20,11 +20,11 @@ project.
 
 Install dependencies:
 ```bash
-pip install -r dependencies.txt
+pip install git+https://github.com/nicolay-r/arekit_ss.git@master
 ```
 
 Download AREkit related data, from which `sources` are required:
-```python
+```bash
 python -m arekit.download_data
 ```
 
@@ -32,8 +32,8 @@ python -m arekit.download_data
 [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-googletrans-sampler/blob/master/arekit_googletrans_sampler.ipynb)
 
 ```bash
-python3 sample.py --writer csv --source rusentrel --sampler bert \
-                  --dest_lang en --docs_limit 1 --output_dir 'out'
+python3 -m arekit_ss.sample --writer csv --source rusentrel --sampler bert \
+                            --dest_lang en --docs_limit 1 --output_dir 'out'
 ```
 In this example, we convert the RuSentRel collection, originally written in Russian, to the English version,
 sampled for the BERT-based models, with samples limited by `limit` parameter

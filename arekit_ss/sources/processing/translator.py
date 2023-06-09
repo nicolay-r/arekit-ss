@@ -8,7 +8,6 @@ from googletrans import Translator
 from arekit.common.entities.base import Entity
 from arekit.common.pipeline.context import PipelineContext
 from arekit.common.pipeline.items.base import BasePipelineItem
-from httpcore import ConnectError
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -82,7 +81,7 @@ class TextAndEntitiesGoogleTranslator(BasePipelineItem):
                     entity.set_display_value(translated_parts[entity_part_ind])
                     translated_parts[entity_part_ind] = entity
                 break
-            except:     # ConnectError as _:
+            except:
                 logger.info("Unable to perform translation. Try {} out of {}.".format(attempt_index, self.__attempts))
                 time.sleep(self.__timeout_for_connection_lost)
                 translated_parts = []

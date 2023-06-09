@@ -7,8 +7,8 @@ from arekit.contrib.utils.connotations.rusentiframes_sentiment import RuSentiFra
 from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesDisplayValueFormatter
 from arekit.contrib.utils.nn.rows import create_rows_provider
 
-from sources.labels.scaler_frames import ThreeLabelScaler
-from sources.labels.sentiment import NegativeTo, PositiveTo
+from arekit_ss.sources.labels.scaler_frames import ThreeLabelScaler
+from arekit_ss.sources.labels.sentiment import NegativeTo, PositiveTo
 
 
 def create_nn_rows_provider(labels_scaler):

@@ -14,10 +14,10 @@ from arekit.contrib.utils.pipelines.sources.ruattitudes.doc_ops import RuAttitud
 from arekit.contrib.utils.pipelines.sources.ruattitudes.extract_text_opinions import create_text_opinion_extraction_pipeline
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
-from sources.config import SourcesConfig
-from sources.labels.scaler import PosNegNeuRelationsLabelScaler
-from sources.labels.sentiment import PositiveTo, NegativeTo
-from sources.processing.translator import TextAndEntitiesGoogleTranslator
+from arekit_ss.sources.config import SourcesConfig
+from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
+from arekit_ss.sources.labels.sentiment import PositiveTo, NegativeTo
+from arekit_ss.sources.processing.translator import TextAndEntitiesGoogleTranslator
 
 
 def build_datapipeline_bert(cfg):

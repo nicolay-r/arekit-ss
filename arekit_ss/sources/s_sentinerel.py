@@ -14,8 +14,8 @@ from arekit.contrib.utils.pipelines.sources.sentinerel.extract_text_opinions imp
     create_text_opinion_extraction_pipeline
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
-from sources.config import SourcesConfig
-from sources.processing.translator import TextAndEntitiesGoogleTranslator
+from arekit_ss.sources.config import SourcesConfig
+from arekit_ss.sources.processing.translator import TextAndEntitiesGoogleTranslator
 
 
 def build_datapipeline_bert(cfg):

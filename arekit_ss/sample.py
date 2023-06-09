@@ -5,16 +5,16 @@ from arekit.common.pipeline.base import BasePipeline
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
-import sources.s_ruattitudes as s_ra
-import sources.s_rusentrel as s_rsr
-import sources.s_sentinerel as s_snr
-from framework.arekit.rows_bert import create_bert_rows_provider
-from framework.arekit.rows_nn import create_nn_rows_provider
-from framework.arekit.rows_prompt import create_prompt_rows_provider
-from framework.arekit.serialize_bert import serialize_bert_pipeline
-from framework.arekit.serialize_nn import serialize_nn_pipeline
-from sources.config import SourcesConfig
-from sources.labels.scaler import PosNegNeuRelationsLabelScaler
+from arekit_ss.framework.arekit.rows_bert import create_bert_rows_provider
+from arekit_ss.framework.arekit.rows_nn import create_nn_rows_provider
+from arekit_ss.framework.arekit.rows_prompt import create_prompt_rows_provider
+from arekit_ss.framework.arekit.serialize_bert import serialize_bert_pipeline
+from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
+from arekit_ss.sources.config import SourcesConfig
+from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
+import arekit_ss.sources.s_ruattitudes as s_ra
+import arekit_ss.sources.s_rusentrel as s_rsr
+import arekit_ss.sources.s_sentinerel as s_snr
 
 data_provider_pipelines = {
     "ruattitudes": {
