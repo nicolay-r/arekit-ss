@@ -2,8 +2,6 @@ import argparse
 from os.path import join
 
 from arekit.common.pipeline.base import BasePipeline
-from arekit.contrib.source.brat.entities.parser import BratTextEntitiesParser
-from arekit.contrib.source.ruattitudes.entity.parser import RuAttitudesTextEntitiesParser
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
@@ -12,30 +10,16 @@ from arekit_ss.framework.arekit.rows_nn import create_nn_rows_provider
 from arekit_ss.framework.arekit.rows_prompt import create_prompt_rows_provider
 from arekit_ss.framework.arekit.serialize_bert import serialize_bert_pipeline
 from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
+from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
 from arekit_ss.text_parser.text_lm import create_lm
 from arekit_ss.text_parser.text_nn_frames import create_nn_frames
 
-import arekit_ss.sources.s_ruattitudes as s_ra
-import arekit_ss.sources.s_rusentrel as s_rsr
-import arekit_ss.sources.s_sentinerel as s_snr
 
 text_parsing_pipelines = {
    "nn-frames": create_nn_frames,
    "lm": create_lm
-}
-
-entity_parsers = {
-    "ruattitudes": RuAttitudesTextEntitiesParser(),
-    "rusentrel": BratTextEntitiesParser(),
-    "sentinerel": BratTextEntitiesParser(),
-}
-
-data_provider_pipelines = {
-    "ruattitudes": s_ra.build_ruattitudes_datapipeline,
-    "rusentrel": s_rsr.build_s_rusentrel_datapipeline,
-    "sentinerel": s_snr.build_sentinerel_datapipeline,
 }
 
 
@@ -73,11 +57,11 @@ if __name__ == '__main__':
     cfg.terms_per_context = args.terms_per_context
     cfg.dest_lang = args.dest_lang
     cfg.docs_limit = args.docs_limit
-    cfg.entities_parser = entity_parsers[args.source]
+    cfg.entities_parser = src_list.ENTITY_PARSERS[args.source]
     cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
 
     # Extract data to be serialized in a form of the pipeline.
-    dpp = data_provider_pipelines[args.source]
+    dpp = src_list.DATA_PROVIDER_PIPELINES[args.source]
     data_folding, data_type_pipelines = dpp(cfg)
 
     labels_scaler = PosNegNeuRelationsLabelScaler()
