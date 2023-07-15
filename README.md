@@ -6,8 +6,12 @@
 
 > **Mind the case (issue [#18](https://github.com/nicolay-r/arekit-googletrans-sampler/issues/18)):** switching to another language may changed amount of extracted data due to `terms_per_context` parameter
 that crops context with fixed amount of words.
+> 
+<p align="center">
+    <img src="logo.png"/>
+</p>
 
-This project provide scripts for instant object-pair context sampling from 
+arekit-ss [AREkit double "s"] -- extension for instant object-pair context sampling from 
 [AREkit](https://github.com/nicolay-r/AREkit)
 collection of 
 [datasources](https://github.com/nicolay-r/AREkit/wiki/Binded-Sources).
@@ -39,15 +43,14 @@ In this example, we convert the RuSentRel collection, originally written in Russ
 sampled for the BERT-based models, with samples limited by `limit` parameter
 
 **samplers**:
-* `nn` -- cnn/lstm architecture related, including frames annotation from RuAttitudes.
+* `nn` -- CNN/LSTM architecture related, including frames annotation from [RuAttitudes](https://github.com/nicolay-r/RuAttitudes).
 * `bert` -- BERT-based, single-input sequence.  
-* `prompt` -- prompt-based sampler for ChatGPT and the related conversational systems.
+* `prompt` -- prompt-based sampler for `ChatGPT` and the related conversational systems [[prompt engeneering guide]](https://github.com/dair-ai/Prompt-Engineering-Guide)
 
 **writer**:
 * `csv` -- for AREkit/AREnets framework;
 * `jsonl` -- for [OpenNRE](https://github.com/thunlp/OpenNRE) framework.
 
-## References
+## Powered by
 
 * [AREkit framework](https://github.com/nicolay-r/AREkit)
-* [Prompt engeneering guide](https://github.com/dair-ai/Prompt-Engineering-Guide)
