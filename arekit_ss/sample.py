@@ -41,7 +41,7 @@ data_provider_pipelines = {
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description="Source Translator.")
+    parser = argparse.ArgumentParser(description="Datasource Sampler.")
 
     parser.add_argument("--writer", type=str, default="csv")
     parser.add_argument("--source", type=str, default="ruattitudes")
