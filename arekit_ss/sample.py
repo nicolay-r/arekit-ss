@@ -12,7 +12,7 @@ from arekit_ss.framework.arekit.serialize_bert import serialize_bert_pipeline
 from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
 from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
-from arekit_ss.sources.labels.formatter import PosNegLabelsFormatter
+from arekit_ss.sources.labels.formatter import PosNegNeuLabelsFormatter
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
 from arekit_ss.text_parser.text_lm import create_lm
 from arekit_ss.text_parser.text_nn_frames import create_nn_frames
@@ -86,7 +86,7 @@ if __name__ == '__main__':
             rows_provider=create_prompt_rows_provider(
                 prompt=args.prompt,
                 labels_scaler=labels_scaler,
-                labels_formatter=PosNegLabelsFormatter()))
+                labels_formatter=PosNegNeuLabelsFormatter()))
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])
