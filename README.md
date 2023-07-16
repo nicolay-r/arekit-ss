@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/badge/Python-3.9-brightgreen.svg)
 ![](https://img.shields.io/badge/AREkit-0.23.1-orange.svg)
-[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-googletrans-sampler/blob/master/arekit_googletrans_sampler.ipynb)
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-ss/blob/master/arekit_ss.ipynb)
 
 <p align="center">
     <img src="logo.png"/>
@@ -17,7 +17,7 @@ For custom text sampling, please follow the
 [ARElight](https://github.com/nicolay-r/ARElight)
 project.
 
-> **Mind the case (issue [#18](https://github.com/nicolay-r/arekit-googletrans-sampler/issues/18)):** switching to another language may changed amount of extracted data due to `terms_per_context` parameter
+> **Mind the case (issue [#18](https://github.com/nicolay-r/arekit-ss/issues/18)):** switching to another language may changed amount of extracted data due to `terms_per_context` parameter
 that crops context with fixed amount of words.
 
 ## Installation
@@ -33,7 +33,7 @@ python -m arekit.download_data
 ```
 
 ## Usage
-[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-googletrans-sampler/blob/master/arekit_googletrans_sampler.ipynb)
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-ss/blob/master/arekit_ss.ipynb)
 
 ```bash
 python3 -m arekit_ss.sample --writer csv --source rusentrel --sampler bert \
