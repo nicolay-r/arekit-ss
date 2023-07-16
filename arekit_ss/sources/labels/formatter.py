@@ -8,8 +8,8 @@ class PosNegNeuLabelsFormatter(StringLabelsFormatter):
 
     def __init__(self):
         stol = {
-            "negative": PositiveTo,
-            "positive": NegativeTo,
+            "negative": NegativeTo,
+            "positive": PositiveTo,
             "no-label": NoLabel
         }
         super(PosNegNeuLabelsFormatter, self).__init__(stol=stol)
