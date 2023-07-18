@@ -54,7 +54,8 @@ class TestRuAttitudes(unittest.TestCase):
                                      writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                      rows_provider=create_ru_sentiment_nn_rows_provider(
                                          relation_labels_scaler=PosNegNeuRelationsLabelScaler(),
-                                         frame_roles_label_scaler=ThreeLabelScaler()))
+                                         frame_roles_label_scaler=ThreeLabelScaler(),
+                                         vectorizers="default"))
         s_ppl = BasePipeline([item])
         s_ppl.run(input_data=None,
                   params_dict={
@@ -71,7 +72,8 @@ class TestRuAttitudes(unittest.TestCase):
                                      output_dir="_out/ra-nn",
                                      rows_provider=create_ru_sentiment_nn_rows_provider(
                                          relation_labels_scaler=PosNegNeuRelationsLabelScaler(),
-                                         frame_roles_label_scaler=ThreeLabelScaler()))
+                                         frame_roles_label_scaler=ThreeLabelScaler(),
+                                         vectorizers="default"))
 
         s_ppl = BasePipeline([item])
         s_ppl.run(input_data=None,

@@ -21,7 +21,8 @@ def create_sentiment_sampler_pipeline_item(args, writer):
             output_dir=args.output_dir, writer=writer,
             rows_provider=create_ru_sentiment_nn_rows_provider(
                 relation_labels_scaler=relation_labels_scaler,
-                frame_roles_label_scaler=ThreeLabelScaler()))
+                frame_roles_label_scaler=ThreeLabelScaler(),
+                vectorizers="default" if args.vectorize else None))
 
     elif "bert" == args.sampler:
         return serialize_bert_pipeline(

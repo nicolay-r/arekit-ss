@@ -12,7 +12,7 @@ from arekit_ss.text_parser.text_lm import create_lm
 from arekit_ss.text_parser.text_nn_ru_frames import create_nn_ru_frames
 
 text_parsing_pipelines = {
-   "nn-frames": create_nn_ru_frames,
+   "nn": create_nn_ru_frames,
    "lm": create_lm
 }
 
@@ -31,6 +31,10 @@ if __name__ == '__main__':
     parser.add_argument("--text_parser", type=str, default="nn")
     parser.add_argument("--docs_limit", type=int, default=None)
     parser.add_argument("--terms_per_context", type=int, default=50)
+    parser.add_argument('--no-vectorize', dest='vectorize', action='store_false',
+                        help="This flag is applicable only for NN, and denotes "
+                             "no need to generate embeddings for features")
+    parser.set_defaults(vectorize=True)
 
     args = parser.parse_args()
 

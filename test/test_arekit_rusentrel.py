@@ -52,7 +52,8 @@ class TestRuSentRel(unittest.TestCase):
                                      writer=NativeCsvWriter(),
                                      rows_provider=create_ru_sentiment_nn_rows_provider(
                                          relation_labels_scaler=PosNegNeuRelationsLabelScaler(),
-                                         frame_roles_label_scaler=ThreeLabelScaler()))
+                                         frame_roles_label_scaler=ThreeLabelScaler(),
+                                         vectorizers="default"))
         s_ppl = BasePipeline([item])
         s_ppl.run(input_data=None,
                   params_dict={
@@ -62,13 +63,15 @@ class TestRuSentRel(unittest.TestCase):
 
     def test_serialize_nn_opennre(self):
         cfg = self.__config()
+        cfg.entities_parser = BratTextEntitiesParser()
         cfg.text_parser = create_nn_ru_frames(cfg)
         data_folding, pipelines = build_s_rusentrel_datapipeline(cfg)
         item = serialize_nn_pipeline(writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                      output_dir="_out/rsr-nn",
                                      rows_provider=create_ru_sentiment_nn_rows_provider(
                                          relation_labels_scaler=PosNegNeuRelationsLabelScaler(),
-                                         frame_roles_label_scaler=ThreeLabelScaler()))
+                                         frame_roles_label_scaler=ThreeLabelScaler(),
+                                         vectorizers="default"))
 
         s_ppl = BasePipeline([item])
         s_ppl.run(input_data=None,

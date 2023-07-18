@@ -8,7 +8,14 @@ class TestScenarios(unittest.TestCase):
         # The case when we do not adopt the translation.
         cmd = "python3 -m arekit_ss.sample --writer csv "\
               "--source {src} --sampler nn --src_lang ru --dest_lang ru "\
-              "--docs_limit 1 --text_parser lm --output_dir './_out/{src}_nn'".replace("{src}", src)
+              "--docs_limit 1 --text_parser nn --output_dir './_out/{src}_nn'".replace("{src}", src)
+        os.system(cmd)
+
+    def test_sentiment_analysis_frames_annotation_no_vec(self, src="rusentrel"):
+        # The case when we do not adopt the translation.
+        cmd = "python3 -m arekit_ss.sample --writer csv --no-vectorize " \
+              "--source {src} --sampler nn --src_lang ru --dest_lang ru " \
+              "--docs_limit 1 --text_parser nn --output_dir './_out/{src}_nn'".replace("{src}", src)
         os.system(cmd)
 
     def test_sentiment_analysis(self, src="rusentrel"):
