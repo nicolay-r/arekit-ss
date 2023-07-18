@@ -5,15 +5,9 @@ from arekit.common.pipeline.base import BasePipeline
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
-from arekit_ss.framework.arekit.rows_bert import create_bert_rows_provider
-from arekit_ss.framework.arekit.rows_nn import create_nn_rows_provider
-from arekit_ss.framework.arekit.rows_prompt import create_prompt_rows_provider
-from arekit_ss.framework.arekit.serialize_bert import serialize_bert_pipeline
-from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
+from arekit_ss.framework.samplers_list import create_sentiment_sampler_pipeline_item
 from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
-from arekit_ss.sources.labels.formatter import PosNegNeuLabelsFormatter
-from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
 from arekit_ss.text_parser.text_lm import create_lm
 from arekit_ss.text_parser.text_nn_ru_frames import create_nn_ru_frames
 
@@ -66,28 +60,8 @@ if __name__ == '__main__':
     dpp = src_list.DATA_PROVIDER_PIPELINES[args.source]
     data_folding, data_type_pipelines = dpp(cfg)
 
-    labels_scaler = PosNegNeuRelationsLabelScaler()
-
     # Prepare serializer and pass data_type_pipelines.
-    pipeline_item = None
-    if "nn" == args.sampler:
-        pipeline_item = serialize_nn_pipeline(
-            output_dir=args.output_dir, writer=writer,
-            rows_provider=create_nn_rows_provider(labels_scaler))
-    elif "bert" == args.sampler:
-        pipeline_item = serialize_bert_pipeline(
-            output_dir=args.output_dir, writer=writer,
-            rows_provider=create_bert_rows_provider(
-                terms_per_context=args.terms_per_context,
-                labels_scaler=labels_scaler))
-    elif "prompt" == args.sampler:
-        # same as for BERT.
-        pipeline_item = serialize_bert_pipeline(
-            output_dir=args.output_dir, writer=writer,
-            rows_provider=create_prompt_rows_provider(
-                prompt=args.prompt,
-                labels_scaler=labels_scaler,
-                labels_formatter=PosNegNeuLabelsFormatter()))
+    pipeline_item = create_sentiment_sampler_pipeline_item(args=args, writer=writer)
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])

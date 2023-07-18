@@ -19,7 +19,6 @@ def create_nn_ru_frames(cfg):
     """
     assert(isinstance(cfg, SourcesConfig))
     assert(cfg.src_lang == "ru")
-    print(cfg.src_lang)
 
     stemmer = MystemWrapper()
 
