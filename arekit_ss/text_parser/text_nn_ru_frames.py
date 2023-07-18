@@ -13,8 +13,13 @@ from arekit_ss.sources.labels.sentiment import PositiveTo, NegativeTo
 from arekit_ss.text_parser.translator import TextAndEntitiesGoogleTranslator
 
 
-def create_nn_frames(cfg):
+def create_nn_ru_frames(cfg):
+    """ This pipeline involves an application of the RuSentiFrames.
+        The latter represent a lexicon for texts in Russian.
+    """
     assert(isinstance(cfg, SourcesConfig))
+    assert(cfg.src_lang == "ru")
+    print(cfg.src_lang)
 
     stemmer = MystemWrapper()
 
@@ -31,7 +36,5 @@ def create_nn_frames(cfg):
     return BaseTextParser(pipeline=[
         cfg.entities_parser,
         DefaultTextTokenizer(keep_tokens=True),
-        TextAndEntitiesGoogleTranslator(src="ru", dest=cfg.dest_lang) if cfg.dest_lang != 'ru' else None,
-            LemmasBasedFrameVariantsParser(
-                frame_variants=frame_variant_collection,
-                stemmer=stemmer)])
+        TextAndEntitiesGoogleTranslator(src=cfg.src_lang, dest=cfg.dest_lang) if cfg.dest_lang != cfg.src_lang else None,
+        LemmasBasedFrameVariantsParser(frame_variants=frame_variant_collection, stemmer=stemmer)])

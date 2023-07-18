@@ -13,7 +13,7 @@ from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
 from arekit_ss.sources.s_ruattitudes import build_ruattitudes_datapipeline
 from arekit_ss.text_parser.text_lm import create_lm
-from arekit_ss.text_parser.text_nn_frames import create_nn_frames
+from arekit_ss.text_parser.text_nn_ru_frames import create_nn_ru_frames
 
 
 class TestRuAttitudes(unittest.TestCase):
@@ -46,7 +46,7 @@ class TestRuAttitudes(unittest.TestCase):
     def test_serialize_nn_csv(self):
         cfg = self.__config()
         cfg.entities_parser = RuAttitudesTextEntitiesParser()
-        cfg.text_parser = create_nn_frames(cfg)
+        cfg.text_parser = create_nn_ru_frames(cfg)
         data_folding, pipelines = build_ruattitudes_datapipeline(cfg)
         item = serialize_nn_pipeline(output_dir="_out/ra-nn",
                                      writer=OpenNREJsonWriter(text_columns=["text_a"]),
@@ -62,7 +62,7 @@ class TestRuAttitudes(unittest.TestCase):
     def test_serialize_nn_opennre(self):
         cfg = self.__config()
         cfg.entities_parser = RuAttitudesTextEntitiesParser()
-        cfg.text_parser = create_nn_frames(cfg)
+        cfg.text_parser = create_nn_ru_frames(cfg)
         data_folding, pipelines = build_ruattitudes_datapipeline(cfg)
         item = serialize_nn_pipeline(writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                      output_dir="_out/ra-nn",

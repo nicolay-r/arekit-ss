@@ -10,5 +10,5 @@ def create_lm(cfg):
 
     return BaseTextParser(pipeline=[
         cfg.entities_parser,
-        TextAndEntitiesGoogleTranslator(src="ru", dest=cfg.dest_lang) if cfg.dest_lang != 'ru' else None,
+        TextAndEntitiesGoogleTranslator(src=cfg.src_lang, dest=cfg.dest_lang) if cfg.dest_lang != cfg.src_lang else None,
         DefaultTextTokenizer()])

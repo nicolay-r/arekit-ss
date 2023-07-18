@@ -15,11 +15,10 @@ from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.formatter import PosNegNeuLabelsFormatter
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
 from arekit_ss.text_parser.text_lm import create_lm
-from arekit_ss.text_parser.text_nn_frames import create_nn_frames
-
+from arekit_ss.text_parser.text_nn_ru_frames import create_nn_ru_frames
 
 text_parsing_pipelines = {
-   "nn-frames": create_nn_frames,
+   "nn-frames": create_nn_ru_frames,
    "lm": create_lm
 }
 
@@ -31,6 +30,7 @@ if __name__ == '__main__':
     parser.add_argument("--writer", type=str, default="csv")
     parser.add_argument("--source", type=str, default="ruattitudes")
     parser.add_argument("--sampler", type=str, default="nn")
+    parser.add_argument("--src_lang", type=str, default="ru")
     parser.add_argument("--dest_lang", type=str, default="en")
     parser.add_argument("--output_dir", type=str, default="_out")
     parser.add_argument("--prompt", type=str, default="{text},`{s_ind}`,`{t_ind}`, `{label}`")
@@ -56,6 +56,7 @@ if __name__ == '__main__':
     # Initialize config.
     cfg = SourcesConfig()
     cfg.terms_per_context = args.terms_per_context
+    cfg.src_lang = args.src_lang
     cfg.dest_lang = args.dest_lang
     cfg.docs_limit = args.docs_limit
     cfg.entities_parser = src_list.ENTITY_PARSERS[args.source]
