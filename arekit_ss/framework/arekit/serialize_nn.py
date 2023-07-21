@@ -1,4 +1,5 @@
 from arekit.common.experiment.data_type import DataType
+from arekit.contrib.networks.input.const import FrameVariantIndices, FrameConnotations
 from arekit.contrib.utils.data.storages.row_cache import RowCacheStorage
 from arekit.contrib.utils.data.writers.base import BaseWriter
 from arekit.contrib.utils.io_utils.embedding import NpEmbeddingIO
@@ -15,7 +16,7 @@ def serialize_nn_pipeline(output_dir, writer, rows_provider):
     assert(isinstance(writer, BaseWriter))
 
     return NetworksInputSerializerPipelineItem(
-        storage=RowCacheStorage(),
+        storage=RowCacheStorage(force_collect_columns=[FrameVariantIndices, FrameConnotations]),
         rows_provider=rows_provider,
         samples_io=SamplesIO(target_dir=output_dir, writer=writer),
         emb_io=NpEmbeddingIO(target_dir=output_dir),
