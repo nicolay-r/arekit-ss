@@ -5,7 +5,7 @@ from arekit.common.pipeline.base import BasePipeline
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
-from arekit_ss.framework.samplers_list import create_sentiment_sampler_pipeline_item
+from arekit_ss.framework.samplers_list import create_sampler_pipeline_item
 from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.text_parser.text_lm import create_lm
@@ -65,7 +65,8 @@ if __name__ == '__main__':
     data_folding, data_type_pipelines = dpp(cfg)
 
     # Prepare serializer and pass data_type_pipelines.
-    pipeline_item = create_sentiment_sampler_pipeline_item(args=args, writer=writer)
+    pipeline_item = create_sampler_pipeline_item(
+        args=args, writer=writer, label_scaler=src_list.LABELS[args.source])
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])
