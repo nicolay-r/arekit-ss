@@ -16,4 +16,4 @@ def build_sentinerel_datapipeline(cfg):
         doc_ops=None,
         text_parser=cfg.text_parser)
 
-    return data_folding, {DataType.Train: pipelines[DataType.Train]}
+    return data_folding, pipelines
