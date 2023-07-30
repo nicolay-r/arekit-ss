@@ -1,4 +1,3 @@
-from arekit.common.experiment.data_type import DataType
 from arekit.contrib.source.sentinerel.io_utils import SentiNerelVersions
 from arekit.contrib.utils.pipelines.sources.sentinerel.extract_text_opinions import \
     create_text_opinion_extraction_pipeline

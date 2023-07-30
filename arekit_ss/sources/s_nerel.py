@@ -1,6 +1,5 @@
 from collections import OrderedDict
 
-from arekit.common.experiment.data_type import DataType
 from arekit.common.labels.scaler.base import BaseLabelScaler
 from arekit.contrib.source.nerel import labels
 from arekit.contrib.source.nerel.io_utils import NerelVersions
