@@ -27,7 +27,7 @@ if __name__ == '__main__':
     parser.add_argument("--src_lang", type=str, default="ru")
     parser.add_argument("--dest_lang", type=str, default="en")
     parser.add_argument("--output_dir", type=str, default="_out")
-    parser.add_argument("--prompt", type=str, default="{text},`{s_ind}`,`{t_ind}`, `{label}`")
+    parser.add_argument("--prompt", type=str, default="{text},`{s_val}`,`{t_val}`, `{label_val}`")
     parser.add_argument("--text_parser", type=str, default="nn")
     parser.add_argument("--docs_limit", type=int, default=None)
     parser.add_argument("--terms_per_context", type=int, default=50)
@@ -66,7 +66,9 @@ if __name__ == '__main__':
 
     # Prepare serializer and pass data_type_pipelines.
     pipeline_item = create_sampler_pipeline_item(
-        args=args, writer=writer, label_scaler=src_list.LABELS[args.source])
+        args=args, writer=writer,
+        label_scaler=src_list.LABELS[args.source],
+        label_fmt=src_list.LABELS_FORMATTER[args.source])
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])
