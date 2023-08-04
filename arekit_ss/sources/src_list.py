@@ -15,24 +15,28 @@ DATA_PROVIDER_PIPELINES = {
         "pipeline": build_ruattitudes_datapipeline,
         "entity_parser": RuAttitudesTextEntitiesParser(),
         "label_scaler": PosNegNeuRelationsLabelScaler(),
-        "label_formatter": PosNegNeuLabelsFormatter()
+        "label_formatter": PosNegNeuLabelsFormatter(),
+        "src_lang": "ru"
     },
     "rusentrel": {
         "pipeline": build_s_rusentrel_datapipeline,
         "entity_parser": BratTextEntitiesParser(),
         "label_scaler": PosNegNeuRelationsLabelScaler(),
         "label_formatter": PosNegNeuLabelsFormatter(),
+        "src_lang": "ru"
     },
     "sentinerel": {
         "pipeline": build_sentinerel_datapipeline,
         "entity_parser": BratTextEntitiesParser(),
         "label_scaler": PosNegNeuRelationsLabelScaler(),
         "label_formatter": PosNegNeuLabelsFormatter(),
+        "src_lang": "ru"
     },
     "nerel": {
         "pipeline": build_nerel_datapipeline,
         "entity_parser": BratTextEntitiesParser(),
         "label_scaler": NerelAnyLabelScaler(),
-        "label_formatter": NerelAnyLabelFormatter()
+        "label_formatter": NerelAnyLabelFormatter(),
+        "src_lang": "ru"
     }
 }

@@ -24,7 +24,7 @@ if __name__ == '__main__':
     parser.add_argument("--writer", type=str, default="csv")
     parser.add_argument("--source", type=str, default="ruattitudes")
     parser.add_argument("--sampler", type=str, default="nn")
-    parser.add_argument("--src_lang", type=str, default="ru")
+    parser.add_argument("--src_lang", type=str, default=None, required=False)
     parser.add_argument("--dest_lang", type=str, default="en")
     parser.add_argument("--output_dir", type=str, default="_out")
     parser.add_argument("--prompt", type=str, default="{text},`{s_val}`,`{t_val}`, `{label_val}`")
@@ -53,10 +53,14 @@ if __name__ == '__main__':
 
     source = src_list.DATA_PROVIDER_PIPELINES[args.source]
 
+    # Provide the check for the source language.
+    if args.src_lang is not None and "src_lang" in source:
+        assert(source["src_lang"] == args.src_lang)
+
     # Initialize config.
     cfg = SourcesConfig()
     cfg.terms_per_context = args.terms_per_context
-    cfg.src_lang = args.src_lang
+    cfg.src_lang = source["src_lang"] if args.src_lang is None else args.src_lang
     cfg.dest_lang = args.dest_lang
     cfg.docs_limit = args.docs_limit
     cfg.entities_parser = source["entity_parser"]
