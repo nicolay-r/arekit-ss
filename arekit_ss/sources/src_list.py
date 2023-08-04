@@ -31,8 +31,8 @@ DATA_PROVIDER_PIPELINES = {
     },
     "nerel": {
         "pipeline": build_nerel_datapipeline,
-        "entity_parser": NerelAnyLabelScaler(),
-        "label_scaler": NerelAnyLabelFormatter(),
+        "entity_parser": BratTextEntitiesParser(),
+        "label_scaler": NerelAnyLabelScaler(),
         "label_formatter": NerelAnyLabelFormatter()
     }
 }

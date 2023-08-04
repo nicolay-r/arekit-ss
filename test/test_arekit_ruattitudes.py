@@ -12,7 +12,7 @@ from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
 from arekit_ss.sources.labels.scaler_frames import ThreeLabelScaler
-from arekit_ss.sources.s_ruattitudes import build_ruattitudes_datapipeline
+from arekit_ss.sources.ruattitudes.data_pipeline import build_ruattitudes_datapipeline
 from arekit_ss.text_parser.text_lm import create_lm
 from arekit_ss.text_parser.text_nn_ru_frames import create_nn_ru_frames
 
