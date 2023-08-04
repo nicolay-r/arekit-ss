@@ -51,24 +51,26 @@ if __name__ == '__main__':
     else:
         raise Exception("writer `{}` is not supported!".format(args.writer))
 
+    source = src_list.DATA_PROVIDER_PIPELINES[args.source]
+
     # Initialize config.
     cfg = SourcesConfig()
     cfg.terms_per_context = args.terms_per_context
     cfg.src_lang = args.src_lang
     cfg.dest_lang = args.dest_lang
     cfg.docs_limit = args.docs_limit
-    cfg.entities_parser = src_list.ENTITY_PARSERS[args.source]
+    cfg.entities_parser = source["entity_parser"]
     cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
 
     # Extract data to be serialized in a form of the pipeline.
-    dpp = src_list.DATA_PROVIDER_PIPELINES[args.source]
+    dpp = source["pipeline"]
     data_folding, data_type_pipelines = dpp(cfg)
 
     # Prepare serializer and pass data_type_pipelines.
     pipeline_item = create_sampler_pipeline_item(
         args=args, writer=writer,
-        label_scaler=src_list.LABELS[args.source],
-        label_fmt=src_list.LABELS_FORMATTER[args.source])
+        label_scaler=source["label_scaler"],
+        label_fmt=source["label_formatter"])
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])

@@ -2,38 +2,37 @@ from arekit.contrib.source.brat.entities.parser import BratTextEntitiesParser
 from arekit.contrib.source.ruattitudes.entity.parser import RuAttitudesTextEntitiesParser
 from arekit.contrib.utils.pipelines.sources.nerel.labels_fmt import NerelAnyLabelFormatter
 
-import arekit_ss.sources.s_ruattitudes as s_ra
-import arekit_ss.sources.s_rusentrel as s_rsr
-import arekit_ss.sources.s_sentinerel as s_snr
-import arekit_ss.sources.s_nerel as s_sn
 from arekit_ss.sources.labels.formatter import PosNegNeuLabelsFormatter
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
+from arekit_ss.sources.nerel.data_pipeline import build_nerel_datapipeline, NerelAnyLabelScaler
+from arekit_ss.sources.ruattitudes.data_pipeline import build_ruattitudes_datapipeline
+from arekit_ss.sources.rusentrel.data_pipeline import build_s_rusentrel_datapipeline
+from arekit_ss.sources.sentinerel.data_pipeline import build_sentinerel_datapipeline
 
 
 DATA_PROVIDER_PIPELINES = {
-    "ruattitudes": s_ra.build_ruattitudes_datapipeline,
-    "rusentrel": s_rsr.build_s_rusentrel_datapipeline,
-    "sentinerel": s_snr.build_sentinerel_datapipeline,
-    "nerel": s_sn.build_nerel_datapipeline,
-}
-
-ENTITY_PARSERS = {
-    "ruattitudes": RuAttitudesTextEntitiesParser(),
-    "rusentrel": BratTextEntitiesParser(),
-    "sentinerel": BratTextEntitiesParser(),
-    "nerel": BratTextEntitiesParser(),
-}
-
-LABELS = {
-    "ruattitudes": PosNegNeuRelationsLabelScaler(),
-    "rusentrel": PosNegNeuRelationsLabelScaler(),
-    "sentinerel": PosNegNeuRelationsLabelScaler(),
-    "nerel": s_sn.NerelAnyLabelScaler(),
-}
-
-LABELS_FORMATTER = {
-    "ruattitudes": PosNegNeuLabelsFormatter(),
-    "rusentrel": PosNegNeuLabelsFormatter(),
-    "sentinerel": PosNegNeuLabelsFormatter(),
-    "nerel": NerelAnyLabelFormatter()
+    "ruattitudes": {
+        "pipeline": build_ruattitudes_datapipeline,
+        "entity_parser": RuAttitudesTextEntitiesParser(),
+        "label_scaler": PosNegNeuRelationsLabelScaler(),
+        "label_formatter": PosNegNeuLabelsFormatter()
+    },
+    "rusentrel": {
+        "pipeline": build_s_rusentrel_datapipeline,
+        "entity_parser": BratTextEntitiesParser(),
+        "label_scaler": PosNegNeuRelationsLabelScaler(),
+        "label_formatter": PosNegNeuLabelsFormatter(),
+    },
+    "sentinerel": {
+        "pipeline": build_sentinerel_datapipeline,
+        "entity_parser": BratTextEntitiesParser(),
+        "label_scaler": PosNegNeuRelationsLabelScaler(),
+        "label_formatter": PosNegNeuLabelsFormatter(),
+    },
+    "nerel": {
+        "pipeline": build_nerel_datapipeline,
+        "entity_parser": NerelAnyLabelScaler(),
+        "label_scaler": NerelAnyLabelFormatter(),
+        "label_formatter": NerelAnyLabelFormatter()
+    }
 }
