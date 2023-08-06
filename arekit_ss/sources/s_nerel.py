@@ -12,7 +12,7 @@ def build_nerel_datapipeline(cfg):
     assert(isinstance(cfg, SourcesConfig))
 
     pipelines, data_folding = create_text_relation_extraction_pipeline(
-        sentinerel_version=NerelVersions.V11,
+        nerel_version=NerelVersions.V11,
         terms_per_context=cfg.terms_per_context,
         docs_limit=cfg.docs_limit,
         doc_ops=None,
