@@ -1,5 +1,4 @@
 import argparse
-from os.path import join
 
 from arekit.common.pipeline.base import BasePipeline
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
