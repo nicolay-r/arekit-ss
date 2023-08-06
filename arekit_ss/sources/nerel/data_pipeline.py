@@ -2,8 +2,9 @@ from collections import OrderedDict
 
 from arekit.common.labels.scaler.base import BaseLabelScaler
 from arekit.contrib.source.nerel import labels
-from arekit.contrib.source.nerel.io_utils import NerelVersions
+from arekit.contrib.source.nerel.versions import NerelVersions
 from arekit.contrib.utils.pipelines.sources.nerel.extract_text_relations import create_text_relation_extraction_pipeline
+from arekit.contrib.utils.pipelines.sources.nerel.labels_fmt import NerelAnyLabelFormatter
 
 from arekit_ss.sources.config import SourcesConfig
 
@@ -12,8 +13,9 @@ def build_nerel_datapipeline(cfg):
     assert(isinstance(cfg, SourcesConfig))
 
     pipelines, data_folding = create_text_relation_extraction_pipeline(
-        sentinerel_version=NerelVersions.V11,
+        nerel_version=NerelVersions.V11,
         terms_per_context=cfg.terms_per_context,
+        label_formatter=NerelAnyLabelFormatter(),
         docs_limit=cfg.docs_limit,
         doc_ops=None,
         text_parser=cfg.text_parser)
@@ -25,7 +27,7 @@ class NerelAnyLabelScaler(BaseLabelScaler):
 
     def __init__(self):
 
-        self.__uint_to_label_dict = OrderedDict([
+        self.__label_to_uint_dict = OrderedDict([
             (labels.OpinionBelongsTo(), 0),
             (labels.OpinionRelatesTo(), 1),
             (labels.NegEffectFrom(), 2),
@@ -77,5 +79,5 @@ class NerelAnyLabelScaler(BaseLabelScaler):
         ])
 
         super(NerelAnyLabelScaler, self).__init__(
-            uint_dict=self.__uint_to_label_dict,
-            int_dict=self.__uint_to_label_dict)
+            uint_dict=self.__label_to_uint_dict,
+            int_dict=self.__label_to_uint_dict)
