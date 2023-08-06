@@ -25,7 +25,7 @@ if __name__ == '__main__':
     parser.add_argument("--source", type=str, default="ruattitudes")
     parser.add_argument("--sampler", type=str, default="nn")
     parser.add_argument("--src_lang", type=str, default=None, required=False)
-    parser.add_argument("--dest_lang", type=str, default="en")
+    parser.add_argument("--dest_lang", type=str, default=None, required=False)
     parser.add_argument("--output_dir", type=str, default="_out")
     parser.add_argument("--prompt", type=str, default="{text},`{s_val}`,`{t_val}`, `{label_val}`")
     parser.add_argument("--text_parser", type=str, default="nn")
@@ -37,10 +37,6 @@ if __name__ == '__main__':
     parser.set_defaults(vectorize=True)
 
     args = parser.parse_args()
-
-    # Completing the output template.
-    output_dir = join(args.output_dir, '-'.join([args.source, args.dest_lang,
-                                                 str(args.docs_limit) if args.docs_limit is not None else "all"]))
 
     # Setup writer.
     writer = None
@@ -61,7 +57,7 @@ if __name__ == '__main__':
     cfg = SourcesConfig()
     cfg.terms_per_context = args.terms_per_context
     cfg.src_lang = source["src_lang"] if args.src_lang is None else args.src_lang
-    cfg.dest_lang = args.dest_lang
+    cfg.dest_lang = source["src_lang"] if args.dest_lang is None else args.dest_lang
     cfg.docs_limit = args.docs_limit
     cfg.entities_parser = source["entity_parser"]
     cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
