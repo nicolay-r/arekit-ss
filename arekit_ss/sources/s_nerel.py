@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from arekit.common.labels.scaler.base import BaseLabelScaler
 from arekit.contrib.source.nerel import labels
-from arekit.contrib.source.nerel.io_utils import NerelVersions
+from arekit.contrib.source.nerel.versions import NerelVersions
 from arekit.contrib.utils.pipelines.sources.nerel.extract_text_relations import create_text_relation_extraction_pipeline
 
 from arekit_ss.sources.config import SourcesConfig
