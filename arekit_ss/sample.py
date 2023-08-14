@@ -23,6 +23,10 @@ if __name__ == '__main__':
     parser.add_argument("--writer", type=str, default="csv")
     parser.add_argument("--source", type=str, default="ruattitudes")
     parser.add_argument("--sampler", type=str, default="nn")
+    parser.add_argument("--splits", type=str, default=None,
+                        help="Manual selection of the data-types related splits that "
+                             "should be chosen for the sampling process; types should be "
+                             "separated by ':' sign; for example: 'train:test'")
     parser.add_argument("--src_lang", type=str, default=None, required=False)
     parser.add_argument("--dest_lang", type=str, default=None, required=False)
     parser.add_argument("--output_dir", type=str, default="_out")
@@ -60,10 +64,15 @@ if __name__ == '__main__':
     cfg.docs_limit = args.docs_limit
     cfg.entities_parser = source["entity_parser"]
     cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
+    cfg.splits = args.splits
 
     # Extract data to be serialized in a form of the pipeline.
     dpp = source["pipeline"]
     data_folding, data_type_pipelines = dpp(cfg)
+
+    # Filter only those data_types that were chosen.
+    data_type_pipelines = {k: data_type_pipelines[k] for k in cfg.get_supported_datatypes()
+                           if k in data_type_pipelines}
 
     # Prepare serializer and pass data_type_pipelines.
     pipeline_item = create_sampler_pipeline_item(
