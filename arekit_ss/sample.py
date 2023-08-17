@@ -9,7 +9,7 @@ from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.text_parser.text_lm import create_lm
 from arekit_ss.text_parser.text_nn_ru_frames import create_nn_ru_frames
-from arekit_ss.utils import auto_import
+from arekit_ss.utils import auto_import, setup_custom_logger
 
 text_parsing_pipelines = {
    "nn": create_nn_ru_frames,
@@ -18,6 +18,8 @@ text_parsing_pipelines = {
 
 
 if __name__ == '__main__':
+
+    logger = setup_custom_logger("arekit_ss")
 
     parser = argparse.ArgumentParser(description="Datasource Sampler.")
 
@@ -75,6 +77,9 @@ if __name__ == '__main__':
     data_type_pipelines = {k: data_type_pipelines[k] for k in cfg.get_supported_datatypes()
                            if k in data_type_pipelines}
 
+    if len(data_type_pipelines) == 0:
+        logger.info(f"DataType Pipelines is empty for the given split `{args.splits}`. No output results.")
+
     # Prepare serializer and pass data_type_pipelines.
     pipeline_item = create_sampler_pipeline_item(
         args=args, writer=writer,
@@ -87,3 +92,5 @@ if __name__ == '__main__':
                      "data_folding": data_folding,
                      "data_type_pipelines": data_type_pipelines
                  })
+
+    logger.info(f"Done!")
