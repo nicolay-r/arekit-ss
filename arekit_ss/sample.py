@@ -9,6 +9,7 @@ from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.text_parser.text_lm import create_lm
 from arekit_ss.text_parser.text_nn_ru_frames import create_nn_ru_frames
+from arekit_ss.utils import auto_import
 
 text_parsing_pipelines = {
    "nn": create_nn_ru_frames,
@@ -62,12 +63,12 @@ if __name__ == '__main__':
     cfg.src_lang = source["src_lang"] if args.src_lang is None else args.src_lang
     cfg.dest_lang = source["src_lang"] if args.dest_lang is None else args.dest_lang
     cfg.docs_limit = args.docs_limit
-    cfg.entities_parser = source["entity_parser"]
+    cfg.entities_parser = auto_import(source["entity_parser"], is_class=True)
     cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
     cfg.splits = args.splits
 
     # Extract data to be serialized in a form of the pipeline.
-    dpp = source["pipeline"]
+    dpp = auto_import(name=source["pipeline"])
     data_folding, data_type_pipelines = dpp(cfg)
 
     # Filter only those data_types that were chosen.
@@ -77,8 +78,8 @@ if __name__ == '__main__':
     # Prepare serializer and pass data_type_pipelines.
     pipeline_item = create_sampler_pipeline_item(
         args=args, writer=writer,
-        label_scaler=source["label_scaler"],
-        label_fmt=source["label_formatter"])
+        label_scaler=auto_import(source["label_scaler"], is_class=True),
+        label_fmt=auto_import(source["label_formatter"], is_class=True))
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])
