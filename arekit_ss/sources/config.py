@@ -16,7 +16,7 @@ class SourcesConfig:
         """ String split name to data-types converter.
         """
 
-        # AREkit 0.23.1 has the predefined type DataType which describes the
+        # AREkit 0.24.0 has the predefined type DataType which describes the
         # splits in a form of Enum.
         data_type_to_split = {
             "train": DataType.Train,

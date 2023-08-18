@@ -89,6 +89,7 @@ if __name__ == '__main__':
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])
     pipeline.run(input_data=None, params_dict={
+                     "doc_ids": None,
                      "data_folding": data_folding,
                      "data_type_pipelines": data_type_pipelines
                  })

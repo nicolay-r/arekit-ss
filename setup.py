@@ -14,7 +14,7 @@ def get_requirements(filenames):
 
 setup(
     name='arekit_ss',
-    version='0.23.1',
+    version='0.24.0',
     description='AREkit sources sampler',
     url='https://github.com/nicolay-r/arekit-ss',
     author='Nicolay Rusnachenko',

@@ -12,7 +12,6 @@ def serialize_bert_pipeline(writer, rows_provider, output_dir):
 
     return BertExperimentInputSerializerPipelineItem(
         storage=RowCacheStorage(force_collect_columns=[ENTITIES, ENTITY_TYPES]),
-        balance_func=lambda _: False,
         samples_io=SamplesIO(target_dir=output_dir, writer=writer),
         save_labels_func=lambda _: True,
         rows_provider=rows_provider)
