@@ -1,7 +1,6 @@
 import itertools
 
 from arekit.common.experiment.data_type import DataType
-from arekit.common.folding.nofold import NoFolding
 from arekit.contrib.source.rusentrel.io_utils import RuSentRelVersions, RuSentRelIOUtils
 from arekit.contrib.source.rusentrel.labels_fmt import RuSentRelLabelsFormatter
 from arekit.contrib.utils.pipelines.sources.rusentrel.extract_text_opinions import \
@@ -11,9 +10,8 @@ from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.sentiment import PositiveTo, NegativeTo
 
 
-def __iter_doc_ids(version, docs_limit):
+def __iter_doc_ids(doc_ids_iter, docs_limit):
     assert((isinstance(docs_limit, int) and docs_limit > 0) or docs_limit is None)
-    doc_ids_iter = RuSentRelIOUtils.iter_collection_indices(version)
     if docs_limit is not None:
         doc_ids_iter = itertools.islice(doc_ids_iter, docs_limit)
     return doc_ids_iter
@@ -29,7 +27,14 @@ def build_s_rusentrel_datapipeline(cfg):
         text_parser=cfg.text_parser,
         labels_fmt=RuSentRelLabelsFormatter(pos_label_type=PositiveTo, neg_label_type=NegativeTo))
 
-    data_folding = NoFolding(doc_ids=__iter_doc_ids(version, cfg.docs_limit),
-                             supported_data_type=DataType.Train)
+    data_folding = {
+        DataType.Train: list(__iter_doc_ids(RuSentRelIOUtils.iter_train_indices(version), cfg.docs_limit)),
+        DataType.Test: list(__iter_doc_ids(RuSentRelIOUtils.iter_test_indices(version), cfg.docs_limit))
+    }
 
-    return data_folding, {DataType.Train: pipeline}
+    data_pipeline = {
+        DataType.Train: pipeline,
+        DataType.Test: pipeline
+    }
+
+    return data_folding, data_pipeline
