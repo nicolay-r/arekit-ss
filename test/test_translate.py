@@ -2,11 +2,11 @@ import logging
 import unittest
 
 from arekit.common.data.input.providers.const import IDLE_MODE
+from arekit.common.docs.base import Document
+from arekit.common.docs.parser import DocumentParser
+from arekit.common.docs.sentence import BaseDocumentSentence
 from arekit.common.entities.base import Entity
 from arekit.common.context.token import Token
-from arekit.common.news.sentence import BaseNewsSentence
-from arekit.common.news.base import News
-from arekit.common.news.parser import NewsParser
 from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.items.text.entities_default import TextEntitiesParser
@@ -19,10 +19,10 @@ logger.setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.DEBUG)
 
 
-class TestTestParser(unittest.TestCase):
+class TestTextParser(unittest.TestCase):
 
     def test(self):
-        text = "А контроль над этими провинциями — [США] , которая не пытается ввести санкции против."
+        text = "А контроль над этими провинциями — [США] , которая не пытается ввести санкции против. [ВКC] "
 
         # Adopting translate pipeline item, based on google translator.
         text_parser = BaseTextParser(pipeline=[
@@ -31,10 +31,10 @@ class TestTestParser(unittest.TestCase):
             DefaultTextTokenizer(keep_tokens=True),
         ])
 
-        news = News(doc_id=0, sentences=[BaseNewsSentence(text.split())])
-        parsed_news = NewsParser.parse(news=news, text_parser=text_parser,
-                                       parent_ppl_ctx=PipelineContext({IDLE_MODE: False}))
-        self.debug_show_terms(parsed_news.iter_terms())
+        doc = Document(doc_id=0, sentences=[BaseDocumentSentence(text.split())])
+        parsed_doc = DocumentParser.parse(doc=doc, text_parser=text_parser,
+                                          parent_ppl_ctx=PipelineContext({IDLE_MODE: False}))
+        self.debug_show_terms(parsed_doc.iter_terms())
 
     @staticmethod
     def debug_show_terms(terms):
