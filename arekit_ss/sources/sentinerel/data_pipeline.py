@@ -12,7 +12,7 @@ def build_sentinerel_datapipeline(cfg):
         sentinerel_version=SentiNerelVersions.V21,
         terms_per_context=cfg.terms_per_context,
         docs_limit=cfg.docs_limit,
-        doc_ops=None,
+        doc_provider=None,
         text_parser=cfg.text_parser)
 
     return data_folding, pipelines

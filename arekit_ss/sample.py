@@ -79,7 +79,7 @@ if __name__ == '__main__':
                            if k in data_type_pipelines}
 
     if len(data_type_pipelines) == 0:
-        logger.info(f"DataType Pipelines is empty for the given split `{args.splits}`. No output results.")
+        logger.info(f"DataType Pipelines are empty for the given splits [`{args.splits}`]. No output results.")
 
     # Prepare serializer and pass data_type_pipelines.
     pipeline_item = create_sampler_pipeline_item(
