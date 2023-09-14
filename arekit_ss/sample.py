@@ -3,9 +3,9 @@ import argparse
 from arekit.common.pipeline.base import BasePipeline
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
+from arekit.contrib.utils.data.writers.sqlite_native import SQliteWriter
 
 from arekit_ss.framework.samplers_list import create_sampler_pipeline_item
-from arekit_ss.framework.sqlite_writer import SQliteWriter
 from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.text_parser.text_lm import create_lm

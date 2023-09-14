@@ -51,6 +51,7 @@ python -m arekit_ss.sample --writer csv --source rusentrel --sampler prompt \
 ### Writers
 * `csv` -- for [AREnets](https://github.com/nicolay-r/AREnets) framework;
 * `jsonl` -- for [OpenNRE](https://github.com/thunlp/OpenNRE) framework.
+* `sqlite` -- SQLite-3.0 database 
 
 ## Powered by
 
