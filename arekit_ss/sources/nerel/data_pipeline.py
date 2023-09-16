@@ -17,6 +17,7 @@ def build_nerel_datapipeline(cfg):
         terms_per_context=cfg.terms_per_context,
         label_formatter=NerelAnyLabelFormatter(),
         docs_limit=cfg.docs_limit,
+        custom_text_opinion_filters=cfg.optional_filters,
         doc_ops=None,
         text_parser=cfg.text_parser)
 

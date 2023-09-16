@@ -25,6 +25,7 @@ def build_s_rusentrel_datapipeline(cfg):
     pipeline = create_text_opinion_extraction_pipeline(
         rusentrel_version=version,
         text_parser=cfg.text_parser,
+        custom_text_opinion_filters=cfg.optional_filters,
         labels_fmt=RuSentRelLabelsFormatter(pos_label_type=PositiveTo, neg_label_type=NegativeTo))
 
     data_folding = {

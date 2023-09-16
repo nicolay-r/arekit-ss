@@ -5,6 +5,7 @@ from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 from arekit.contrib.utils.data.writers.sqlite_native import SQliteWriter
 
+from arekit_ss.filters.label_type import LabelTextOpinionFilter
 from arekit_ss.framework.samplers_list import create_sampler_pipeline_item
 from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     parser.add_argument("--prompt", type=str, default="{text},`{s_val}`,`{t_val}`, `{label_val}`")
     parser.add_argument("--text_parser", type=str, default="nn")
     parser.add_argument("--doc_ids", type=str, default=None)
+    parser.add_argument("--relation_types", type=str, default=None)
     parser.add_argument("--docs_limit", type=int, default=None)
     parser.add_argument("--terms_per_context", type=int, default=50)
     parser.add_argument('--no-vectorize', dest='vectorize', action='store_false',
@@ -53,7 +55,7 @@ if __name__ == '__main__':
     elif args.writer in ['jsonl', 'json']:
         writer = OpenNREJsonWriter(text_columns=["text_a", "text_b"])
     elif args.writer == "sqlite":
-        writer = SQliteWriter()
+        writer = SQliteWriter(skip_existed=False)
     else:
         raise Exception("writer `{}` is not supported!".format(args.writer))
 
@@ -72,6 +74,10 @@ if __name__ == '__main__':
     cfg.entities_parser = auto_import(source["entity_parser"], is_class=True)
     cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
     cfg.splits = args.splits
+
+    # Setup filters for text opinions extraction.
+    if args.relation_types is not None:
+        cfg.optional_filters.append(LabelTextOpinionFilter(args.relation_types.split("|")))
 
     # Extract data to be serialized in a form of the pipeline.
     dpp = auto_import(name=source["pipeline"])

@@ -11,6 +11,7 @@ class SourcesConfig:
         self.entities_parser = None
         self.text_parser = None
         self.splits = None
+        self.optional_filters = []
 
     def get_supported_datatypes(self):
         """ String split name to data-types converter.

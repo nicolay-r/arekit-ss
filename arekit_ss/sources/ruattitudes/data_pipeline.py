@@ -17,6 +17,7 @@ def build_ruattitudes_datapipeline(cfg):
         version=version,
         text_parser=cfg.text_parser,
         label_scaler=PosNegNeuRelationsLabelScaler(),
+        custom_text_opinion_filters=cfg.optional_filters,
         limit=cfg.docs_limit)
 
     d = RuAttitudesDocumentProvider.read_ruattitudes_to_brat_in_memory(
