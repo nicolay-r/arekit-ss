@@ -6,6 +6,7 @@ from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 from arekit.contrib.utils.data.writers.sqlite_native import SQliteWriter
 
 from arekit_ss.filters.label_type import LabelTextOpinionFilter
+from arekit_ss.filters.object_type import EntityBasedTextOpinionFilter
 from arekit_ss.framework.samplers_list import create_sampler_pipeline_item
 from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
@@ -35,6 +36,10 @@ if __name__ == '__main__':
     parser.add_argument("--src_lang", type=str, default=None, required=False)
     parser.add_argument("--dest_lang", type=str, default=None, required=False)
     parser.add_argument("--output_dir", type=str, default="_out")
+    parser.add_argument("--object-source-types", type=str, default=None,
+                        help="Filter specific source object types")
+    parser.add_argument("--object-target-types", type=str, default=None,
+                        help="Filter specific target object types")
     parser.add_argument("--prompt", type=str, default="{text},`{s_val}`,`{t_val}`, `{label_val}`")
     parser.add_argument("--text_parser", type=str, default="nn")
     parser.add_argument("--doc_ids", type=str, default=None)
@@ -77,7 +82,14 @@ if __name__ == '__main__':
 
     # Setup filters for text opinions extraction.
     if args.relation_types is not None:
-        cfg.optional_filters.append(LabelTextOpinionFilter(args.relation_types.split("|")))
+        cfg.optional_filters.append(LabelTextOpinionFilter(
+            relation_types=args.relation_types.split("|")))
+    if args.object_source_types is not None:
+        cfg.optional_filters.append(EntityBasedTextOpinionFilter(
+            supported_types=args.object_source_types.split("|"), is_src=True))
+    if args.object_target_types is not None:
+        cfg.optional_filters.append(EntityBasedTextOpinionFilter(
+            supported_types=args.object_target_types.split("|"), is_src=False))
 
     # Extract data to be serialized in a form of the pipeline.
     dpp = auto_import(name=source["pipeline"])
