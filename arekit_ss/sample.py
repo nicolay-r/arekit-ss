@@ -1,5 +1,6 @@
 import argparse
 
+from arekit.common.data import const
 from arekit.common.pipeline.base import BasePipeline
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
@@ -60,7 +61,7 @@ if __name__ == '__main__':
     elif args.writer in ['jsonl', 'json']:
         writer = OpenNREJsonWriter(text_columns=["text_a", "text_b"])
     elif args.writer == "sqlite":
-        writer = SQliteWriter(skip_existed=False)
+        writer = SQliteWriter(skip_existed=False, clear_table=True, index_column_names=[const.ID])
     else:
         raise Exception("writer `{}` is not supported!".format(args.writer))
 
