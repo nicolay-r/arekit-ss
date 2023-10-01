@@ -24,7 +24,7 @@ that crops context with fixed amount of words.
 
 Install dependencies:
 ```bash
-pip install git+https://github.com/nicolay-r/arekit-ss.git@master
+pip install git+https://github.com/nicolay-r/arekit-ss.git@0.24.0
 ```
 
 Download AREkit related data, from which `sources` are required:
