@@ -44,7 +44,7 @@ python -m arekit_ss.sample --writer csv --source rusentrel --sampler prompt \
 ![output_prompts](https://github.com/nicolay-r/arekit-ss/assets/14871187/d1499f24-b2df-410b-98cc-8d4018de8c65)
 
 ### samplers
-* `nn` -- CNN/LSTM architecture related, including frames annotation from [RuAttitudes](https://github.com/nicolay-r/RuAttitudes).
+* `nn` -- CNN/LSTM architecture related, including frames annotation from [RuSentiFrames](https://github.com/nicolay-r/RuSentiFrames).
 * `bert` -- BERT-based, single-input sequence.  
 * `prompt` -- prompt-based sampler for `ChatGPT` and the related conversational systems [[prompt engeneering guide]](https://github.com/dair-ai/Prompt-Engineering-Guide)
 
