@@ -17,9 +17,6 @@ For custom text sampling, please follow the
 [ARElight](https://github.com/nicolay-r/ARElight)
 project.
 
-> **Mind the case (issue [#18](https://github.com/nicolay-r/arekit-ss/issues/18)):** switching to another language may changed amount of extracted data due to `terms_per_context` parameter
-that crops context with fixed amount of words.
-
 ## Installation
 
 Install dependencies:
@@ -41,6 +38,11 @@ python -m arekit_ss.sample --writer csv --source rusentrel --sampler prompt \
   --prompt "For text: '{text}', the attitude between '{s_val}' and '{t_val}' is: '{label_val}'" \
   --dest_lang en --docs_limit 1 --text_parser lm --output_dir 'out_rusentrel_prompt'
 ```
+
+> **Mind the case (issue [#18](https://github.com/nicolay-r/arekit-ss/issues/18)):** 
+> switching to another language may affect on amount of extracted data because of `terms_per_context` 
+> parameter that crops context by fixed and predefined amount of words.
+
 ![output_prompts](https://github.com/nicolay-r/arekit-ss/assets/14871187/d1499f24-b2df-410b-98cc-8d4018de8c65)
 
 ### samplers
