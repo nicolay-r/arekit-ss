@@ -1,5 +1,3 @@
-from arekit.common.entities.str_fmt import StringEntitiesFormatter
-from arekit.common.entities.types import OpinionEntityType
 from arekit.contrib.bert.input.providers.cropped_sample import CroppedBertSampleRowProvider
 from arekit.contrib.bert.terms.mapper import BertDefaultStringTextTermsMapper
 
