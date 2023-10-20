@@ -6,7 +6,7 @@ from arekit_ss.framework.arekit.serialize_nn import serialize_nn_pipeline
 from arekit_ss.sources.labels.scaler_frames import ThreeLabelScaler
 
 
-def create_sampler_pipeline_item(args, writer, label_scaler, label_fmt):
+def create_sampler_pipeline_item(args, writer, label_scaler, label_fmt, entity_fmt):
     """ This function represent a factory of all the potential samplers,
         oriented for sentiment analysis task (labels_scaler)
     """
@@ -17,14 +17,16 @@ def create_sampler_pipeline_item(args, writer, label_scaler, label_fmt):
             rows_provider=create_ru_sentiment_nn_rows_provider(
                 relation_labels_scaler=label_scaler,
                 frame_roles_label_scaler=ThreeLabelScaler(),
-                vectorizers="default" if args.vectorize else None))
+                vectorizers="default" if args.vectorize else None,
+                entity_fmt=entity_fmt))
 
     elif "bert" == args.sampler:
         return serialize_bert_pipeline(
             output_dir=args.output_dir, writer=writer,
             rows_provider=create_bert_rows_provider(
                 terms_per_context=args.terms_per_context,
-                labels_scaler=label_scaler))
+                labels_scaler=label_scaler,
+                entity_fmt=entity_fmt))
 
     elif "prompt" == args.sampler:
         # same as for BERT.
@@ -34,4 +36,5 @@ def create_sampler_pipeline_item(args, writer, label_scaler, label_fmt):
                 prompt=args.prompt,
                 labels_scaler=label_scaler,
                 # We consider a default labels formatter.
-                labels_formatter=label_fmt))
+                labels_formatter=label_fmt,
+                entity_fmt=entity_fmt))

@@ -5,7 +5,9 @@ from arekit.common.pipeline.base import BasePipeline
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 from arekit.contrib.utils.data.writers.sqlite_native import SQliteWriter
+from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesDisplayValueFormatter
 
+from arekit_ss.entity.masking import MaskedEntitiesFormatter
 from arekit_ss.filters.label_type import LabelTextOpinionFilter
 from arekit_ss.filters.object_type import EntityBasedTextOpinionFilter
 from arekit_ss.framework.samplers_list import create_sampler_pipeline_item
@@ -34,6 +36,7 @@ if __name__ == '__main__':
                         help="Manual selection of the data-types related splits that "
                              "should be chosen for the sampling process; types should be "
                              "separated by ':' sign; for example: 'train:test'")
+    parser.add_argument("--mask_entities", type=str, default=None, required=False)
     parser.add_argument("--src_lang", type=str, default=None, required=False)
     parser.add_argument("--dest_lang", type=str, default=None, required=False)
     parser.add_argument("--output_dir", type=str, default="_out")
@@ -107,7 +110,11 @@ if __name__ == '__main__':
     pipeline_item = create_sampler_pipeline_item(
         args=args, writer=writer,
         label_scaler=auto_import(source["label_scaler"], is_class=True),
-        label_fmt=auto_import(source["label_formatter"], is_class=True))
+        label_fmt=auto_import(source["label_formatter"], is_class=True),
+        entity_fmt=StringEntitiesDisplayValueFormatter() if args.mask_entities is None else
+            MaskedEntitiesFormatter(subj_mask=args.mask_entities.split(":")[0],
+                                    obj_mask=args.mask_entities.split(":")[1],
+                                    other_mask=args.mask_entities.split(":")[2]))
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])
