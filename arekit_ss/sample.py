@@ -83,6 +83,7 @@ if __name__ == '__main__':
     cfg.entities_parser = auto_import(source["entity_parser"], is_class=True)
     cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
     cfg.splits = args.splits
+    cfg.do_mask_entities = args.mask_entities is not None
 
     # Setup filters for text opinions extraction.
     if args.relation_types is not None:
@@ -111,7 +112,7 @@ if __name__ == '__main__':
         args=args, writer=writer,
         label_scaler=auto_import(source["label_scaler"], is_class=True),
         label_fmt=auto_import(source["label_formatter"], is_class=True),
-        entity_fmt=StringEntitiesDisplayValueFormatter() if args.mask_entities is None else
+        entity_fmt=StringEntitiesDisplayValueFormatter() if not cfg.do_mask_entities else
             MaskedEntitiesFormatter(subj_mask=args.mask_entities.split(":")[0],
                                     obj_mask=args.mask_entities.split(":")[1],
                                     other_mask=args.mask_entities.split(":")[2]))

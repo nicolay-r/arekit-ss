@@ -12,7 +12,8 @@ from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextToken
 from arekit.contrib.utils.pipelines.items.text.entities_default import TextEntitiesParser
 from arekit.common.text.parser import BaseTextParser
 
-from arekit_ss.text_parser.translator import TextAndEntitiesGoogleTranslator
+from arekit_ss.sources.config import SourcesConfig
+from arekit_ss.third_party.googletrans import translate_value
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -21,13 +22,21 @@ logging.basicConfig(level=logging.DEBUG)
 
 class TestTextParser(unittest.TestCase):
 
+    def test_translator(self):
+        x = translate_value("привет", dest="en", src="ru")
+        print(x)
+
     def test(self):
         text = "А контроль над этими провинциями — [США] , которая не пытается ввести санкции против. [ВКC] "
+
+        cfg = SourcesConfig()
+        cfg.src_lang = "ru"
+        cfg.dest_lang = "en"
 
         # Adopting translate pipeline item, based on google translator.
         text_parser = BaseTextParser(pipeline=[
             TextEntitiesParser(),
-            TextAndEntitiesGoogleTranslator(src="ru", dest="en"),
+            cfg.get_translator_pipeline_item(cfg.src_lang != cfg.dest_lang),
             DefaultTextTokenizer(keep_tokens=True),
         ])
 
@@ -42,8 +51,7 @@ class TestTextParser(unittest.TestCase):
             if isinstance(term, str):
                 print("Word:\t\t'{}'".format(term))
             elif isinstance(term, Token):
-                print("Token:\t\t'{}' ('{}')".format(term.get_token_value(),
-                                                            term.get_meta_value()))
+                print("Token:\t\t'{}' ('{}')".format(term.get_token_value(), term.get_meta_value()))
             elif isinstance(term, Entity):
                 print("Entity:\t\t'{}' ({})".format(term.Value, type(term)))
             else:

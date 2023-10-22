@@ -10,7 +10,6 @@ from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.sentiment import PositiveTo, NegativeTo
-from arekit_ss.text_parser.translator import TextAndEntitiesGoogleTranslator
 
 
 def create_nn_ru_frames(cfg):
@@ -35,5 +34,5 @@ def create_nn_ru_frames(cfg):
     return BaseTextParser(pipeline=[
         cfg.entities_parser,
         DefaultTextTokenizer(keep_tokens=True),
-        TextAndEntitiesGoogleTranslator(src=cfg.src_lang, dest=cfg.dest_lang) if cfg.dest_lang != cfg.src_lang else None,
+        cfg.get_translator_pipeline_item(do_translation=cfg.src_lang != cfg.dest_lang),
         LemmasBasedFrameVariantsParser(frame_variants=frame_variant_collection, stemmer=stemmer)])
