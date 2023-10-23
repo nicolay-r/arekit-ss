@@ -2,6 +2,7 @@ import argparse
 
 from arekit.common.data import const
 from arekit.common.pipeline.base import BasePipeline
+from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 from arekit.contrib.utils.data.writers.sqlite_native import SQliteWriter
@@ -119,10 +120,10 @@ if __name__ == '__main__':
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])
-    pipeline.run(input_data=None, params_dict={
-                     "doc_ids": args.doc_ids.split(',') if args.doc_ids is not None else None,
-                     "data_folding": data_folding,
-                     "data_type_pipelines": data_type_pipelines
-                 })
+    pipeline.run(input_data=PipelineContext({
+         "doc_ids": args.doc_ids.split(',') if args.doc_ids is not None else None,
+         "data_folding": data_folding,
+         "data_type_pipelines": data_type_pipelines
+     }))
 
     logger.info(f"Done!")
