@@ -1,10 +1,12 @@
 import unittest
 
 from arekit.common.pipeline.base import BasePipeline
+from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.source.brat.entities.parser import BratTextEntitiesParser
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 
+from arekit_ss.entity.masking import StringEntitiesDisplayValueFormatter
 from arekit_ss.framework.arekit.rows_bert import create_bert_rows_provider
 from arekit_ss.framework.arekit.rows_ru_sentiment_nn import create_ru_sentiment_nn_rows_provider
 from arekit_ss.framework.arekit.serialize_bert import serialize_bert_pipeline
@@ -23,6 +25,7 @@ class TestRuSentRel(unittest.TestCase):
     def __config(self):
         cfg = SourcesConfig()
         cfg.docs_limit = 5
+        cfg.src_lang = "ru"
         cfg.dest_lang = "ru"
         return cfg
 
@@ -35,13 +38,11 @@ class TestRuSentRel(unittest.TestCase):
                                        writer=OpenNREJsonWriter(text_columns=["text_a"]),
                                        rows_provider=create_bert_rows_provider(
                                            terms_per_context=100,
-                                           labels_scaler=PosNegNeuRelationsLabelScaler()))
+                                           labels_scaler=PosNegNeuRelationsLabelScaler(),
+                                           entity_fmt=StringEntitiesDisplayValueFormatter()))
         pipeline = BasePipeline([item])
-        pipeline.run(input_data=None,
-                     params_dict={
-                      "data_folding": data_folding,
-                      "data_type_pipelines": pipelines
-                     })
+        pipeline.run(input_data=PipelineContext(d={"data_folding": data_folding,
+                                                   "data_type_pipelines": pipelines}))
 
     def test_serialize_nn_csv(self):
         cfg = self.__config()
@@ -53,15 +54,13 @@ class TestRuSentRel(unittest.TestCase):
                                      rows_provider=create_ru_sentiment_nn_rows_provider(
                                          relation_labels_scaler=PosNegNeuRelationsLabelScaler(),
                                          frame_roles_label_scaler=ThreeLabelScaler(),
+                                         entity_fmt=StringEntitiesDisplayValueFormatter(),
                                          vectorizers="default"))
-        s_ppl = BasePipeline([item])
-        s_ppl.run(input_data=None,
-                  params_dict={
-                      "data_folding": data_folding,
-                      "data_type_pipelines": pipelines
-                  })
+        pipeline = BasePipeline([item])
+        pipeline.run(input_data=PipelineContext(d={"data_folding": data_folding,
+                                                   "data_type_pipelines": pipelines}))
 
-    def test_serialize_nn_opennre(self):
+    def test_serialize_nn_jsonl(self):
         cfg = self.__config()
         cfg.entities_parser = BratTextEntitiesParser()
         cfg.text_parser = create_nn_ru_frames(cfg)
@@ -71,11 +70,9 @@ class TestRuSentRel(unittest.TestCase):
                                      rows_provider=create_ru_sentiment_nn_rows_provider(
                                          relation_labels_scaler=PosNegNeuRelationsLabelScaler(),
                                          frame_roles_label_scaler=ThreeLabelScaler(),
+                                         entity_fmt=StringEntitiesDisplayValueFormatter(),
                                          vectorizers="default"))
 
-        s_ppl = BasePipeline([item])
-        s_ppl.run(input_data=None,
-                  params_dict={
-                      "data_folding": data_folding,
-                      "data_type_pipelines": pipelines
-                  })
+        pipeline = BasePipeline([item])
+        pipeline.run(input_data=PipelineContext(d={"data_folding": data_folding,
+                                                   "data_type_pipelines": pipelines}))

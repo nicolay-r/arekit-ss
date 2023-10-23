@@ -19,6 +19,9 @@ class SingletonTranslator(object):
 def translate_value(value, src, dest, attempts=10):
     """ This is a main wrapping for GoogleTranslation API calls.
     """
+    assert(isinstance(src, str))
+    assert(isinstance(dest, str))
+
     translator = SingletonTranslator.instance()
 
     import logging
