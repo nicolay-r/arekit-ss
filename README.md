@@ -36,7 +36,7 @@ Example of composing prompts:
 ```bash
 python -m arekit_ss.sample --writer csv --source rusentrel --sampler prompt \
   --prompt "For text: '{text}', the attitude between '{s_val}' and '{t_val}' is: '{label_val}'" \
-  --dest_lang en --docs_limit 1 --text_parser lm --output_dir 'out_rusentrel_prompt'
+  --dest_lang en --docs_limit 1 --text_parser lm
 ```
 
 > **Mind the case (issue [#18](https://github.com/nicolay-r/arekit-ss/issues/18)):** 
