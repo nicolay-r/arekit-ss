@@ -48,8 +48,7 @@ class TestRuAttitudes(unittest.TestCase):
         cfg.text_parser = create_nn_ru_frames(cfg)
         data_folding, pipelines = build_ruattitudes_datapipeline(cfg)
         s_ppl = BasePipeline([nn_ppl("ra")])
-        s_ppl.run(input_data=None,
-                  params_dict=PipelineContext(d={
+        s_ppl.run(input_data=PipelineContext(d={
                       "data_folding": data_folding,
                       "data_type_pipelines": pipelines
                   }))

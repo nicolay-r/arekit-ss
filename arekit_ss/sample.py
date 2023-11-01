@@ -1,4 +1,5 @@
 import argparse
+from os.path import join
 
 from arekit.common.data import const
 from arekit.common.pipeline.base import BasePipeline
@@ -46,9 +47,9 @@ if __name__ == '__main__':
     parser.add_argument("--object-target-types", type=str, default=None,
                         help="Filter specific target object types")
     parser.add_argument("--prompt", type=str, default="{text},`{s_val}`,`{t_val}`, `{label_val}`")
-    parser.add_argument("--text_parser", type=str, default="nn")
     parser.add_argument("--doc_ids", type=str, default=None)
-    parser.add_argument("--relation_types", type=str, default=None)
+    parser.add_argument("--relation_types", type=str, default=None,
+                        help="list of types, in which items separated with `|` char.")
     parser.add_argument("--docs_limit", type=int, default=None)
     parser.add_argument("--terms_per_context", type=int, default=50)
     parser.add_argument('--no-vectorize', dest='vectorize', action='store_false',
@@ -82,7 +83,7 @@ if __name__ == '__main__':
     cfg.dest_lang = source["src_lang"] if args.dest_lang is None else args.dest_lang
     cfg.docs_limit = args.docs_limit
     cfg.entities_parser = auto_import(source["entity_parser"], is_class=True)
-    cfg.text_parser = text_parsing_pipelines[args.text_parser](cfg)
+    cfg.text_parser = text_parsing_pipelines["nn" if args.sampler == "nn" else "lm"](cfg)
     cfg.splits = args.splits
     cfg.do_mask_entities = args.mask_entities is not None
 
@@ -109,12 +110,14 @@ if __name__ == '__main__':
         logger.info(f"DataType Pipelines are empty for the given splits [`{args.splits}`]. No output results.")
 
     # Forming the name of the result samples by relying on the source name.
-    collection_name = "-".join([
+    collection_name = "-".join(list(filter(lambda item: item is not None, [
         args.source,
         args.sampler,
         "tpc" + str(args.terms_per_context),
-        cfg.dest_lang
-    ])
+        cfg.dest_lang,
+        "l" + str(args.docs_limit) if args.docs_limit is not None else None,
+        "fixed" if args.doc_ids is not None else None
+    ])))
 
     pipeline_item = create_sampler_pipeline_item(
         args=args,
@@ -134,4 +137,4 @@ if __name__ == '__main__':
          "data_type_pipelines": data_type_pipelines
      }))
 
-    logger.info(f"Done!")
+    logger.info(f"Done: {join(args.output_dir, collection_name)} [{args.writer}]")
