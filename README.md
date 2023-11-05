@@ -8,14 +8,11 @@
     <img src="logo.png"/>
 </p>
 
-`arekit-ss` [AREkit double "s"] -- is an extension for instant object-pair context sampling from 
-[AREkit](https://github.com/nicolay-r/AREkit)
-collection of 
-[datasources](https://github.com/nicolay-r/AREkit/wiki/Binded-Sources).
+`arekit-ss` [AREkit double "s"] -- is an object-pair context sampler 
+for [datasources](https://github.com/nicolay-r/AREkit/wiki/Binded-Sources), 
+powered by [AREkit](https://github.com/nicolay-r/AREkit)
 
-For custom text sampling, please follow the 
-[ARElight](https://github.com/nicolay-r/ARElight)
-project.
+> **NOTE:** For custom text sampling, please follow the [ARElight](https://github.com/nicolay-r/ARElight) project.
 
 ## Installation
 
@@ -53,14 +50,18 @@ python -m arekit_ss.sample --writer csv --source rusentrel --sampler prompt \
     * `terms_per_context` -- amount of words (terms) in between SOURCE and TARGET objects.
     * `object-source-types` -- filter specific source object types
     * `object-target-types` -- filter specific target object types
-    * `relation_types` -- list of types, in which items separated with `|` char; all by default.
-    * `splits` -- Manual selection of the data-types related splits that should be chosen for the sampling process; types should be separated by ':' sign; for example: 'train:test'
+    * `relation_types` -- list of types, in which items separated with `|` char; all by default
+    * `splits` -- Manual selection of the data-types related splits that should be chosen for the sampling process; 
+      types should be separated by ':' sign; for example: 'train:test'
 * `sampler` -- List of the supported samplers:
     * `nn` -- CNN/LSTM architecture related, including frames annotation from [RuSentiFrames](https://github.com/nicolay-r/RuSentiFrames).
         * `no-vectorize` -- flag is applicable only for `nn`, and denotes no need to generate embeddings for features
     * `bert` -- BERT-based, single-input sequence.
     * `prompt` -- prompt-based sampler for LLM systems [[prompt engeneering guide]](https://github.com/dair-ai/Prompt-Engineering-Guide)
-        * `prompt` -- For the `prompt` sampler, text of the prompt.
+        * `prompt` -- text of the prompt which includes the following parameters:
+          * `{text}` is an original text of the sample
+          * `{s_val}` and `{t_val}` values of the source and target of the pairs respectively
+          * `{label_val}` value of the label
 * `writer` -- the output format of samples:
     * `csv` -- for [AREnets](https://github.com/nicolay-r/AREnets) framework;
     * `jsonl` -- for [OpenNRE](https://github.com/thunlp/OpenNRE) framework.
