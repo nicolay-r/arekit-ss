@@ -15,14 +15,17 @@ def get_requirements(filenames):
 setup(
     name='arekit_ss',
     version='0.23.1',
-    description='AREkit sources sampler',
+    description='Low Resource Context Relation Sampler for contexts'
+                ' with relations for fact-checking and fine-tuning your LLM models, powered by AREkit',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     url='https://github.com/nicolay-r/arekit-ss',
     author='Nicolay Rusnachenko',
-    author_email='???',
+    author_email='rusnicolay@gmail.com',
     license='MIT License',
     classifiers=[
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.9',
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Text Processing :: Linguistic',
     ],
@@ -30,4 +33,5 @@ setup(
     packages=find_packages(),
     package_dir={'src': 'src'},
     install_requires=get_requirements(['dependencies.txt']),
+    data_files=["logo.png"],
 )

@@ -1,2 +1,2 @@
-arekit @ git+https://github.com/nicolay-r/AREkit@0.23.1-rc
+arekit==0.23.1
 googletrans==3.1.0a0
