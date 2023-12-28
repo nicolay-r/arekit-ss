@@ -1,4 +1,4 @@
-## arekit-ss 0.24.0
+## arekit-ss 0.25.0
 
 ![](https://img.shields.io/badge/Python-3.9-brightgreen.svg)
 ![](https://img.shields.io/badge/AREkit-0.24.0-orange.svg)
@@ -18,7 +18,7 @@ powered by [AREkit](https://github.com/nicolay-r/AREkit)
 
 Install dependencies:
 ```bash
-pip install git+https://github.com/nicolay-r/arekit-ss.git@0.24.0
+pip install git+https://github.com/nicolay-r/arekit-ss.git@0.25.0
 ```
 
 Download AREkit related data, from which `sources` are required:

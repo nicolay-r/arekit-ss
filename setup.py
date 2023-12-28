@@ -14,7 +14,7 @@ def get_requirements(filenames):
 
 setup(
     name='arekit_ss',
-    version='0.24.0',
+    version='0.25.0',
     description='Low Resource Context Relation Sampler for contexts'
                 ' with relations for fact-checking and fine-tuning your LLM models, powered by AREkit',
     long_description=open('README.md').read(),
