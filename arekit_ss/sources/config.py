@@ -13,7 +13,7 @@ class SourcesConfig:
         self.translator_backend = "googletrans"
         self.docs_limit = None
         self.entities_parser = None
-        self.text_parser = None
+        self.text_parser_items = None
         self.splits = None
         self.do_mask_entites = False
         self.optional_filters = []

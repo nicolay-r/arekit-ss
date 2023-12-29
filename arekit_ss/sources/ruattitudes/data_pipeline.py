@@ -1,11 +1,10 @@
 from arekit.common.experiment.data_type import DataType
 
-from arekit.contrib.source.ruattitudes.io_utils import RuAttitudesVersions
-from arekit.contrib.utils.pipelines.sources.ruattitudes.doc_provider import RuAttitudesDocumentProvider
-from arekit.contrib.utils.pipelines.sources.ruattitudes.extract_text_opinions import create_text_opinion_extraction_pipeline
-
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.scaler import PosNegNeuRelationsLabelScaler
+from arekit_ss.sources.ruattitudes.doc_provider import RuAttitudesDocumentProvider
+from arekit_ss.sources.ruattitudes.extract_text_opinions import create_text_opinion_extraction_pipeline
+from arekit_ss.sources.ruattitudes.utils.io_utils import RuAttitudesVersions
 
 
 def build_ruattitudes_datapipeline(cfg):
@@ -15,7 +14,7 @@ def build_ruattitudes_datapipeline(cfg):
 
     pipeline = create_text_opinion_extraction_pipeline(
         version=version,
-        text_parser=cfg.text_parser,
+        text_parser=cfg.text_parser_items,
         label_scaler=PosNegNeuRelationsLabelScaler(),
         custom_text_opinion_filters=cfg.optional_filters,
         limit=cfg.docs_limit)

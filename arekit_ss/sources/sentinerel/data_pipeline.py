@@ -1,8 +1,6 @@
-from arekit.contrib.source.sentinerel.io_utils import SentiNerelVersions
-from arekit.contrib.utils.pipelines.sources.sentinerel.extract_text_opinions import \
-    create_text_opinion_extraction_pipeline
-
 from arekit_ss.sources.config import SourcesConfig
+from arekit_ss.sources.sentinerel.extract_text_opinions import create_text_opinion_extraction_pipeline
+from arekit_ss.sources.sentinerel.utils.io_utils import SentiNerelVersions
 
 
 def build_sentinerel_datapipeline(cfg):
@@ -14,6 +12,6 @@ def build_sentinerel_datapipeline(cfg):
         custom_text_opinion_filters=cfg.optional_filters,
         docs_limit=cfg.docs_limit,
         doc_provider=None,
-        text_parser=cfg.text_parser)
+        text_parser=cfg.text_parser_items)
 
     return data_folding, pipelines

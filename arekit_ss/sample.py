@@ -12,7 +12,7 @@ from arekit.contrib.utils.io_utils.samples import SamplesIO
 from arekit_ss.entity.masking import StringEntitiesDisplayValueFormatter, MaskedEntitiesFormatter
 from arekit_ss.filters.label_type import LabelTextOpinionFilter
 from arekit_ss.filters.object_type import EntityBasedTextOpinionFilter
-from arekit_ss.framework.samplers_list import create_sampler_pipeline_item
+from arekit_ss.samplers_list import create_sampler_pipeline_item
 from arekit_ss.sources import src_list
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.text_parser.text_lm import create_lm
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     cfg.dest_lang = source["src_lang"] if args.dest_lang is None else args.dest_lang
     cfg.docs_limit = args.docs_limit
     cfg.entities_parser = auto_import(source["entity_parser"], is_class=True)
-    cfg.text_parser = text_parsing_pipelines["nn" if args.sampler == "nn" else "lm"](cfg)
+    cfg.text_parser_items = text_parsing_pipelines["nn" if args.sampler == "nn" else "lm"](cfg)
     cfg.splits = args.splits
     cfg.do_mask_entities = args.mask_entities is not None
 
@@ -131,10 +131,11 @@ if __name__ == '__main__':
 
     # Launch pipeline.
     pipeline = BasePipeline([pipeline_item])
-    pipeline.run(input_data=PipelineContext({
-         "doc_ids": args.doc_ids.split(',') if args.doc_ids is not None else None,
-         "data_folding": data_folding,
-         "data_type_pipelines": data_type_pipelines
-     }))
+    ctx = PipelineContext({
+        "doc_ids": args.doc_ids.split(',') if args.doc_ids is not None else None,
+        "data_folding": data_folding,
+        "data_type_pipelines": data_type_pipelines
+    })
+    pipeline.run(pipeline_ctx=ctx)
 
     logger.info(f"Done: {join(args.output_dir, collection_name)} [{args.writer}]")

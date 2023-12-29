@@ -1,15 +1,13 @@
 from arekit.common.frames.variants.collection import FrameVariantsCollection
-from arekit.common.text.parser import BaseTextParser
-from arekit.contrib.source.rusentiframes.collection import RuSentiFramesCollection
-from arekit.contrib.source.rusentiframes.labels_fmt import RuSentiFramesLabelsFormatter, \
-    RuSentiFramesEffectLabelsFormatter
-from arekit.contrib.source.rusentiframes.types import RuSentiFramesVersions
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.sources.labels.sentiment import PositiveTo, NegativeTo
+from arekit_ss.sources.rusentiframes.collection import RuSentiFramesCollection
+from arekit_ss.sources.rusentiframes.labels_fmt import RuSentiFramesLabelsFormatter, RuSentiFramesEffectLabelsFormatter
+from arekit_ss.sources.rusentiframes.types import RuSentiFramesVersions
 
 
 def create_nn_ru_frames(cfg):
@@ -31,8 +29,7 @@ def create_nn_ru_frames(cfg):
         overwrite_existed_variant=True,
         raise_error_on_existed_variant=False)
 
-    return BaseTextParser(pipeline=[
-        cfg.entities_parser,
-        DefaultTextTokenizer(keep_tokens=True),
-        cfg.get_translator_pipeline_item(do_translation=cfg.src_lang != cfg.dest_lang),
-        LemmasBasedFrameVariantsParser(frame_variants=frame_variant_collection, stemmer=stemmer)])
+    return [cfg.entities_parser,
+            DefaultTextTokenizer(keep_tokens=True),
+            cfg.get_translator_pipeline_item(do_translation=cfg.src_lang != cfg.dest_lang),
+            LemmasBasedFrameVariantsParser(frame_variants=frame_variant_collection, stemmer=stemmer)]

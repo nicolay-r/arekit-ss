@@ -1,12 +1,12 @@
 from collections import OrderedDict
 
 from arekit.common.labels.scaler.base import BaseLabelScaler
-from arekit.contrib.source.nerelbio import labels
-from arekit.contrib.source.nerelbio.versions import NerelBioVersions
-from arekit.contrib.utils.pipelines.sources.nerel_bio.extrat_text_relations import create_text_relation_extraction_pipeline
-from arekit.contrib.utils.pipelines.sources.nerel_bio.labels_fmt import NerelBioAnyLabelFormatter
 
 from arekit_ss.sources.config import SourcesConfig
+from arekit_ss.sources.nerel_bio.extrat_text_relations import create_text_relation_extraction_pipeline
+from arekit_ss.sources.nerel_bio.labels_fmt import NerelBioAnyLabelFormatter
+from arekit_ss.sources.nerel_bio.utils import labels
+from arekit_ss.sources.nerel_bio.utils.versions import NerelBioVersions
 
 
 def build_nerel_bio_datapipeline(cfg):
@@ -21,7 +21,7 @@ def build_nerel_bio_datapipeline(cfg):
         docs_limit=cfg.docs_limit,
         custom_text_opinion_filters=cfg.optional_filters,
         doc_ops=None,
-        text_parser=cfg.text_parser)
+        text_parser=cfg.text_parser_items)
 
     return data_folding, pipelines
 

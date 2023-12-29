@@ -3,14 +3,13 @@ import unittest
 
 from arekit.common.data.input.providers.const import IDLE_MODE
 from arekit.common.docs.base import Document
-from arekit.common.docs.parser import DocumentParser
+from arekit.common.docs.parser import DocumentParsers
 from arekit.common.docs.sentence import BaseDocumentSentence
 from arekit.common.entities.base import Entity
 from arekit.common.context.token import Token
 from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.items.text.entities_default import TextEntitiesParser
-from arekit.common.text.parser import BaseTextParser
 
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.third_party.googletrans import translate_value
@@ -34,15 +33,13 @@ class TestTextParser(unittest.TestCase):
         cfg.dest_lang = "en"
 
         # Adopting translate pipeline item, based on google translator.
-        text_parser = BaseTextParser(pipeline=[
-            TextEntitiesParser(),
-            cfg.get_translator_pipeline_item(cfg.src_lang != cfg.dest_lang),
-            DefaultTextTokenizer(keep_tokens=True),
-        ])
+        pipeline_items = [TextEntitiesParser(src_func=lambda s: s.Text),
+                          cfg.get_translator_pipeline_item(cfg.src_lang != cfg.dest_lang),
+                          DefaultTextTokenizer(keep_tokens=True)]
 
         doc = Document(doc_id=0, sentences=[BaseDocumentSentence(text.split())])
-        parsed_doc = DocumentParser.parse(doc=doc, text_parser=text_parser,
-                                          parent_ppl_ctx=PipelineContext({IDLE_MODE: False}))
+        parsed_doc = DocumentParsers.parse(doc=doc, pipeline_items=pipeline_items,
+                                           parent_ppl_ctx=PipelineContext({IDLE_MODE: False}))
         self.debug_show_terms(parsed_doc.iter_terms())
 
     @staticmethod
