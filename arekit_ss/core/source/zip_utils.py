@@ -2,7 +2,7 @@ import zipfile
 
 import enum
 
-from arekit.common import utils
+from arekit_ss.utils import get_default_download_dir
 
 
 class ZipArchiveUtils(object):
@@ -44,4 +44,4 @@ class ZipArchiveUtils(object):
 
     @staticmethod
     def get_data_root():
-        return utils.get_default_download_dir()
+        return get_default_download_dir()

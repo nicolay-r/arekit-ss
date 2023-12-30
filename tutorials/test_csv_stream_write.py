@@ -10,7 +10,7 @@ from arekit.common.data.input.providers.text.single import BaseSingleTextProvide
 from arekit.common.experiment.data_type import DataType
 from arekit.common.labels.base import Label, NoLabel
 from arekit.common.labels.scaler.base import BaseLabelScaler
-from arekit.common.pipeline.base import BasePipeline
+from arekit.common.pipeline.base import BasePipelineLauncher
 from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.bert.input.providers.text_pair import PairTextProvider
 from arekit.contrib.bert.terms.mapper import BertDefaultStringTextTermsMapper
@@ -81,10 +81,6 @@ class TestStreamWriters(unittest.TestCase):
             save_labels_func=lambda data_type: True,
             storage=RowCacheStorage())
 
-        pipeline = BasePipeline([
-            pipeline_item
-        ])
-
         #####
         # Declaring pipeline related context parameters.
         #####
@@ -106,10 +102,13 @@ class TestStreamWriters(unittest.TestCase):
             pipeline_items=pipeline_items)
         #####
 
-        pipeline.run(pipeline_ctx=PipelineContext(d={
-            "data_type_pipelines": {DataType.Train: train_pipeline},
-            "data_folding": {DataType.Train: [0, 1]}
-        }), src_key="data_type_pipelines")
+        BasePipelineLauncher.run(
+            pipeline=[pipeline_item],
+            pipeline_ctx=PipelineContext(d={
+                "data_type_pipelines": {DataType.Train: train_pipeline},
+                "data_folding": {DataType.Train: [0, 1]}
+            }),
+            src_key="data_type_pipelines")
 
     def test_csv_native(self):
         """ Testing writing into CSV format

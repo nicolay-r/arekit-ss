@@ -10,6 +10,7 @@ from arekit.common.docs.parsed.providers.entity_service import EntityServiceProv
 from arekit.common.docs.parsed.service import ParsedDocumentService
 from arekit.common.opinions.annot.algo.pair_based import PairBasedOpinionAnnotationAlgorithm
 from arekit.common.opinions.collection import OpinionCollection
+from arekit.common.pipeline.base import BasePipelineLauncher
 from arekit.common.pipeline.context import PipelineContext
 from arekit.common.synonyms.grouping import SynonymsCollectionValuesGroupingProviders
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
@@ -92,7 +93,7 @@ class TestTextOpinionAnnotation(unittest.TestCase):
         )
 
         # launching pipeline.
-        pipeline.run(pipeline_ctx=context)
+        BasePipelineLauncher.run(pipeline=pipeline, pipeline_ctx=context)
 
         # Running the pipeline.
         for linked in context.provide("result"):

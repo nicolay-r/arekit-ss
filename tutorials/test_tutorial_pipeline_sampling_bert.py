@@ -12,7 +12,7 @@ from arekit.common.experiment.data_type import DataType
 from arekit.common.labels.base import NoLabel, Label
 from arekit.common.labels.scaler.base import BaseLabelScaler
 from arekit.common.labels.str_fmt import StringLabelsFormatter
-from arekit.common.pipeline.base import BasePipeline
+from arekit.common.pipeline.base import BasePipelineLauncher
 from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.bert.input.providers.text_pair import PairTextProvider
 from arekit.contrib.bert.terms.mapper import BertDefaultStringTextTermsMapper
@@ -98,10 +98,6 @@ class TestBertSerialization(unittest.TestCase):
             storage=PandasBasedRowsStorage(),
             src_key=None)
 
-        pipeline = BasePipeline([
-            pipeline_item
-        ])
-
         #####
         # Declaring pipeline related context parameters.
         #####
@@ -125,13 +121,15 @@ class TestBertSerialization(unittest.TestCase):
             pipeline_items=pipeline_items)
         #####
 
-        pipeline.run(pipeline_ctx=PipelineContext(d={
+        BasePipelineLauncher.run(
+            pipeline=[pipeline_item],
+            pipeline_ctx=PipelineContext(d={
             "data_type_pipelines": {DataType.Train: train_pipeline},
             "data_folding": {DataType.Train: [0, 1]}
         }))
 
         reader = PandasCsvReader()
-        source = join(self.__output_dir, "sample-train-0" + writer.extension())
+        source = join(self.__output_dir, "sample-train" + writer.extension())
         storage = reader.read(source)
         self.assertEqual(20, len(storage), "Amount of rows is non equal!")
 

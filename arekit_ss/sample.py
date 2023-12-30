@@ -2,7 +2,7 @@ import argparse
 from os.path import join
 
 from arekit.common.data import const
-from arekit.common.pipeline.base import BasePipeline
+from arekit.common.pipeline.base import BasePipelineLauncher
 from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
@@ -130,12 +130,11 @@ if __name__ == '__main__':
                                     other_mask=args.mask_entities.split(":")[2]))
 
     # Launch pipeline.
-    pipeline = BasePipeline([pipeline_item])
     ctx = PipelineContext({
         "doc_ids": args.doc_ids.split(',') if args.doc_ids is not None else None,
         "data_folding": data_folding,
         "data_type_pipelines": data_type_pipelines
     })
-    pipeline.run(pipeline_ctx=ctx)
+    BasePipelineLauncher.run(pipeline=[pipeline_item], pipeline_ctx=ctx)
 
     logger.info(f"Done: {join(args.output_dir, collection_name)} [{args.writer}]")

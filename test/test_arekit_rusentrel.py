@@ -1,6 +1,6 @@
 import unittest
 
-from arekit.common.pipeline.base import BasePipeline
+from arekit.common.pipeline.base import BasePipelineLauncher
 from arekit.common.pipeline.context import PipelineContext
 
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
@@ -25,24 +25,24 @@ class TestRuSentRel(unittest.TestCase):
         cfg.entities_parser = BratTextEntitiesParser()
         cfg.text_parser_items = create_lm(cfg)
         data_folding, pipelines = build_s_rusentrel_datapipeline(cfg)
-        pipeline = BasePipeline([bert_ppl("rsr")])
-        pipeline.run(pipeline_ctx=PipelineContext(d={"data_folding": data_folding,
-                                                     "data_type_pipelines": pipelines}))
+        BasePipelineLauncher.run(pipeline=[bert_ppl("rsr")],
+                                 pipeline_ctx=PipelineContext(d={"data_folding": data_folding,
+                                                                 "data_type_pipelines": pipelines}))
 
     def test_serialize_nn_csv(self):
         cfg = self.__config()
         cfg.entities_parser = BratTextEntitiesParser()
         cfg.text_parser_items = create_nn_ru_frames(cfg)
         data_folding, pipelines = build_s_rusentrel_datapipeline(cfg)
-        pipeline = BasePipeline([nn_ppl("rsr")])
-        pipeline.run(pipeline_ctx=PipelineContext(d={"data_folding": data_folding,
-                                                     "data_type_pipelines": pipelines}))
+        BasePipelineLauncher.run(pipeline=[nn_ppl("rsr")],
+                                 pipeline_ctx=PipelineContext(d={"data_folding": data_folding,
+                                                                 "data_type_pipelines": pipelines}))
 
     def test_serialize_nn_jsonl(self):
         cfg = self.__config()
         cfg.entities_parser = BratTextEntitiesParser()
         cfg.text_parser_items = create_nn_ru_frames(cfg)
         data_folding, pipelines = build_s_rusentrel_datapipeline(cfg)
-        pipeline = BasePipeline([nn_ppl("rsr")])
-        pipeline.run(pipeline_ctx=PipelineContext(d={"data_folding": data_folding,
-                                                     "data_type_pipelines": pipelines}))
+        BasePipelineLauncher.run(pipeline=[nn_ppl("rsr")],
+                                 pipeline_ctx=PipelineContext(d={"data_folding": data_folding,
+                                                                 "data_type_pipelines": pipelines}))
