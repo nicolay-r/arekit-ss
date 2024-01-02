@@ -21,9 +21,9 @@ Install dependencies:
 pip install git+https://github.com/nicolay-r/arekit-ss.git@0.25.0
 ```
 
-Download AREkit related data, from which `sources` are required:
+Download resources:
 ```bash
-python -m arekit.download_data
+python -m arekit_ss.download_data
 ```
 
 ## Usage
