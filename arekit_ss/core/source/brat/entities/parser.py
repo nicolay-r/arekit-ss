@@ -1,44 +1,15 @@
-from arekit.common.docs.objects_parser import SentenceObjectsParserPipelineItem
-from arekit.common.text.partitioning.str import StringPartitioning
-from arekit.common.text.partitioning.terms import TermsPartitioning
+from arekit.common.pipeline.items.base import BasePipelineItem
 
+from arekit_ss.core.source.brat.entities.partitioning import Partitioning
 from arekit_ss.core.source.brat.sentence import BratSentence
 
 
-class BratTextEntitiesParser(SentenceObjectsParserPipelineItem):
+class BratTextEntitiesParser(BasePipelineItem):
 
-    ################################
-    # NOTE: Supported partitionings.
-    ################################
-    # By default, BRAT annotation proposes to adopt entities annotation
-    # based on string input, which means that entity ends described as
-    # `char-ind-begin` and `char-ind-end`. However, the latter could be
-    # expanded to list of terms, which means that we deal with `ind-begin`
-    # and `ind-end` list indices.
-    __supported_partitionings = {
-        "string": StringPartitioning(),
-        "terms": TermsPartitioning()
-    }
+    def __init__(self, text_fmt="str", **kwargs):
+        super(BratTextEntitiesParser, self).__init__(**kwargs)
+        self.__partitioning = Partitioning(text_fmt)
 
-    def __init__(self, partitioning="string", **kwargs):
-        assert(isinstance(partitioning, str))
-        super(BratTextEntitiesParser, self).__init__(self.__supported_partitionings[partitioning], **kwargs)
-
-    # region protected methods
-
-    def _get_text(self, sentence):
-        return sentence.Text
-
-    def _get_parts_provider_func(self, sentence):
-        return self.__iter_subs_values_with_bounds(sentence)
-
-    # endregion
-
-    # region private methods
-
-    @staticmethod
-    def __iter_subs_values_with_bounds(sentence):
-        assert(isinstance(sentence, BratSentence))
-        return sentence.iter_entity_with_local_bounds()
-
-    # endregion
+    def apply_core(self, input_data, pipeline_ctx):
+        assert(isinstance(input_data, BratSentence))
+        return self.__partitioning.provide(text=input_data.Text, parts_it=input_data.iter_entity_with_local_bounds())
