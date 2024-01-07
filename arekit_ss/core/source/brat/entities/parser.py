@@ -1,6 +1,6 @@
 from arekit.common.pipeline.items.base import BasePipelineItem
+from arekit.common.text.partitioning import Partitioning
 
-from arekit_ss.core.source.brat.entities.partitioning import Partitioning
 from arekit_ss.core.source.brat.sentence import BratSentence
 
 
