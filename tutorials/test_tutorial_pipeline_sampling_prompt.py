@@ -17,12 +17,12 @@ from arekit.contrib.prompt.sample import PromptedSampleRowProvider
 from arekit.contrib.utils.data.readers.csv_pd import PandasCsvReader
 from arekit.contrib.utils.data.storages.pandas_based import PandasBasedRowsStorage
 from arekit.contrib.utils.data.writers.csv_pd import PandasCsvWriter
-from arekit.contrib.utils.io_utils.samples import SamplesIO
 from arekit.contrib.utils.pipelines.items.sampling.base import BaseSerializerPipelineItem
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
 
+from arekit_ss.core.samples_io import CustomSamplesIO
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
 from arekit_ss.pipelines.annot.predefined import PredefinedTextOpinionAnnotator
 from arekit_ss.sources.rusentrel.utils.labels_fmt import RuSentRelLabelsFormatter
@@ -90,7 +90,7 @@ class TestPromptSerialization(unittest.TestCase):
             text_provider=text_provider)
 
         writer = PandasCsvWriter(write_header=True)
-        samples_io = SamplesIO(self.__output_dir, writer, prefix="prompt-sample")
+        samples_io = CustomSamplesIO(self.__output_dir, writer, prefix="prompt-sample")
 
         pipeline_item = BaseSerializerPipelineItem(
             rows_provider=rows_provider,

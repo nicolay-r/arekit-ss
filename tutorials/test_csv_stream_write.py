@@ -17,12 +17,12 @@ from arekit.contrib.bert.terms.mapper import BertDefaultStringTextTermsMapper
 from arekit.contrib.utils.data.storages.row_cache import RowCacheStorage
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
-from arekit.contrib.utils.io_utils.samples import SamplesIO
 from arekit.contrib.utils.pipelines.items.sampling.base import BaseSerializerPipelineItem
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
 
+from arekit_ss.core.samples_io import CustomSamplesIO
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
 from arekit_ss.pipelines.annot.predefined import PredefinedTextOpinionAnnotator
 from tutorials.test_tutorial_collection_binding import FooDocReader
@@ -73,7 +73,7 @@ class TestStreamWriters(unittest.TestCase):
             label_provider=MultipleLabelProvider(SentimentLabelScaler()),
             text_provider=text_provider)
 
-        samples_io = SamplesIO(self.__output_dir, writer)
+        samples_io = CustomSamplesIO(self.__output_dir, writer)
 
         pipeline_item = BaseSerializerPipelineItem(
             rows_provider=sample_rows_provider,

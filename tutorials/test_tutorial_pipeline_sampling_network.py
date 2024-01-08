@@ -15,7 +15,6 @@ from arekit.contrib.utils.data.storages.pandas_based import PandasBasedRowsStora
 from arekit.contrib.utils.data.writers.csv_pd import PandasCsvWriter
 from arekit.contrib.utils.entities.formatters.str_display import StringEntitiesDisplayValueFormatter
 from arekit.contrib.utils.io_utils.embedding import NpEmbeddingIO
-from arekit.contrib.utils.io_utils.samples import SamplesIO
 from arekit.contrib.utils.pipelines.items.sampling.networks import NetworksInputSerializerPipelineItem
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
@@ -24,6 +23,7 @@ from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import D
 from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.processing.pos.mystem_wrap import POSMystemWrapper
 
+from arekit_ss.core.samples_io import CustomSamplesIO
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
 from arekit_ss.core.utils.nn.rows import create_rows_provider
 from arekit_ss.pipelines.annot.predefined import PredefinedTextOpinionAnnotator
@@ -91,7 +91,7 @@ class TestSamplingNetwork(unittest.TestCase):
             ctx=ctx)
 
         pipeline_item = NetworksInputSerializerPipelineItem(
-            samples_io=SamplesIO(self.__output_dir, writer),
+            samples_io=CustomSamplesIO(self.__output_dir, writer),
             emb_io=NpEmbeddingIO(target_dir=self.__output_dir),
             rows_provider=rows_provider,
             save_labels_func=lambda data_type: data_type != DataType.Test,

@@ -7,8 +7,8 @@ from arekit.common.pipeline.context import PipelineContext
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 from arekit.contrib.utils.data.writers.sqlite_native import SQliteWriter
-from arekit.contrib.utils.io_utils.samples import SamplesIO
 
+from arekit_ss.core.samples_io import CustomSamplesIO
 from arekit_ss.entity.masking import StringEntitiesDisplayValueFormatter, MaskedEntitiesFormatter
 from arekit_ss.filters.label_type import LabelTextOpinionFilter
 from arekit_ss.filters.object_type import EntityBasedTextOpinionFilter
@@ -121,7 +121,7 @@ if __name__ == '__main__':
 
     pipeline_item = create_sampler_pipeline_item(
         args=args,
-        samples_io=SamplesIO(target_dir=args.output_dir, writer=writer, prefix=collection_name),
+        samples_io=CustomSamplesIO(target_dir=args.output_dir, writer=writer, prefix=collection_name),
         label_scaler=auto_import(source["label_scaler"], is_class=True),
         label_fmt=auto_import(source["label_formatter"], is_class=True),
         entity_fmt=StringEntitiesDisplayValueFormatter() if not cfg.do_mask_entities else

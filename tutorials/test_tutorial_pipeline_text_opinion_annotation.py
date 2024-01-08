@@ -71,7 +71,7 @@ class TestTextOpinionAnnotation(unittest.TestCase):
                 synonyms=synonyms, value=value))
 
         text_parser = [
-            BratTextEntitiesParser(partitioning="string"),
+            BratTextEntitiesParser(text_fmt="str"),
             DefaultTextTokenizer(keep_tokens=True),
         ]
 
