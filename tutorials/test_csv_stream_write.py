@@ -108,7 +108,7 @@ class TestStreamWriters(unittest.TestCase):
                 "data_type_pipelines": {DataType.Train: train_pipeline},
                 "data_folding": {DataType.Train: [0, 1]}
             }),
-            src_key="data_type_pipelines")
+            has_input=False)
 
     def test_csv_native(self):
         """ Testing writing into CSV format
