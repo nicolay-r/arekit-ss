@@ -19,13 +19,13 @@ from arekit.contrib.utils.pipelines.items.sampling.networks import NetworksInput
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
-from arekit.contrib.utils.processing.pos.mystem_wrap import POSMystemWrapper
 
 from arekit_ss.core.samples_io import CustomSamplesIO
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
 from arekit_ss.core.utils.nn.rows import create_rows_provider
 from arekit_ss.pipelines.annot.predefined import PredefinedTextOpinionAnnotator
 from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
+from arekit_ss.pos.ru_mystem import POSMystemWrapper
 from arekit_ss.sources.rusentiframes.collection import RuSentiFramesCollection
 from arekit_ss.sources.rusentiframes.connotations.rusentiframes_sentiment import RuSentiFramesConnotationProvider
 from arekit_ss.sources.rusentiframes.labels_fmt import RuSentiFramesLabelsFormatter, RuSentiFramesEffectLabelsFormatter

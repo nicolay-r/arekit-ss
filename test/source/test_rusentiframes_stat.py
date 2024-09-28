@@ -4,8 +4,8 @@ import argparse
 from arekit.common.frames.variants.base import FrameVariant
 from arekit.common.frames.variants.collection import FrameVariantsCollection
 from arekit.common.labels.base import Label
-from arekit.contrib.utils.processing.pos.mystem_wrap import POSMystemWrapper
 
+from arekit_ss.pos.ru_mystem import POSMystemWrapper
 from arekit_ss.sources.rusentiframes.effect import FrameEffect
 from arekit_ss.sources.rusentiframes.collection import RuSentiFramesCollection
 from arekit_ss.sources.rusentiframes.polarity import RuSentiFramesFramePolarity
