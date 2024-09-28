@@ -4,7 +4,6 @@ import unittest
 from collections import OrderedDict
 from tqdm import tqdm
 
-
 sys.path.append('../../')
 
 from arekit.common.opinions.base import Opinion
@@ -15,7 +14,8 @@ from arekit.common.context.token import Token
 from arekit.common.labels.base import NoLabel
 from arekit.common.labels.scaler.base import BaseLabelScaler
 
-from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
+from arekit_ss.core.source.brat.entities.entity import BratEntity
+from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
 from arekit_ss.sources.ruattitudes.utils.entity.parser import RuAttitudesTextEntitiesParser
 from arekit_ss.sources.ruattitudes.utils.text_object import TextObject
 from arekit_ss.sources.ruattitudes.utils.io_utils import RuAttitudesVersions
@@ -23,7 +23,6 @@ from arekit_ss.sources.ruattitudes.utils.collection import RuAttitudesCollection
 from arekit_ss.sources.ruattitudes.utils.doc import RuAttitudesDocument
 from arekit_ss.sources.ruattitudes.utils.opinions.base import SentenceOpinion
 from arekit_ss.sources.ruattitudes.utils.sentence import RuAttitudesSentence
-from arekit_ss.core.source.brat.entities.entity import BratEntity
 from arekit_ss.sources.ruattitudes.utils.doc_brat import RuAttitudesDocumentsConverter
 
 from utils import RuAttitudesSentenceOpinionUtils

@@ -18,13 +18,13 @@ from arekit.contrib.utils.data.readers.csv_pd import PandasCsvReader
 from arekit.contrib.utils.data.storages.pandas_based import PandasBasedRowsStorage
 from arekit.contrib.utils.data.writers.csv_pd import PandasCsvWriter
 from arekit.contrib.utils.pipelines.items.sampling.base import BaseSerializerPipelineItem
-from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
 
 from arekit_ss.core.samples_io import CustomSamplesIO
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
 from arekit_ss.pipelines.annot.predefined import PredefinedTextOpinionAnnotator
+from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
 from arekit_ss.sources.rusentrel.utils.labels_fmt import RuSentRelLabelsFormatter
 from test_tutorial_pipeline_text_opinion_annotation import FooDocumentProvider
 

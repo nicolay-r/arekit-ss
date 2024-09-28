@@ -13,7 +13,6 @@ from arekit.common.opinions.collection import OpinionCollection
 from arekit.common.pipeline.base import BasePipelineLauncher
 from arekit.common.pipeline.context import PipelineContext
 from arekit.common.synonyms.grouping import SynonymsCollectionValuesGroupingProviders
-from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.text_opinion.annot.algo_based import AlgorithmBasedTextOpinionAnnotator
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
@@ -22,6 +21,7 @@ from arekit.contrib.utils.synonyms.stemmer_based import StemmerBasedSynonymColle
 
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
 from arekit_ss.pipelines.annot.predefined import PredefinedTextOpinionAnnotator
+from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
 from tutorials.test_tutorial_collection_binding import FooDocReader
 
 

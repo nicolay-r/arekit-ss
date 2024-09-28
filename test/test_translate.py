@@ -8,9 +8,9 @@ from arekit.common.docs.sentence import BaseDocumentSentence
 from arekit.common.entities.base import Entity
 from arekit.common.context.token import Token
 from arekit.common.pipeline.context import PipelineContext
-from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.items.text.entities_default import TextEntitiesParser
 
+from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
 from arekit_ss.sources.config import SourcesConfig
 from arekit_ss.third_party.googletrans import translate_value
 

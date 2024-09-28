@@ -18,13 +18,13 @@ from arekit.contrib.utils.data.storages.row_cache import RowCacheStorage
 from arekit.contrib.utils.data.writers.csv_native import NativeCsvWriter
 from arekit.contrib.utils.data.writers.json_opennre import OpenNREJsonWriter
 from arekit.contrib.utils.pipelines.items.sampling.base import BaseSerializerPipelineItem
-from arekit.contrib.utils.pipelines.items.text.tokenizer import DefaultTextTokenizer
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
 
 from arekit_ss.core.samples_io import CustomSamplesIO
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
 from arekit_ss.pipelines.annot.predefined import PredefinedTextOpinionAnnotator
+from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
 from tutorials.test_tutorial_collection_binding import FooDocReader
 from tutorials.test_tutorial_pipeline_sampling_bert import CustomEntitiesFormatter, CustomLabelsFormatter
 
