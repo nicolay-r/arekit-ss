@@ -3,11 +3,11 @@ import unittest
 from arekit.common.frames.text_variant import TextFrameVariant
 from arekit.common.frames.variants.collection import FrameVariantsCollection
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
 from arekit_ss.sources.rusentiframes.collection import RuSentiFramesCollection
 from arekit_ss.sources.rusentiframes.labels_fmt import RuSentiFramesLabelsFormatter, RuSentiFramesEffectLabelsFormatter
 from arekit_ss.sources.rusentiframes.types import RuSentiFramesVersions
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 
 from labels import PositiveLabel, NegativeLabel
 

@@ -3,12 +3,12 @@ import unittest
 from arekit.common.bound import Bound
 from arekit.common.entities.collection import EntityCollection
 from arekit.common.synonyms.grouping import SynonymsCollectionValuesGroupingProviders
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.synonyms.stemmer_based import StemmerBasedSynonymCollection
 
 from arekit_ss.core.source.brat.entities.compound import BratCompoundEntity
 from arekit_ss.core.source.brat.entities.entity import BratEntity
 from arekit_ss.core.source.brat.sentences_reader import BratDocumentSentencesReader
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 
 
 class TestCompoundEntities(unittest.TestCase):

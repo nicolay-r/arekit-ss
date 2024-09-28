@@ -12,12 +12,12 @@ from arekit.common.docs.sentence import BaseDocumentSentence
 from arekit.contrib.utils.pipelines.items.text.entities_default import TextEntitiesParser
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.frames_negation import FrameVariantsSentimentNegation
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 
 from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
 from arekit_ss.sources.rusentiframes.collection import RuSentiFramesCollection
 from arekit_ss.sources.rusentiframes.labels_fmt import RuSentiFramesLabelsFormatter, RuSentiFramesEffectLabelsFormatter
 from arekit_ss.sources.rusentiframes.types import RuSentiFramesVersions
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

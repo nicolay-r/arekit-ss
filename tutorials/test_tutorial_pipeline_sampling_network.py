@@ -19,7 +19,6 @@ from arekit.contrib.utils.pipelines.items.sampling.networks import NetworksInput
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.processing.pos.mystem_wrap import POSMystemWrapper
 
 from arekit_ss.core.samples_io import CustomSamplesIO
@@ -31,6 +30,7 @@ from arekit_ss.sources.rusentiframes.collection import RuSentiFramesCollection
 from arekit_ss.sources.rusentiframes.connotations.rusentiframes_sentiment import RuSentiFramesConnotationProvider
 from arekit_ss.sources.rusentiframes.labels_fmt import RuSentiFramesLabelsFormatter, RuSentiFramesEffectLabelsFormatter
 from arekit_ss.sources.rusentiframes.types import RuSentiFramesVersions
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 from test_tutorial_pipeline_text_opinion_annotation import FooDocumentProvider
 
 

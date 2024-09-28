@@ -7,13 +7,13 @@ from arekit.common.synonyms.grouping import SynonymsCollectionValuesGroupingProv
 from arekit.contrib.utils.pipelines.text_opinion.annot.algo_based import AlgorithmBasedTextOpinionAnnotator
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.synonyms.stemmer_based import StemmerBasedSynonymCollection
 
 from arekit_ss.sources.rusentrel.doc_provider import RuSentrelDocumentProvider
 from arekit_ss.sources.rusentrel.utils.labels_fmt import RuSentRelLabelsFormatter
 from arekit_ss.sources.rusentrel.utils.opinions.collection import RuSentRelOpinions
 from arekit_ss.sources.rusentrel.utils.synonyms import RuSentRelSynonymsCollectionHelper
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 
 
 def create_text_opinion_extraction_pipeline(rusentrel_version,

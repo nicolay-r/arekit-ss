@@ -10,7 +10,6 @@ from arekit.common.text.stemmer import Stemmer
 from arekit.contrib.utils.pipelines.items.text.frames import FrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.frames_lemmatized import LemmasBasedFrameVariantsParser
 from arekit.contrib.utils.pipelines.items.text.frames_negation import FrameVariantsSentimentNegation
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.synonyms.stemmer_based import StemmerBasedSynonymCollection
 
 from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
@@ -21,6 +20,7 @@ from arekit_ss.sources.rusentiframes.types import RuSentiFramesVersions
 from arekit_ss.sources.rusentrel.utils.docs_reader import RuSentRelDocumentsReader
 from arekit_ss.sources.rusentrel.utils.io_utils import RuSentRelVersions, RuSentRelIOUtils
 from arekit_ss.sources.rusentrel.utils.synonyms import RuSentRelSynonymsCollectionHelper
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 from labels import NegativeLabel, PositiveLabel
 from debug_text import debug_show_doc_terms
 

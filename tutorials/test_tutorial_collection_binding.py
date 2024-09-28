@@ -4,7 +4,6 @@ from os.path import basename, join, dirname
 
 from arekit.common.entities.collection import EntityCollection
 from arekit.common.synonyms.grouping import SynonymsCollectionValuesGroupingProviders
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.synonyms.stemmer_based import StemmerBasedSynonymCollection
 
 from arekit_ss.core.source.brat.annot import BratAnnotationParser
@@ -12,6 +11,7 @@ from arekit_ss.core.source.brat.doc import BratDocument
 from arekit_ss.core.source.brat.entities.compound import BratCompoundEntity
 from arekit_ss.core.source.brat.sentences_reader import BratDocumentSentencesReader
 from arekit_ss.core.source.zip_utils import ZipArchiveUtils
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 
 
 class FooVersions(Enum):

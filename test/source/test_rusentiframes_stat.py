@@ -4,7 +4,6 @@ import argparse
 from arekit.common.frames.variants.base import FrameVariant
 from arekit.common.frames.variants.collection import FrameVariantsCollection
 from arekit.common.labels.base import Label
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.processing.pos.mystem_wrap import POSMystemWrapper
 
 from arekit_ss.sources.rusentiframes.effect import FrameEffect
@@ -12,6 +11,7 @@ from arekit_ss.sources.rusentiframes.collection import RuSentiFramesCollection
 from arekit_ss.sources.rusentiframes.polarity import RuSentiFramesFramePolarity
 from arekit_ss.sources.rusentiframes.labels_fmt import RuSentiFramesLabelsFormatter, RuSentiFramesEffectLabelsFormatter
 from arekit_ss.sources.rusentiframes.types import RuSentiFramesVersions, RuSentiFramesVersionsService
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 
 from labels import PositiveLabel, NegativeLabel
 

@@ -16,12 +16,12 @@ from arekit.common.synonyms.grouping import SynonymsCollectionValuesGroupingProv
 from arekit.contrib.utils.pipelines.text_opinion.annot.algo_based import AlgorithmBasedTextOpinionAnnotator
 from arekit.contrib.utils.pipelines.text_opinion.extraction import text_opinion_extraction_pipeline
 from arekit.contrib.utils.pipelines.text_opinion.filters.distance_based import DistanceLimitedTextOpinionFilter
-from arekit.contrib.utils.processing.lemmatization.mystem import MystemWrapper
 from arekit.contrib.utils.synonyms.stemmer_based import StemmerBasedSynonymCollection
 
 from arekit_ss.core.source.brat.entities.parser import BratTextEntitiesParser
 from arekit_ss.pipelines.annot.predefined import PredefinedTextOpinionAnnotator
 from arekit_ss.pipelines.text.tokenizer import DefaultTextTokenizer
+from arekit_ss.stemmers.ru_mystem import MystemWrapper
 from tutorials.test_tutorial_collection_binding import FooDocReader
 
 
