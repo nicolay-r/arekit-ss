@@ -9,10 +9,10 @@ from arekit.contrib.networks.input.providers.sample import NetworkSampleRowProvi
 from arekit.contrib.networks.input.providers.text import NetworkSingleTextProvider
 from arekit.contrib.networks.input.term_types import TermTypes
 from arekit.contrib.networks.input.terms_mapping import VectorizedNetworkTermMapping
-from arekit.contrib.utils.vectorizers.bpe import BPEVectorizer
-from arekit.contrib.utils.vectorizers.random_norm import RandomNormalVectorizer
 
 from arekit_ss.core.utils.resources import load_embedding_news_mystem_skipgram_1000_20_2015
+from arekit_ss.core.utils.vectorizers.bpe import BPEVectorizer
+from arekit_ss.core.utils.vectorizers.random_norm import RandomNormalVectorizer
 from arekit_ss.stemmers.ru_mystem import MystemWrapper
 
 
