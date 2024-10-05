@@ -37,5 +37,9 @@ def download():
 
     # Perform downloading ...
     for local_name, url_link in data.items():
+
+        if "<HIDDEN>" in url_link:
+            continue
+
         utils.download(dest_file_path=join(root_dir, local_name),
                        source_url=url_link)
