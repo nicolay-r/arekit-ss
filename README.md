@@ -4,6 +4,8 @@
 ![](https://img.shields.io/badge/AREkit-0.24.0-orange.svg)
 [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-ss/blob/master/arekit_ss.ipynb)
 
+### [📜 List of binded sources](https://github.com/nicolay-r/AREkit/wiki/Binded-Sources)
+
 <p align="center">
     <img src="logo.png"/>
 </p>
