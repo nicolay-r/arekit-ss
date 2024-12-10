@@ -3,6 +3,8 @@
 ![](https://img.shields.io/badge/Python-3.9-brightgreen.svg)
 ![](https://img.shields.io/badge/AREkit-0.25.0-orange.svg)
 [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicolay-r/arekit-ss/blob/master/arekit_ss.ipynb)
+[![PyPI downloads](https://img.shields.io/pypi/dm/arekit-ss.svg)](https://pypistats.org/packages/arekit-ss)
+
 
 ### [📜 List of binded sources](https://github.com/nicolay-r/AREkit/wiki/Binded-Sources)
 
